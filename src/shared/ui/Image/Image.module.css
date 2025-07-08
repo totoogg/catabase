@@ -1,0 +1,5 @@
+.Image {
+  width: 100%;
+  fill: var(--svgColor);
+  stroke: var(--svgColor);
+}

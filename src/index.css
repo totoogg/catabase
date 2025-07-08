@@ -3,11 +3,15 @@
   --header: #0C0537;
   --footer: #3D4F64;
   --card: #FFFFFF;
-  --cardShadow: rgba(255, 201, 79, 0.3);
+  --svgColor: #000000;
+  --cardBorder: #E5E5E5;
+  --cardShadow: rgba(255, 201, 79, 1);
   --backgroundBtnLight: #EFEFEF;
   --backgroundBtnDark: #3D4F64;
   --colorBtnLight: #535353;
   --errorBtn: #dc2626;
+  --skeletonLight: #FCFCFC;
+  --skeletonDark: #E5E5E5;
 
   --table: 768px;
   --content: 1400px;
@@ -58,4 +62,9 @@ a {
   display: flex;
   width: 100%;
   max-width: var(--content);
+}
+
+path {
+  fill: inherit;
+  stroke: inherit;
 }

@@ -13,7 +13,7 @@ export class Search extends Component {
   render() {
     return (
       <div className={cls.block}>
-        <Input placeholder="Search" onKeyUp={this.typeEnter} />
+        <Input placeholder="Search..." onKeyUp={this.typeEnter} />
         <Button className={cls.btn} variant="filled">
           Search
         </Button>
