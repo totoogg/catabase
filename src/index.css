@@ -1,4 +1,14 @@
 :root {
+  --background: #FCFCFC;
+  --header: #0C0537;
+  --footer: #3D4F64;
+  --card: #FFFFFF;
+  --cardShadow: rgba(255, 201, 79, 0.3);
+  --backgroundBtnLight: #EFEFEF;
+  --backgroundBtnDark: #3D4F64;
+  --colorBtnLight: #535353;
+  --errorBtn: #dc2626;
+
   --table: 768px;
   --content: 1400px;
 }
@@ -14,7 +24,11 @@ html {
   font-size: 10px;
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;
-  background-color: #999999;
+  background-color: var(--background);
+}
+
+body {
+  font-size: 2rem;
 }
 
 img {
@@ -22,8 +36,26 @@ img {
   display: block;
 }
 
+input,
+button,
+textarea,
+select {
+  margin: 0;
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  max-width: var(--content);
 }

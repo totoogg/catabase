@@ -1,0 +1,12 @@
+.Card {
+  width: 100px;
+  height: 100px;
+  background-color: var(--card);
+  margin: 100px;
+  box-shadow: 0 0 10px var(--background);
+  transition: box-shadow 0.3s ease;
+}
+
+.Card:hover {
+  box-shadow: 0 0 10px var(--cardShadow);
+}

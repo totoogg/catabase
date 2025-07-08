@@ -27,7 +27,9 @@ export class BugButton extends Component<BugButtonProps, BugButtonState> {
 
   render() {
     return (
-      <Button onClick={this.throwError}>{this.props.text ?? 'Error'}</Button>
+      <Button onClick={this.throwError} variant="filled" colorBtn="error">
+        {this.props.text ?? 'Error'}
+      </Button>
     );
   }
 }

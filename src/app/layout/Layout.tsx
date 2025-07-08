@@ -1,4 +1,6 @@
+import { Footer, Header } from '@/widgets';
 import { Component, ReactNode } from 'react';
+import cls from './Layout.module.css';
 
 interface LayoutProps {
   children?: ReactNode;
@@ -6,6 +8,12 @@ interface LayoutProps {
 
 export default class Layout extends Component<LayoutProps> {
   render() {
-    return <>{this.props.children}</>;
+    return (
+      <div className={cls.Layout}>
+        <Header />
+        {this.props.children}
+        <Footer />
+      </div>
+    );
   }
 }
