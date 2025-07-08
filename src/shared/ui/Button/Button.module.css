@@ -36,7 +36,7 @@
 
 
 .filled.normal {
-  border: var(--backgroundBtnLight);
+  background: var(--backgroundBtnLight);
   color: var(--colorBtnLight);
 }
 

@@ -1,5 +1,6 @@
 import { Button } from '@/shared';
 import { Component } from 'react';
+import cls from './BugButton.module.css';
 
 interface BugButtonProps {
   text?: string;
@@ -27,7 +28,12 @@ export class BugButton extends Component<BugButtonProps, BugButtonState> {
 
   render() {
     return (
-      <Button onClick={this.throwError} variant="filled" colorBtn="error">
+      <Button
+        onClick={this.throwError}
+        className={cls.btn}
+        variant="filled"
+        colorBtn="error"
+      >
         {this.props.text ?? 'Error'}
       </Button>
     );
