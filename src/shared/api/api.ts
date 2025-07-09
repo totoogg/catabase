@@ -13,10 +13,19 @@ export async function getCards(props: GetCardsProps) {
     const res = await fetch(
       URL + `?name_like=${search}&_limit=${limit}&_page=${page}`
     );
+
+    if (res.status > 499) {
+      return { status: res.status, res: 'Server error' };
+    }
+
+    if (res.status > 399) {
+      return { status: res.status, res: 'Invalid request' };
+    }
+
     const data = await res.json();
 
-    return data;
+    return { status: res.status, res: data };
   } catch {
-    throw new Error('error');
+    return { status: -1, res: 'Network error. Could not send request' };
   }
 }

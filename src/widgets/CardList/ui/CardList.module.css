@@ -4,3 +4,16 @@
   gap: 20px;
   justify-content: center;
 }
+
+.error {
+  font-size: 2rem;
+  width: 100%;
+  color: var(--errorBtn);
+  text-align: center;
+}
+
+.notFound {
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+}

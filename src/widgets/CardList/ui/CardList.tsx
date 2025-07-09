@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import cls from './CardList.module.css';
-import { CardTypes, LOCAL_SEARCH, Skeleton } from '@/shared';
+import { CardTypes, LOCAL_SEARCH, getCards } from '@/shared';
 import { Card } from '@/entities';
-import { getCards } from '@/shared';
+import { SkeletonLoading } from './SkeletonLoading';
+import { NotFound } from './NotFound';
 
 interface CardListProps {
   className?: string;
@@ -11,6 +12,8 @@ interface CardListProps {
 interface CardListState {
   cards: CardTypes[] | null;
   isLoading: boolean;
+  local: string;
+  error: string;
 }
 
 export class CardList extends Component<CardListProps, CardListState> {
@@ -19,31 +22,42 @@ export class CardList extends Component<CardListProps, CardListState> {
     this.state = {
       cards: null,
       isLoading: false,
+      local: '',
+      error: '',
     };
   }
 
-  changeLocalStorage = async (e: StorageEvent) => {
-    if (e.key === LOCAL_SEARCH && e.oldValue !== e.newValue) {
+  fetchReq = async (val?: string) => {
+    this.setState({
+      isLoading: true,
+      local: val ?? '',
+    });
+    const res = await getCards({ search: val ?? '' });
+
+    if (res.status > 0 && res.status < 400) {
       this.setState({
-        isLoading: true,
-      });
-      const res = await getCards({ search: e.newValue ?? '' });
-      this.setState({
-        cards: res,
+        cards: res.res,
         isLoading: false,
+        error: '',
+      });
+    } else {
+      this.setState({
+        cards: null,
+        isLoading: false,
+        error: res.res,
       });
     }
   };
 
-  getStartData = async () => {
-    this.setState({
-      isLoading: true,
-    });
-    const res = await getCards({});
-    this.setState({
-      cards: res,
-      isLoading: false,
-    });
+  changeLocalStorage = async (e: StorageEvent) => {
+    if (e.key === LOCAL_SEARCH && e.oldValue !== e.newValue) {
+      this.fetchReq(e.newValue ?? '');
+    }
+  };
+
+  getStartData = () => {
+    const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
+    this.fetchReq(local);
   };
 
   componentDidMount() {
@@ -60,20 +74,16 @@ export class CardList extends Component<CardListProps, CardListState> {
   }
 
   render() {
+    if (this.state.error) {
+      return <p className={cls.error}>{this.state.error}</p>;
+    }
+
     if (this.state.isLoading || !this.state.cards) {
-      return (
-        <div className={cls.CardList}>
-          {Array(10)
-            .fill(0)
-            .map((_, i) => (
-              <Skeleton height={400} width={250} key={i} />
-            ))}
-        </div>
-      );
+      return <SkeletonLoading />;
     }
 
     if (this.state.cards.length === 0) {
-      return <p>Non</p>;
+      return <NotFound text={this.state.local} />;
     }
 
     return (
