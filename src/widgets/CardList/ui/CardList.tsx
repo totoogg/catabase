@@ -49,9 +49,13 @@ export class CardList extends Component<CardListProps, CardListState> {
     }
   };
 
-  changeLocalStorage = async (e: StorageEvent) => {
-    if (e.key === LOCAL_SEARCH && e.oldValue !== e.newValue) {
-      this.fetchReq(e.newValue ?? '');
+  changeLocalStorage = (event: Event) => {
+    const customEvent = event as CustomEvent & {
+      newValue: string;
+    };
+    if (this.state.local !== customEvent.newValue) {
+      localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
+      this.fetchReq(customEvent.newValue ?? '');
     }
   };
 
@@ -62,14 +66,17 @@ export class CardList extends Component<CardListProps, CardListState> {
 
   componentDidMount() {
     if (typeof window !== 'undefined') {
-      window.addEventListener('storage', this.changeLocalStorage);
+      window.addEventListener('localStorageChanged', this.changeLocalStorage);
     }
     this.getStartData();
   }
 
   componentWillUnmount() {
     if (typeof window !== 'undefined') {
-      window.removeEventListener('storage', this.changeLocalStorage);
+      window.removeEventListener(
+        'localStorageChanged',
+        this.changeLocalStorage
+      );
     }
   }
 
