@@ -1,4 +1,4 @@
-import { Button, LOCAL_SEARCH } from '@/shared';
+import { Button, escapeHtml, LOCAL_SEARCH } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { Component, KeyboardEvent } from 'react';
 import cls from './Search.module.css';
@@ -35,7 +35,8 @@ export class Search extends Component<SearchProps, SearchState> {
   };
 
   getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+    const value = escapeHtml(e.target.value);
+    this.setState({ value });
   };
 
   typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
