@@ -34,7 +34,6 @@
   border: 2px solid var(--errorBtn);
 }
 
-
 .filled.normal {
   background: var(--backgroundBtnLight);
   color: var(--colorBtnLight);

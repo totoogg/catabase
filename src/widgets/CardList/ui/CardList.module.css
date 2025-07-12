@@ -17,3 +17,18 @@
   width: 100%;
   text-align: center;
 }
+
+.skeleton {
+  width: 250px;
+  overflow: hidden;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}

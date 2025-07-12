@@ -30,7 +30,7 @@ export class Search extends Component<SearchProps, SearchState> {
 
   saveLocal = () => {
     const event = new Event('localStorageChanged') as LocalStorageChangedEvent;
-    event.newValue = this.state.value;
+    event.newValue = this.state.value.trim();
     window.dispatchEvent(event);
   };
 
