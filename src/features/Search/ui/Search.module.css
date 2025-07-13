@@ -1,0 +1,10 @@
+.btn {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-left: 2px solid var(--header);
+}
+
+.block {
+  width: 100%;
+  display: flex;
+}

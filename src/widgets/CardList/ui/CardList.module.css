@@ -1,0 +1,34 @@
+.CardList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.error {
+  font-size: 2rem;
+  width: 100%;
+  color: var(--errorBtn);
+  text-align: center;
+}
+
+.notFound {
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.skeleton {
+  width: 250px;
+  overflow: hidden;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}

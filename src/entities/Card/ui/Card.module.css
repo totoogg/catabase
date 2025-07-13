@@ -1,0 +1,25 @@
+.Card {
+  overflow: hidden;
+  border-radius: 5px;
+  width: 250px;
+  background-color: var(--card);
+  box-shadow: 0 0 20px var(--background);
+  outline: 2px solid var(--cardBorder);
+  transition: all 0.3s ease;
+}
+
+.Card:hover {
+  box-shadow: 0 0 10px var(--cardShadow);
+  outline: none;
+}
+
+.cardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+
+.cardImage {
+  width: 250px;
+}
