@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { Input } from '../../src/shared/ui/input/Input.tsx';
+import { Input } from '../../../src/shared/ui/input/Input.tsx';
 import userEvent from '@testing-library/user-event';
 
 describe('Input', () => {

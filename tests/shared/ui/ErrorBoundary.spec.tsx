@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { ErrorBoundary } from '../../src/shared/ui/errorBoundary/errorBoundary';
+import { ErrorBoundary } from '../../../src/shared/ui/errorBoundary/errorBoundary';
 
 const Child = () => {
   throw new Error();

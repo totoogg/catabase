@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
-import { AppImage } from '../../src/shared/ui/Image/Image';
+import { AppImage } from '../../../src/shared/ui/Image/Image';
 
-vi.mock('../../src/shared/assets/icons/imgError.svg', () => ({
+vi.mock('../../../src/shared/assets/icons/imgError.svg', () => ({
   default: () => <svg data-testid="error-icon" />,
 }));
 
-vi.mock('../../src/ui/Skeleton/Skeleton', () => ({
+vi.mock('../../../src/ui/Skeleton/Skeleton', () => ({
   Skeleton: () => <div data-testid="skeleton">Skeleton</div>,
 }));
 
