@@ -39,8 +39,6 @@ describe('AppImage', () => {
 
     render(<AppImage src="asd" alt="error" height="100" />);
 
-    await new Promise((resolve) => setTimeout(resolve, 10));
-
     await act(async () => {
       errorHandler?.();
     });
@@ -64,8 +62,6 @@ describe('AppImage', () => {
     }));
 
     render(<AppImage src="asd" alt="success" height="100" />);
-
-    await new Promise((resolve) => setTimeout(resolve, 10));
 
     await act(async () => {
       loadHandler?.();
