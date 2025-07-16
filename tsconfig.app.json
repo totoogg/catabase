@@ -26,6 +26,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "noImplicitAny": true
   },
   "include": ["src"]
