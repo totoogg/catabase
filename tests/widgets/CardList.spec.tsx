@@ -10,8 +10,8 @@ interface LocalStorageChangedEvent extends Event {
 }
 
 const mockCards = [
-  { id: '1', title: 'Card 1', description: 'Desc 1' },
-  { id: '2', title: 'Card 2', description: 'Desc 2' },
+  { id: '1', name: 'Card 1', breed: 'Desc 1' },
+  { id: '2', name: 'Card 2', breed: 'Desc 2' },
 ];
 
 describe('CardList', () => {
