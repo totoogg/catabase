@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, Component, ReactNode } from 'react';
+import { ButtonHTMLAttributes, FC, memo, ReactNode } from 'react';
 import cls from './Button.module.css';
 
 export type ButtonTheme = 'outline' | 'filled';
@@ -10,24 +10,24 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonTheme;
 }
 
-export class Button extends Component<ButtonProps> {
-  render() {
-    const {
-      variant = 'outline',
-      colorBtn = 'normal',
-      children,
-      className,
-      ...otherProps
-    } = this.props;
+export const Button: FC<ButtonProps> = memo((props) => {
+  const {
+    variant = 'outline',
+    colorBtn = 'normal',
+    children,
+    className,
+    ...otherProps
+  } = props;
 
-    const classes = [cls[variant], cls[colorBtn], cls.button, className].join(
-      ' '
-    );
+  const classes = [cls[variant], cls[colorBtn], cls.button, className].join(
+    ' '
+  );
 
-    return (
-      <button className={classes} {...otherProps}>
-        {children ?? 'Button'}
-      </button>
-    );
-  }
-}
+  return (
+    <button className={classes} {...otherProps}>
+      {children ?? 'Button'}
+    </button>
+  );
+});
+
+Button.displayName = 'Button';

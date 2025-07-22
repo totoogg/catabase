@@ -1,16 +1,16 @@
-import { Component, InputHTMLAttributes } from 'react';
+import { FC, InputHTMLAttributes, memo } from 'react';
 import cls from './Input.module.css';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-export class Input extends Component<InputProps> {
-  render() {
-    const { className, ...otherProps } = this.props;
+export const Input: FC<InputProps> = memo((props) => {
+  const { className, ...otherProps } = props;
 
-    const classes = [cls.input, className].join(' ');
+  const classes = [cls.input, className].join(' ');
 
-    return <input className={classes} {...otherProps} />;
-  }
-}
+  return <input className={classes} {...otherProps} />;
+});
+
+Input.displayName = 'Input';

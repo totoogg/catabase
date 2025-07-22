@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { memo } from 'react';
 import cls from './ErrorPageBoundary.module.css';
 
-export class ErrorPageBoundary extends Component {
-  render() {
-    return <div className={cls.text}>Something went wrong!</div>;
-  }
-}
+export const ErrorPageBoundary = memo(() => {
+  return <div className={cls.text}>Something went wrong!</div>;
+});
+
+ErrorPageBoundary.displayName = 'ErrorPageBoundary';

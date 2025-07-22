@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
@@ -9,53 +9,39 @@ interface ImageProps {
   height: string;
 }
 
-interface ImageState {
-  isLoading: boolean;
-  hasError: boolean;
-}
+export const AppImage: FC<ImageProps> = memo((props) => {
+  const { alt, src, height } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-export class AppImage extends Component<ImageProps, ImageState> {
-  constructor(props: ImageProps) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      hasError: false,
-    };
-  }
-
-  componentDidMount() {
-    const { src } = this.props;
+  useEffect(() => {
+    const { src } = props;
     const image = new Image();
 
     image.src = src ?? '';
 
     image.onload = () => {
-      this.setState({
-        isLoading: true,
-      });
+      setIsLoading(true);
     };
     image.onerror = () => {
-      this.setState({
-        isLoading: true,
-        hasError: true,
-      });
+      setIsLoading(true);
+      setHasError(true);
     };
+  });
+
+  if (!isLoading) {
+    return <Skeleton width={250} height={height} />;
   }
 
-  render() {
-    if (!this.state.isLoading) {
-      return <Skeleton width={250} height={250} />;
-    }
-
-    if (this.state.hasError) {
-      return (
-        <div className={cls.Image}>
-          <ImageError />
-        </div>
-      );
-    }
-    const { alt, src, height } = this.props;
-
-    return <img className={cls.Image} height={height} src={src} alt={alt} />;
+  if (hasError) {
+    return (
+      <div className={cls.Image}>
+        <ImageError />
+      </div>
+    );
   }
-}
+
+  return <img className={cls.Image} height={height} src={src} alt={alt} />;
+});
+
+AppImage.displayName = 'AppImage';

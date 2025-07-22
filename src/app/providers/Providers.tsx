@@ -1,11 +1,11 @@
-import { Component, ReactNode } from 'react';
+import { FC, memo, ReactNode } from 'react';
 
 interface ProvidersProps {
   children?: ReactNode;
 }
 
-export default class Providers extends Component<ProvidersProps> {
-  render() {
-    return <div>{this.props.children}</div>;
-  }
-}
+export const Providers: FC<ProvidersProps> = memo(({ children }) => {
+  return <div>{children}</div>;
+});
+
+Providers.displayName = 'Providers';

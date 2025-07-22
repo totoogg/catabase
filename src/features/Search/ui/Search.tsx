@@ -1,65 +1,57 @@
 import { Button, escapeHtml, LOCAL_SEARCH } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
-import { Component, KeyboardEvent } from 'react';
+import { FC, KeyboardEvent, memo, useEffect, useState } from 'react';
 import cls from './Search.module.css';
 
 interface SearchProps {
   className?: string;
 }
 
-interface SearchState {
-  value: string;
-}
-
 interface LocalStorageChangedEvent extends Event {
   newValue: string;
 }
 
-export class Search extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
+export const Search: FC<SearchProps> = memo((props) => {
+  const [value, setValue] = useState<string>('');
 
-  componentDidMount() {
+  const classes = [cls.block, props.className].join(' ');
+
+  useEffect(() => {
     const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-    this.setState({ value: local });
-  }
+    setValue(local);
+  }, []);
 
-  saveLocal = () => {
+  const saveLocal = () => {
     const event = new Event('localStorageChanged') as LocalStorageChangedEvent;
-    event.newValue = this.state.value.trim();
+    event.newValue = value.trim();
+    localStorage.setItem(LOCAL_SEARCH, event.newValue);
     window.dispatchEvent(event);
   };
 
-  getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = escapeHtml(e.target.value);
-    this.setState({ value });
+    setValue(value);
   };
 
-  typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+  const typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      this.saveLocal();
+      saveLocal();
     }
   };
 
-  render() {
-    const classes = [cls.block, this.props.className].join(' ');
+  return (
+    <div className={classes}>
+      <Input
+        value={value}
+        placeholder="Search..."
+        onKeyUp={typeEnter}
+        onChange={getValue}
+      />
+      <Button className={cls.btn} variant="filled" onClick={saveLocal}>
+        Search
+      </Button>
+    </div>
+  );
+});
 
-    return (
-      <div className={classes}>
-        <Input
-          value={this.state.value}
-          placeholder="Search..."
-          onKeyUp={this.typeEnter}
-          onChange={this.getValue}
-        />
-        <Button className={cls.btn} variant="filled" onClick={this.saveLocal}>
-          Search
-        </Button>
-      </div>
-    );
-  }
-}
+Search.displayName = 'Search';
