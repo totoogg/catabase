@@ -1,0 +1,37 @@
+.Cat {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  margin: auto;
+  width: 100%;
+  background: var(--overlay);
+  cursor: pointer;
+  max-height: 100vh;
+
+}
+
+.wrapper {
+  max-width: 1400px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.content {
+  padding: 20px;
+  width: 70%;
+  max-width: 700px;
+  background: var(--footer);
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  color: var(--cardBorder);
+  font-size: 3rem;
+  overflow-y: auto;
+  cursor: default;
+}
+
+.close {
+  margin-left: auto;
+}

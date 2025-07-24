@@ -4,7 +4,7 @@ import { CardTypes, LOCAL_SEARCH, getCards } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 export const CardList: FC = memo(() => {
   const [cards, setCards] = useState<CardTypes[] | null>(null);
@@ -69,7 +69,9 @@ export const CardList: FC = memo(() => {
   return (
     <div className={cls.CardList}>
       {cards.map((el) => (
-        <Card card={el} key={el.id} />
+        <Link to={`cats/${el.id}`} key={el.id} className={cls.link}>
+          <Card card={el} />
+        </Link>
       ))}
     </div>
   );

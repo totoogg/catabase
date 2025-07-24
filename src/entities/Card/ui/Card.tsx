@@ -1,22 +1,15 @@
 import { FC, memo } from 'react';
 import cls from './Card.module.css';
-import { AppImage, CardTypes } from '@/shared';
+import { AppImage, CardTypes, transformDataForCard } from '@/shared';
 
 interface CardListProps {
   card: CardTypes;
 }
 
 export const Card: FC<CardListProps> = memo(({ card }) => {
-  const { name, breed, age, weight, dailyFood, lastVetVisit, imageUrl } = card;
+  const { name, imageUrl } = card;
 
-  const attribs = [
-    { name: 'Name', value: name },
-    { name: 'Breed', value: breed },
-    { name: 'Age', value: age },
-    { name: 'Weight', value: weight },
-    { name: 'Daily Food', value: dailyFood },
-    { name: 'Last Visit', value: lastVetVisit },
-  ];
+  const attribs = transformDataForCard(card);
 
   return (
     <div className={cls.Card}>

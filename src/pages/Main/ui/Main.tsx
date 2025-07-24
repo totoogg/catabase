@@ -1,6 +1,7 @@
 import { CardList, Pagination } from '@/widgets';
 import { memo } from 'react';
 import cls from './Main.module.css';
+import { Outlet } from 'react-router';
 
 export const Main = memo(() => {
   return (
@@ -9,6 +10,7 @@ export const Main = memo(() => {
         <div className={cls.content}>
           <CardList />
           <Pagination />
+          <Outlet />
         </div>
       </div>
     </div>

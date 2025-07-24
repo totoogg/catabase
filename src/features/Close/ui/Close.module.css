@@ -1,0 +1,25 @@
+.close {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.line {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background-color: var(--cardBorder);
+  left: calc(50% - 20px);
+  border-radius: 10px;
+  transform: scale(0);
+}
+
+.line:first-child {
+  transform: rotate(-45deg);
+  top: calc(50% - 2px);
+}
+
+.line:last-child {
+  bottom: calc(50% - 2px);
+  transform: rotate(45deg);
+}

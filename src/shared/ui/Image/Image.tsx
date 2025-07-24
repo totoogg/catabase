@@ -7,10 +7,11 @@ interface ImageProps {
   src: string;
   alt: string;
   height: string;
+  className?: string;
 }
 
 export const AppImage: FC<ImageProps> = memo((props) => {
-  const { alt, src, height } = props;
+  const { alt, src, height, className } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -41,7 +42,14 @@ export const AppImage: FC<ImageProps> = memo((props) => {
     );
   }
 
-  return <img className={cls.Image} height={height} src={src} alt={alt} />;
+  return (
+    <img
+      className={[cls.Image, className].join(' ')}
+      height={height}
+      src={src}
+      alt={alt}
+    />
+  );
 });
 
 AppImage.displayName = 'AppImage';

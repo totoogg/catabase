@@ -5,16 +5,16 @@ import {
   Route,
   RouterProvider,
 } from 'react-router';
-import { ErrorPage, ErrorPageBoundary, Main } from '@/pages';
+import { Cat, ErrorPage, ErrorPageBoundary, Main } from '@/pages';
 import { Layout } from '../layout/Layout';
 import { ErrorBoundary } from '@/shared';
 
 export const AppRouter: FC = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" errorElement={<ErrorPage />}>
+      <Route errorElement={<ErrorPage />}>
         <Route
-          index
+          path="/"
           element={
             <ErrorBoundary errorPage={<ErrorPageBoundary />}>
               <Layout>
@@ -22,9 +22,10 @@ export const AppRouter: FC = () => {
               </Layout>
             </ErrorBoundary>
           }
-        />
+        >
+          <Route path="cats/:catId" element={<Cat />} />
+        </Route>
         <Route path="about" element={<div>about</div>} />
-        <Route path="cats/:catId" element={<div>CatsID</div>} />
       </Route>
     )
   );
