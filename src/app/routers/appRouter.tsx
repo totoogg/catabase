@@ -11,7 +11,7 @@ import { Layout } from '../layout/Layout';
 export const AppRouter: FC = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" errorElement={<div>2</div>}>
+      <Route path="/" errorElement={<div>ErrorPage</div>}>
         <Route
           index
           element={
@@ -21,7 +21,7 @@ export const AppRouter: FC = () => {
           }
         />
         <Route path="about" element={<div>about</div>} />
-        <Route path="cats/:catId" element={<div>1</div>} />
+        <Route path="cats/:catId" element={<div>CatsID</div>} />
       </Route>
     )
   );

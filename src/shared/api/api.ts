@@ -6,6 +6,12 @@ interface GetCardsProps {
   limit?: number;
 }
 
+interface TotalPagesEvent extends Event {
+  pages: number;
+}
+
+const event = new Event('totalPages') as TotalPagesEvent;
+
 export async function getCards(props: GetCardsProps) {
   const { limit = 10, page = 1, search = '' } = props;
 
@@ -24,8 +30,18 @@ export async function getCards(props: GetCardsProps) {
 
     const data = await res.json();
 
+    const pages = Math.ceil(
+      Number(res.headers.get('X-Total-Count') ?? 0) / limit
+    );
+
+    event.pages = pages;
+    window.dispatchEvent(event);
+
     return { status: res.status, res: data };
   } catch {
+    event.pages = -1;
+    window.dispatchEvent(event);
+
     return { status: -1, res: 'Network error. Could not send request' };
   }
 }

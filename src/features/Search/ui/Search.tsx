@@ -13,6 +13,7 @@ interface LocalStorageChangedEvent extends Event {
 
 export const Search: FC<SearchProps> = memo((props) => {
   const [value, setValue] = useState<string>('');
+  const [error, setError] = useState('');
 
   const classes = [cls.block, props.className].join(' ');
 
@@ -21,16 +22,31 @@ export const Search: FC<SearchProps> = memo((props) => {
     setValue(local);
   }, []);
 
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(''), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   const saveLocal = () => {
     const event = new Event('localStorageChanged') as LocalStorageChangedEvent;
-    event.newValue = value.trim();
+    event.newValue = escapeHtml(value.trim());
     localStorage.setItem(LOCAL_SEARCH, event.newValue);
     window.dispatchEvent(event);
   };
 
   const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = escapeHtml(e.target.value);
-    setValue(value);
+    const inputValue = e.target.value;
+    const filteredValue = inputValue.replace(/[^\p{L}\d\s]/gu, '');
+
+    if (inputValue !== filteredValue) {
+      setError('Only letters, numbers and spaces are allowed!');
+    } else {
+      setError('');
+    }
+
+    setValue(filteredValue);
   };
 
   const typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -42,6 +58,7 @@ export const Search: FC<SearchProps> = memo((props) => {
   return (
     <div className={classes}>
       <Input
+        pattern="/[^\p{L}\d\s]/gu"
         value={value}
         placeholder="Search..."
         onKeyUp={typeEnter}
@@ -50,6 +67,7 @@ export const Search: FC<SearchProps> = memo((props) => {
       <Button className={cls.btn} variant="filled" onClick={saveLocal}>
         Search
       </Button>
+      {error && <div className={cls.error}>{error}</div>}
     </div>
   );
 });

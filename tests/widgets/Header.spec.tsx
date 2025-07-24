@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { Header } from '../../src/widgets/Header/ui/Header';
 import { LOCAL_SEARCH } from '../../src/shared/consts/localStorage';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 
 describe('Header', () => {
   it('renders Header', () => {

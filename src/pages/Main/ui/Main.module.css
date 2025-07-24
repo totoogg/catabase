@@ -5,3 +5,10 @@
   padding: 20px;
   margin-bottom: auto;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}

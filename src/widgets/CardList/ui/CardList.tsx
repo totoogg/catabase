@@ -4,12 +4,14 @@ import { CardTypes, LOCAL_SEARCH, getCards } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
+import { useSearchParams } from 'react-router';
 
 export const CardList: FC = memo(() => {
   const [cards, setCards] = useState<CardTypes[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [local, setLocal] = useState('');
   const [error, setError] = useState('');
+  const [params] = useSearchParams();
 
   useEffect(() => {
     const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
@@ -18,7 +20,9 @@ export const CardList: FC = memo(() => {
       setIsLoading(true);
       setLocal(val ?? '');
 
-      const res = await getCards({ search: val ?? '' });
+      const page = Number(params.get('page') ?? 1);
+
+      const res = await getCards({ search: val ?? '', page });
 
       if (res.status > 0 && res.status < 400) {
         setCards(res.res);
@@ -48,7 +52,7 @@ export const CardList: FC = memo(() => {
 
     return () =>
       window.removeEventListener('localStorageChanged', changeLocalStorage);
-  }, []);
+  }, [params]);
 
   if (error) {
     return <p className={cls.error}>{error}</p>;

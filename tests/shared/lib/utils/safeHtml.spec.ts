@@ -1,4 +1,5 @@
 import { escapeHtml } from '../../../../src/shared/lib/utils/safeHtml';
+import { describe, it, expect } from 'vitest';
 
 describe('escapeHtml', () => {
   it('escape HTML characters', () => {

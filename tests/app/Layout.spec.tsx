@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import Layout from '../../src/app/layout/Layout';
+import { Layout } from '../../src/app/layout/Layout';
 
 const Child = () => {
   return <div data-testid="child" />;
