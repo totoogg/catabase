@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
-import { CardTypes, LOCAL_SEARCH, getCards } from '@/shared';
+import { CardTypes, LOCAL_SEARCH, getCards, useGetLocalData } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
@@ -12,10 +12,9 @@ export const CardList: FC = memo(() => {
   const [local, setLocal] = useState('');
   const [error, setError] = useState('');
   const [params] = useSearchParams();
+  const { value: localValue } = useGetLocalData();
 
   useEffect(() => {
-    const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-
     const fetchReq = async (val?: string) => {
       setIsLoading(true);
       setLocal(val ?? '');
@@ -40,7 +39,7 @@ export const CardList: FC = memo(() => {
         newValue: string;
       };
 
-      if (local !== customEvent.newValue) {
+      if (localValue !== customEvent.newValue) {
         localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
         fetchReq(customEvent.newValue ?? '');
       }
@@ -48,11 +47,11 @@ export const CardList: FC = memo(() => {
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    fetchReq(local);
+    fetchReq(localValue);
 
     return () =>
       window.removeEventListener('localStorageChanged', changeLocalStorage);
-  }, [params]);
+  }, [localValue, params]);
 
   if (error) {
     return <p className={cls.error}>{error}</p>;

@@ -1,4 +1,4 @@
-import { Button, escapeHtml, LOCAL_SEARCH } from '@/shared';
+import { Button, escapeHtml, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { FC, KeyboardEvent, memo, useEffect, useState } from 'react';
 import cls from './Search.module.css';
@@ -12,15 +12,10 @@ interface LocalStorageChangedEvent extends Event {
 }
 
 export const Search: FC<SearchProps> = memo((props) => {
-  const [value, setValue] = useState<string>('');
   const [error, setError] = useState('');
+  const { setValue, value } = useGetLocalData();
 
   const classes = [cls.block, props.className].join(' ');
-
-  useEffect(() => {
-    const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-    setValue(local);
-  }, []);
 
   useEffect(() => {
     if (error) {
