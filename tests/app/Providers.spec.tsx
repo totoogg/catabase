@@ -1,20 +1,37 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { render } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Providers } from '../../src/app/providers/Providers';
+import { Main } from '../../src/pages/Main/ui/Main';
 import '@testing-library/jest-dom';
 
-const Child = () => {
-  return <div data-testid="child" />;
-};
+beforeEach(() => {
+  vi.mock('react-router', async () => {
+    const mod =
+      await vi.importActual<typeof import('react-router')>('react-router');
+    return {
+      ...mod,
+      useSearchParams: () => [new Map([['page', '1']])],
+    };
+  });
+});
 
 describe('Providers', () => {
   it('renders Providers', () => {
-    render(
+    const { container } = render(
       <Providers>
-        <Child />
+        <Main />
       </Providers>
     );
 
-    expect(screen.getByTestId('child')).toBeInTheDocument();
+    expect(container.querySelectorAll('div[class*="skeleton"]')).toHaveLength(
+      90
+    );
+    expect(
+      container.querySelectorAll('div[class*="skeletonContent"]')
+    ).toHaveLength(10);
+    expect(container.querySelector('div[class*="Main"]')).toBeInTheDocument();
+    expect(
+      container.querySelector('div[class*="wrapper"]')
+    ).toBeInTheDocument();
   });
 });

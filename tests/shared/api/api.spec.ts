@@ -5,12 +5,14 @@ describe('getCards', () => {
   it('get data', async () => {
     global.fetch = vi.fn().mockImplementation(() => ({
       status: 200,
+      headers: new Map([['X-Total-Count', 10]]),
       json: () => Promise.resolve({ cards: [] }),
     }));
 
     const cards = await getCards({ search: 'test', page: 1, limit: 10 });
 
-    expect(cards).toEqual({ res: { cards: [] }, status: 200 });
+    expect(cards.res.cards).toEqual([]);
+    expect(cards.status).toEqual(200);
   });
 
   it('get bad request', async () => {

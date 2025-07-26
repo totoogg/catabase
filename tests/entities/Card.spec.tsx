@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { Card } from '../../src/entities/Card/ui/Card';
+import '@testing-library/jest-dom';
 
 describe('Card', () => {
   it('renders Card', () => {
@@ -12,6 +13,8 @@ describe('Card', () => {
       dailyFood: '250 g',
       lastVetVisit: '2023-05-15',
       imageUrl: 'test.jpg',
+      characteristics: {},
+      owner: {},
       id: '1',
     };
 
