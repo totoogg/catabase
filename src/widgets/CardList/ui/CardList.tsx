@@ -51,15 +51,12 @@ export const CardList: FC = memo(() => {
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    if (firstRendering) {
-      fetchReq(localValue);
-    }
-
     if (currentPage !== Number(params.get('page') ?? 1)) {
       fetchReq(local);
     }
 
-    if (localValue !== undefined) {
+    if (localValue !== undefined && firstRendering) {
+      fetchReq(localValue);
       setFirstRendering(false);
     }
 
