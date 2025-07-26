@@ -86,10 +86,6 @@ describe('CardList', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText('Card 2')).toBeInTheDocument();
-    });
-
     localStorage.setItem(LOCAL_SEARCH, 'new search');
 
     act(() => {

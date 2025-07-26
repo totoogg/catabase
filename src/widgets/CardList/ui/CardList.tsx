@@ -13,7 +13,7 @@ export const CardList: FC = memo(() => {
   const [error, setError] = useState('');
   const [params, setParams] = useSearchParams();
   const [firstRendering, setFirstRendering] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
 
   useEffect(() => {
