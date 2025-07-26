@@ -7,4 +7,6 @@
 
 .showCatById {
   overflow-y: hidden;
+  background: var(--overlay);
+  position: relative;
 }

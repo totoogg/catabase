@@ -9,14 +9,19 @@ export const Cat = () => {
 
   const handleClick = (e: MouseEvent) => {
     const classes = (e.target as HTMLElement).className;
-    if (classes.includes('wrapper') || classes.includes('close')) {
+    if (
+      classes.includes('wrapper') ||
+      classes.includes('close') ||
+      classes.includes('line') ||
+      classes.includes('Cat')
+    ) {
       navigate(`/`);
     }
   };
 
   return (
-    <div className={cls.Cat}>
-      <div className={cls.wrapper} onClick={handleClick}>
+    <div className={cls.Cat} onClick={handleClick}>
+      <div className={cls.wrapper}>
         <div className={cls.content}>
           <Close className={cls.close} />
           <CardId />

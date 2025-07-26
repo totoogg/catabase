@@ -5,10 +5,9 @@
   top: 0;
   margin: auto;
   width: 100%;
-  background: var(--overlay);
   cursor: pointer;
   max-height: 100vh;
-
+  background: var(--overlay);
 }
 
 .wrapper {
