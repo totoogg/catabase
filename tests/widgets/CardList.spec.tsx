@@ -11,8 +11,6 @@ interface LocalStorageChangedEvent extends Event {
   newValue: string;
 }
 
-beforeEach(() => {});
-
 const data = {
   name: 'Fluffy',
   breed: 'Persian',
@@ -37,7 +35,7 @@ beforeEach(() => {
       await vi.importActual<typeof import('react-router')>('react-router');
     return {
       ...mod,
-      useSearchParams: () => [new Map([['page', '1']])],
+      useSearchParams: () => [new Map([['page', '1']]), vi.fn()],
     };
   });
 });

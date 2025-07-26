@@ -1,4 +1,4 @@
-import { Button, escapeHtml, LOCAL_SEARCH, useGetLocalData } from '@/shared';
+import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { FC, KeyboardEvent, memo, useEffect, useState } from 'react';
 import cls from './Search.module.css';
@@ -25,10 +25,14 @@ export const Search: FC<SearchProps> = memo((props) => {
   }, [error]);
 
   const saveLocal = () => {
-    const event = new Event('localStorageChanged') as LocalStorageChangedEvent;
-    event.newValue = escapeHtml(value.trim());
-    localStorage.setItem(LOCAL_SEARCH, event.newValue);
-    window.dispatchEvent(event);
+    if (value !== undefined) {
+      const event = new Event(
+        'localStorageChanged'
+      ) as LocalStorageChangedEvent;
+      event.newValue = value.trim();
+      localStorage.setItem(LOCAL_SEARCH, event.newValue);
+      window.dispatchEvent(event);
+    }
   };
 
   const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +58,7 @@ export const Search: FC<SearchProps> = memo((props) => {
     <div className={classes}>
       <Input
         pattern="/[^\p{L}\d\s]/gu"
-        value={value}
+        value={value ?? ''}
         placeholder="Search..."
         onKeyUp={typeEnter}
         onChange={getValue}

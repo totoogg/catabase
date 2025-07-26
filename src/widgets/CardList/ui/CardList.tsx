@@ -11,7 +11,9 @@ export const CardList: FC = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const [local, setLocal] = useState('');
   const [error, setError] = useState('');
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
+  const [firstRendering, setFirstRendering] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
   const { value: localValue } = useGetLocalData();
 
   useEffect(() => {
@@ -20,6 +22,7 @@ export const CardList: FC = memo(() => {
       setLocal(val ?? '');
 
       const page = Number(params.get('page') ?? 1);
+      setCurrentPage(page);
 
       const res = await getCards({ search: val ?? '', page });
 
@@ -39,19 +42,30 @@ export const CardList: FC = memo(() => {
         newValue: string;
       };
 
-      if (localValue !== customEvent.newValue) {
-        localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
+      if (local !== customEvent.newValue) {
         fetchReq(customEvent.newValue ?? '');
+        setParams({ page: '1' });
+        localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
       }
     };
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    fetchReq(localValue);
+    if (firstRendering) {
+      fetchReq(localValue);
+    }
+
+    if (currentPage !== Number(params.get('page') ?? 1)) {
+      fetchReq(local);
+    }
+
+    if (localValue !== undefined) {
+      setFirstRendering(false);
+    }
 
     return () =>
       window.removeEventListener('localStorageChanged', changeLocalStorage);
-  }, [localValue, params]);
+  }, [currentPage, firstRendering, local, localValue, params, setParams]);
 
   if (error) {
     return <p className={cls.error}>{error}</p>;
