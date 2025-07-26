@@ -1,0 +1,24 @@
+import cls from './School.module.css';
+
+export const School = () => {
+  return (
+    <div className={cls.school}>
+      <a
+        href="https://rs.school/react/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div className={cls.logo}></div>
+        <div>
+          <h3>RS School React</h3>
+          <p>Course on modern React development</p>
+        </div>
+      </a>
+      <p>
+        RS School is a free educational program with a practical focus. The
+        course covers modern approaches to React development, including hooks,
+        TypeScript, testing, and performance optimization.
+      </p>
+    </div>
+  );
+};

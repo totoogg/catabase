@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router';
-import { Cat, ErrorPage, ErrorPageBoundary, Main } from '@/pages';
+import { About, Cat, ErrorPage, ErrorPageBoundary, Main } from '@/pages';
 import { Layout } from '../layout/Layout';
 import { ErrorBoundary } from '@/shared';
 
@@ -25,7 +25,7 @@ export const AppRouter: FC = () => {
         >
           <Route path="cats/:catId" element={<Cat />} />
         </Route>
-        <Route path="about" element={<div>about</div>} />
+        <Route path="about" element={<About />} />
       </Route>
     )
   );

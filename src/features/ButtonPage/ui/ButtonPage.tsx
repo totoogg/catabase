@@ -21,7 +21,7 @@ export const ButtonPage: FC<ButtonPageProps> = memo(({ index }) => {
     <Button
       className={[
         cls.ButtonPage,
-        index === Number(params.get('page') ?? 0) ? cls.active : '',
+        index === Number(params.get('page') ?? 1) ? cls.active : '',
       ].join(' ')}
       onClick={handleClick}
     >

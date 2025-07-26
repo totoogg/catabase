@@ -10,3 +10,13 @@
 .wrapper {
   justify-content: center;
 }
+
+.link {
+  color: var(--card);
+  transition: all 0.3s ease;
+  font-size: 3rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
