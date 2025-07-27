@@ -6,6 +6,7 @@ import * as api from '../../src/shared/api/api';
 import '@testing-library/jest-dom';
 
 beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation(() => null);
   vi.mock('react-router', async () => {
     const mod =
       await vi.importActual<typeof import('react-router')>('react-router');
