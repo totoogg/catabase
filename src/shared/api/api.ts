@@ -1,6 +1,6 @@
 import { URL } from '../consts/api';
 
-interface GetCardsProps {
+/* interface GetCardsProps {
   search?: string;
   page?: number;
   limit?: number;
@@ -56,4 +56,53 @@ export async function getCards(props: GetCardsProps) {
 
 export async function getCardById(id: string) {
   return await getResponse(URL + `/` + id);
-}
+} */
+import {
+  BaseQueryFn,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
+import { setLoader } from './loader/loaderSlice';
+import { setError } from './error/errorSlice';
+import { setCount } from './count/countSlice';
+
+const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
+  api.dispatch(setLoader(true));
+
+  try {
+    const result = await fetchBaseQuery({ baseUrl: URL })(
+      args,
+      api,
+      extraOptions
+    );
+
+    const error = result.error?.status;
+
+    if (typeof error === 'number' && error > 499) {
+      api.dispatch(setError('Server error'));
+    }
+
+    if (typeof error === 'number' && error > 399) {
+      api.dispatch(setError('Invalid request'));
+    }
+
+    const pages = Math.ceil(
+      parseInt(result.meta?.response?.headers.get('X-Total-Count') || '0') / 10
+    );
+
+    api.dispatch(setCount(pages));
+
+    return result;
+  } catch (error) {
+    api.dispatch(setError('Network error. Could not send request'));
+    throw error;
+  } finally {
+    api.dispatch(setLoader(false));
+  }
+};
+
+export const apiSlice = createApi({
+  reducerPath: 'api',
+  baseQuery: customBaseQuery,
+  endpoints: () => ({}),
+});
