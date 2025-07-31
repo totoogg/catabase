@@ -1,65 +1,74 @@
-import { Button, escapeHtml, LOCAL_SEARCH } from '@/shared';
+import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
-import { Component, KeyboardEvent } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import cls from './Search.module.css';
 
 interface SearchProps {
   className?: string;
 }
 
-interface SearchState {
-  value: string;
-}
-
 interface LocalStorageChangedEvent extends Event {
   newValue: string;
 }
 
-export class Search extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
+export const Search: FC<SearchProps> = (props) => {
+  const [error, setError] = useState('');
+  const { setValue, value } = useGetLocalData();
 
-  componentDidMount() {
-    const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-    this.setState({ value: local });
-  }
+  const classes = [cls.block, props.className].join(' ');
 
-  saveLocal = () => {
-    const event = new Event('localStorageChanged') as LocalStorageChangedEvent;
-    event.newValue = this.state.value.trim();
-    window.dispatchEvent(event);
-  };
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(''), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
-  getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = escapeHtml(e.target.value);
-    this.setState({ value });
-  };
-
-  typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      this.saveLocal();
+  const saveLocal = () => {
+    if (value !== undefined) {
+      const event = new Event(
+        'localStorageChanged'
+      ) as LocalStorageChangedEvent;
+      event.newValue = value.trim();
+      localStorage.setItem(LOCAL_SEARCH, event.newValue);
+      window.dispatchEvent(event);
     }
   };
 
-  render() {
-    const classes = [cls.block, this.props.className].join(' ');
+  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const filteredValue = inputValue.replace(/[^\p{L}\d\s]/gu, '');
 
-    return (
-      <div className={classes}>
-        <Input
-          value={this.state.value}
-          placeholder="Search..."
-          onKeyUp={this.typeEnter}
-          onChange={this.getValue}
-        />
-        <Button className={cls.btn} variant="filled" onClick={this.saveLocal}>
-          Search
-        </Button>
-      </div>
-    );
-  }
-}
+    if (inputValue !== filteredValue) {
+      setError('Only letters, numbers and spaces are allowed!');
+    } else {
+      setError('');
+    }
+
+    setValue(filteredValue);
+  };
+
+  const typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      saveLocal();
+    }
+  };
+
+  return (
+    <div className={classes}>
+      <Input
+        pattern="/[^\p{L}\d\s]/gu"
+        value={value ?? ''}
+        placeholder="Search..."
+        onKeyUp={typeEnter}
+        onChange={getValue}
+      />
+      <Button className={cls.btn} variant="filled" onClick={saveLocal}>
+        Search
+      </Button>
+      {error && <div className={cls.error}>{error}</div>}
+    </div>
+  );
+};
+
+Search.displayName = 'Search';

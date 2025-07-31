@@ -1,6 +1,5 @@
 import { escapeHtml } from '../../../../src/shared/lib/utils/safeHtml';
 import { describe, it, expect } from 'vitest';
-import '@testing-library/jest-dom';
 
 describe('escapeHtml', () => {
   it('escape HTML characters', () => {

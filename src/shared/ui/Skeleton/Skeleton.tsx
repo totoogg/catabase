@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { CSSProperties, FC } from 'react';
 import cls from './Skeleton.module.css';
 
 interface SkeletonProps {
@@ -8,17 +8,17 @@ interface SkeletonProps {
   border?: string;
 }
 
-export class Skeleton extends Component<SkeletonProps> {
-  render() {
-    const { border, className, height, width } = this.props;
-    const styles: React.CSSProperties = {
-      width,
-      height,
-      borderRadius: border,
-    };
+export const Skeleton: FC<SkeletonProps> = (props) => {
+  const { border, className, height, width } = props;
+  const styles: CSSProperties = {
+    width,
+    height,
+    borderRadius: border,
+  };
 
-    const classes = [cls.skeleton, className].join(' ');
+  const classes = [cls.skeleton, className].join(' ');
 
-    return <div className={classes} style={styles} />;
-  }
-}
+  return <div className={classes} style={styles} />;
+};
+
+Skeleton.displayName = 'Skeleton';

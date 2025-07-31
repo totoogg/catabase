@@ -1,17 +1,34 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import Layout from '../../src/app/layout/Layout';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { Layout } from '../../src/app/layout/Layout';
+import '@testing-library/jest-dom';
+import { MemoryRouter } from 'react-router';
 
 const Child = () => {
   return <div data-testid="child" />;
 };
 
+beforeEach(() => {
+  vi.mock('react-router-dom', async () => {
+    const mod =
+      await vi.importActual<typeof import('react-router')>('react-router');
+    return {
+      ...mod,
+      useParams: () => ({
+        catId: undefined,
+      }),
+    };
+  });
+});
+
 describe('Layout', () => {
   it('renders Layout', () => {
     const { container } = render(
-      <Layout>
-        <Child />
-      </Layout>
+      <MemoryRouter>
+        <Layout>
+          <Child />
+        </Layout>
+      </MemoryRouter>
     );
 
     expect(screen.getByTestId('child')).toBeInTheDocument();

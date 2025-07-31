@@ -1,15 +1,16 @@
-import { Component } from 'react';
 import cls from './Footer.module.css';
-import { BugButton } from '@/features';
+import { Link } from 'react-router';
 
-export class Footer extends Component {
-  render() {
-    return (
-      <div className={cls.Footer}>
-        <div className={['wrapper', cls.wrapper].join(' ')}>
-          <BugButton />
-        </div>
+export const Footer = () => {
+  return (
+    <div className={cls.Footer}>
+      <div className={['wrapper', cls.wrapper].join(' ')}>
+        <Link to="about" className={cls.link}>
+          About
+        </Link>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+Footer.displayName = 'Footer';

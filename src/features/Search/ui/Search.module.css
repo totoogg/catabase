@@ -7,4 +7,15 @@
 .block {
   width: 100%;
   display: flex;
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  top: 40px;
+  color: red;
+  background-color: #ffecec;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
 }

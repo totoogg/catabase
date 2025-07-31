@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ErrorBoundary } from '../../../src/shared/ui/ErrorBoundary/ErrorBoundary';
+import '@testing-library/jest-dom';
 
 const Child = () => {
   throw new Error();

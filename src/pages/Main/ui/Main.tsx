@@ -1,15 +1,19 @@
-import { CardList } from '@/widgets';
-import { Component } from 'react';
+import { CardList, Pagination } from '@/widgets';
 import cls from './Main.module.css';
+import { Outlet } from 'react-router';
 
-export class Main extends Component {
-  render() {
-    return (
-      <div className={cls.Main}>
-        <div className="wrapper">
+export const Main = () => {
+  return (
+    <div className={cls.Main}>
+      <div className="wrapper">
+        <div className={cls.content}>
           <CardList />
+          <Pagination />
+          <Outlet />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+Main.displayName = 'Main';

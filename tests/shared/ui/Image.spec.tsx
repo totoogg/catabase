@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import { AppImage } from '../../../src/shared/ui/Image/Image';
+import '@testing-library/jest-dom';
 
 vi.mock('../../../src/shared/assets/icons/imgError.svg', () => ({
   default: () => <svg data-testid="error-icon" />,

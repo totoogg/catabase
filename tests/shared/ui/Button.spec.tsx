@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { Button } from '../../../src/shared/ui/button/Button';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 
 describe('Button', () => {
   it('renders the button with the correct text', () => {

@@ -6,6 +6,7 @@
   --svgColor: #000000;
   --cardBorder: #e5e5e5;
   --cardShadow: rgba(255, 201, 79, 1);
+  --overlay: rgba(61, 79, 100, 0.5);
   --backgroundBtnLight: #efefef;
   --backgroundBtnDark: #3d4f64;
   --colorBtnLight: #535353;
@@ -32,6 +33,7 @@ html {
 
 body {
   font-size: 1.5rem;
+  min-height: 100vh;
 }
 
 img {
@@ -61,6 +63,7 @@ a {
   display: flex;
   width: 100%;
   max-width: var(--content);
+  justify-content: center;
 }
 
 path {

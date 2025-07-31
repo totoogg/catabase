@@ -1,19 +1,12 @@
-import { ErrorBoundary } from '@/shared';
-import Layout from './layout/Layout';
-import Providers from './providers/Providers';
-import { Component } from 'react';
-import { ErrorPageBoundary, Main } from '@/pages';
+import { Providers } from './providers/Providers';
+import { AppRouter } from './routers/appRouter';
 
-export class App extends Component {
-  render() {
-    return (
-      <ErrorBoundary errorPage={<ErrorPageBoundary />}>
-        <Providers>
-          <Layout>
-            <Main />
-          </Layout>
-        </Providers>
-      </ErrorBoundary>
-    );
-  }
-}
+export const App = () => {
+  return (
+    <Providers>
+      <AppRouter />
+    </Providers>
+  );
+};
+
+App.displayName = 'App';

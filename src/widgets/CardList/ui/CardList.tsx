@@ -1,104 +1,90 @@
-import { Component } from 'react';
+import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
-import { CardTypes, LOCAL_SEARCH, getCards } from '@/shared';
+import { CardTypes, LOCAL_SEARCH, getCards, useGetLocalData } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
+import { Link, useSearchParams } from 'react-router';
 
-interface CardListProps {
-  className?: string;
-}
+export const CardList: FC = () => {
+  const [cards, setCards] = useState<CardTypes[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [local, setLocal] = useState('');
+  const [error, setError] = useState('');
+  const [params, setParams] = useSearchParams();
+  const [firstRendering, setFirstRendering] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { value: localValue } = useGetLocalData();
 
-interface CardListState {
-  cards: CardTypes[] | null;
-  isLoading: boolean;
-  local: string;
-  error: string;
-}
+  useEffect(() => {
+    const fetchReq = async (val?: string) => {
+      setIsLoading(true);
+      setLocal(val ?? '');
 
-export class CardList extends Component<CardListProps, CardListState> {
-  constructor(props: CardListProps) {
-    super(props);
-    this.state = {
-      cards: null,
-      isLoading: false,
-      local: '',
-      error: '',
+      const page = parseInt(params.get('page') || '1');
+      setCurrentPage(page);
+
+      const res = await getCards({ search: val ?? '', page });
+
+      if (res.status > 0 && res.status < 400) {
+        setCards(res.res);
+        setIsLoading(false);
+        setError('');
+      } else {
+        setCards(null);
+        setIsLoading(false);
+        setError(res.res);
+      }
     };
-  }
 
-  fetchReq = async (val?: string) => {
-    this.setState({
-      isLoading: true,
-      local: val ?? '',
-    });
-    const res = await getCards({ search: val ?? '' });
+    const changeLocalStorage = (event: Event) => {
+      const customEvent = event as CustomEvent & {
+        newValue: string;
+      };
 
-    if (res.status > 0 && res.status < 400) {
-      this.setState({
-        cards: res.res,
-        isLoading: false,
-        error: '',
-      });
-    } else {
-      this.setState({
-        cards: null,
-        isLoading: false,
-        error: res.res,
-      });
-    }
-  };
-
-  changeLocalStorage = (event: Event) => {
-    const customEvent = event as CustomEvent & {
-      newValue: string;
+      if (local !== customEvent.newValue) {
+        fetchReq(customEvent.newValue ?? '');
+        setParams({ page: '1' });
+        localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
+      }
     };
-    if (this.state.local !== customEvent.newValue) {
-      localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
-      this.fetchReq(customEvent.newValue ?? '');
-    }
-  };
 
-  getStartData = () => {
-    const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-    this.fetchReq(local);
-  };
+    window.addEventListener('localStorageChanged', changeLocalStorage);
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('localStorageChanged', this.changeLocalStorage);
+    if (currentPage !== Number(params.get('page') ?? 1)) {
+      fetchReq(local);
     }
-    this.getStartData();
+
+    if (localValue !== undefined && firstRendering) {
+      fetchReq(localValue);
+      setFirstRendering(false);
+    }
+
+    return () =>
+      window.removeEventListener('localStorageChanged', changeLocalStorage);
+  }, [currentPage, firstRendering, local, localValue, params, setParams]);
+
+  if (error) {
+    return <p className={cls.error}>{error}</p>;
   }
 
-  componentWillUnmount() {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener(
-        'localStorageChanged',
-        this.changeLocalStorage
-      );
-    }
+  if (isLoading || !cards) {
+    return <SkeletonLoading />;
   }
 
-  render() {
-    if (this.state.error) {
-      return <p className={cls.error}>{this.state.error}</p>;
-    }
-
-    if (this.state.isLoading || !this.state.cards) {
-      return <SkeletonLoading />;
-    }
-
-    if (this.state.cards.length === 0) {
-      return <NotFound text={this.state.local} />;
-    }
-
-    return (
-      <div className={cls.CardList}>
-        {this.state.cards.map((el) => (
-          <Card card={el} key={el.id} />
-        ))}
-      </div>
-    );
+  if (cards.length === 0) {
+    return <NotFound text={local} />;
   }
-}
+
+  return (
+    <div className={cls.CardList}>
+      {cards.map((el) => (
+        <Link to={`cats/${el.id}`} key={el.id} className={cls.link}>
+          <Card card={el} />
+        </Link>
+      ))}
+    </div>
+  );
+};
+
+CardList.displayName = 'CardList';

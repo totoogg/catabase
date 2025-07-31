@@ -4,3 +4,9 @@
   justify-content: space-between;
   flex-direction: column;
 }
+
+.showCatById {
+  overflow-y: hidden;
+  background: var(--overlay);
+  position: relative;
+}
