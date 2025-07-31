@@ -2,10 +2,14 @@ import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { MouseEvent } from 'react';
 import { Close } from '@/features';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 export const Cat = () => {
+  const [params] = useSearchParams();
+
   const navigate = useNavigate();
+
+  const page = parseInt(params.get('page') || '1');
 
   const handleClick = (e: MouseEvent) => {
     const classes = (e.target as HTMLElement).className;
@@ -15,7 +19,7 @@ export const Cat = () => {
       classes.includes('line') ||
       classes.includes('Cat')
     ) {
-      navigate(`/`);
+      navigate(`/?page=${page}`);
     }
   };
 

@@ -1,5 +1,6 @@
 export * from './ui';
 export * from './types/cardApiTypes';
+export * from './types/queryTypes';
 export * from './consts/api';
 export * from './consts/localStorage';
 export * from './api';

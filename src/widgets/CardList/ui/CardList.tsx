@@ -3,7 +3,7 @@ import cls from './CardList.module.css';
 import {
   CardTypes,
   LOCAL_SEARCH,
-  selectError,
+  selectErrorHome,
   selectIsLoader,
   useAppSelector,
   useGetLocalData,
@@ -23,14 +23,15 @@ export const CardList: FC = () => {
 
   const [fetchCats] = useLazyGetCatsQuery();
   const isLoading = useAppSelector(selectIsLoader);
-  const error = useAppSelector(selectError);
+  const error = useAppSelector(selectErrorHome);
   const [cards, setCards] = useState<CardTypes[] | null>(null);
+
+  const page = parseInt(params.get('page') || '1');
 
   useEffect(() => {
     const fetchReq = async (val?: string) => {
       setLocal(val ?? '');
 
-      const page = parseInt(params.get('page') || '1');
       setCurrentPage(page);
       const res = await fetchCats({ search: val ?? '', page });
 
@@ -68,6 +69,7 @@ export const CardList: FC = () => {
     firstRendering,
     local,
     localValue,
+    page,
     params,
     setParams,
   ]);
@@ -87,7 +89,11 @@ export const CardList: FC = () => {
   return (
     <div className={cls.CardList}>
       {cards.map((el) => (
-        <Link to={`cats/${el.id}`} key={el.id} className={cls.link}>
+        <Link
+          to={`cats/${el.id}?page=${page}`}
+          key={el.id}
+          className={cls.link}
+        >
           <Card card={el} />
         </Link>
       ))}
