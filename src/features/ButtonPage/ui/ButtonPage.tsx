@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import cls from './ButtonPage.module.css';
 import { Button } from '@/shared';
 import { useSearchParams } from 'react-router';
@@ -7,7 +7,7 @@ interface ButtonPageProps {
   index: number;
 }
 
-export const ButtonPage: FC<ButtonPageProps> = memo(({ index }) => {
+export const ButtonPage: FC<ButtonPageProps> = ({ index }) => {
   const [params, setParams] = useSearchParams();
 
   const handleClick = () => {
@@ -28,6 +28,6 @@ export const ButtonPage: FC<ButtonPageProps> = memo(({ index }) => {
       {index}
     </Button>
   );
-});
+};
 
 ButtonPage.displayName = 'ButtonPage';

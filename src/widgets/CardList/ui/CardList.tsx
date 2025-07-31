@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import { CardTypes, LOCAL_SEARCH, getCards, useGetLocalData } from '@/shared';
 import { Card } from '@/entities';
@@ -6,7 +6,7 @@ import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
 import { Link, useSearchParams } from 'react-router';
 
-export const CardList: FC = memo(() => {
+export const CardList: FC = () => {
   const [cards, setCards] = useState<CardTypes[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [local, setLocal] = useState('');
@@ -21,7 +21,7 @@ export const CardList: FC = memo(() => {
       setIsLoading(true);
       setLocal(val ?? '');
 
-      const page = Number(params.get('page') ?? 1);
+      const page = parseInt(params.get('page') || '1');
       setCurrentPage(page);
 
       const res = await getCards({ search: val ?? '', page });
@@ -85,6 +85,6 @@ export const CardList: FC = memo(() => {
       ))}
     </div>
   );
-});
+};
 
 CardList.displayName = 'CardList';

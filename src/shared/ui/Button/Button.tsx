@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, memo, ReactNode } from 'react';
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import cls from './Button.module.css';
 
 export type ButtonTheme = 'outline' | 'filled';
@@ -10,7 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonTheme;
 }
 
-export const Button: FC<ButtonProps> = memo((props) => {
+export const Button: FC<ButtonProps> = (props) => {
   const {
     variant = 'outline',
     colorBtn = 'normal',
@@ -28,6 +28,6 @@ export const Button: FC<ButtonProps> = memo((props) => {
       {children ?? 'Button'}
     </button>
   );
-});
+};
 
 Button.displayName = 'Button';

@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import cls from './Header.module.css';
 import { Search } from '@/features';
 
-export const Header = memo(() => {
+export const Header = () => {
   return (
     <div className={cls.Header}>
       <div className="wrapper">
@@ -10,6 +9,6 @@ export const Header = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 Header.displayName = 'Header';

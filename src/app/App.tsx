@@ -1,13 +1,12 @@
 import { Providers } from './providers/Providers';
-import { memo } from 'react';
 import { AppRouter } from './routers/appRouter';
 
-export const App = memo(() => {
+export const App = () => {
   return (
     <Providers>
       <AppRouter />
     </Providers>
   );
-});
+};
 
 App.displayName = 'App';

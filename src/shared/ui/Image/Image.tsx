@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
@@ -10,7 +10,7 @@ interface ImageProps {
   className?: string;
 }
 
-export const AppImage: FC<ImageProps> = memo((props) => {
+export const AppImage: FC<ImageProps> = (props) => {
   const { alt, src, height, className } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -50,6 +50,6 @@ export const AppImage: FC<ImageProps> = memo((props) => {
       alt={alt}
     />
   );
-});
+};
 
 AppImage.displayName = 'AppImage';

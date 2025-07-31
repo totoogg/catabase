@@ -1,6 +1,6 @@
 import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
-import { FC, KeyboardEvent, memo, useEffect, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import cls from './Search.module.css';
 
 interface SearchProps {
@@ -11,7 +11,7 @@ interface LocalStorageChangedEvent extends Event {
   newValue: string;
 }
 
-export const Search: FC<SearchProps> = memo((props) => {
+export const Search: FC<SearchProps> = (props) => {
   const [error, setError] = useState('');
   const { setValue, value } = useGetLocalData();
 
@@ -69,6 +69,6 @@ export const Search: FC<SearchProps> = memo((props) => {
       {error && <div className={cls.error}>{error}</div>}
     </div>
   );
-});
+};
 
 Search.displayName = 'Search';

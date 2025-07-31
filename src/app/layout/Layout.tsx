@@ -1,5 +1,5 @@
 import { Footer, Header } from '@/widgets';
-import { FC, memo, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import cls from './Layout.module.css';
 import { useParams } from 'react-router';
 
@@ -7,7 +7,7 @@ interface LayoutProps {
   children?: ReactNode;
 }
 
-export const Layout: FC<LayoutProps> = memo(({ children }) => {
+export const Layout: FC<LayoutProps> = ({ children }) => {
   const { catId } = useParams();
 
   return (
@@ -17,6 +17,6 @@ export const Layout: FC<LayoutProps> = memo(({ children }) => {
       <Footer />
     </div>
   );
-});
+};
 
 Layout.displayName = 'Layout';

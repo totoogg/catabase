@@ -1,9 +1,8 @@
 import { Button } from '@/shared';
-import { memo } from 'react';
 import { useNavigate } from 'react-router';
 import cls from './ErrorPage.module.css';
 
-export const ErrorPage = memo(() => {
+export const ErrorPage = () => {
   const navigate = useNavigate();
 
   const handleHome = () => {
@@ -19,6 +18,6 @@ export const ErrorPage = memo(() => {
       </Button>
     </div>
   );
-});
+};
 
 ErrorPage.displayName = 'ErrorPage';

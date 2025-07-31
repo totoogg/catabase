@@ -1,9 +1,8 @@
 import { CardList, Pagination } from '@/widgets';
-import { memo } from 'react';
 import cls from './Main.module.css';
 import { Outlet } from 'react-router';
 
-export const Main = memo(() => {
+export const Main = () => {
   return (
     <div className={cls.Main}>
       <div className="wrapper">
@@ -15,6 +14,6 @@ export const Main = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 Main.displayName = 'Main';

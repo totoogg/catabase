@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import cls from './CardId.module.css';
 import { Skeleton } from '@/shared';
 
-export const SkeletonLoading = memo(() => {
+export const SkeletonLoading = () => {
   return (
     <div className={cls.content}>
       <Skeleton height={'800px'} width={'100%'} />
@@ -22,6 +21,6 @@ export const SkeletonLoading = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 SkeletonLoading.displayName = 'SkeletonLoading';

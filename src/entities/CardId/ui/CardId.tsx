@@ -16,31 +16,33 @@ export const CardId = () => {
   const [status, setStatus] = useState<number | null>(null);
 
   useEffect(() => {
-    if (catId && !data) {
-      setIsLoading(true);
-      getCardById(catId).then((res) => {
+    async function requestCard() {
+      if (catId && !data) {
+        setIsLoading(true);
+        const res = await getCardById(catId);
         setData(res.res);
         setStatus(res.status);
         setIsLoading(false);
-      });
+      }
     }
+    requestCard();
   }, [catId, data]);
 
   if (isLoading) {
     return <SkeletonLoading />;
   }
 
-  if (status && (status < 0 || status > 399) && typeof data === 'string') {
-    return <div className={cls.error}>{data}</div>;
-  }
-
-  if (!data || typeof data === 'string') {
+  if (!data || !status) {
     return null;
   }
 
-  const { name, imageUrl } = data;
+  if (status >= 400 && status <= 599) {
+    return <div className={cls.error}>{data as string}</div>;
+  }
 
-  const attribs = transformDataForCard(data, true);
+  const { name, imageUrl } = data as CardTypes;
+
+  const attribs = transformDataForCard(data as CardTypes, true);
 
   return (
     <div className={cls.content}>

@@ -1,11 +1,11 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import cls from './CardList.module.css';
 
 interface NotFoundProps {
   text: string;
 }
 
-export const NotFound: FC<NotFoundProps> = memo(({ text }) => {
+export const NotFound: FC<NotFoundProps> = ({ text }) => {
   return (
     <p className={cls.notFound}>
       No cat with the name &quot;
@@ -13,6 +13,6 @@ export const NotFound: FC<NotFoundProps> = memo(({ text }) => {
       &quot; found
     </p>
   );
-});
+};
 
 NotFound.displayName = 'NotFound';

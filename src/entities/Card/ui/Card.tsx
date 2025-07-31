@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import cls from './Card.module.css';
 import { AppImage, CardTypes, transformDataForCard } from '@/shared';
 
@@ -6,7 +6,7 @@ interface CardListProps {
   card: CardTypes;
 }
 
-export const Card: FC<CardListProps> = memo(({ card }) => {
+export const Card: FC<CardListProps> = ({ card }) => {
   const { name, imageUrl } = card;
 
   const attribs = transformDataForCard(card);
@@ -25,6 +25,6 @@ export const Card: FC<CardListProps> = memo(({ card }) => {
       </div>
     </div>
   );
-});
+};
 
 Card.displayName = 'Card';

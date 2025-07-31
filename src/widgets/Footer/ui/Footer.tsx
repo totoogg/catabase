@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import cls from './Footer.module.css';
 import { Link } from 'react-router';
 
-export const Footer = memo(() => {
+export const Footer = () => {
   return (
     <div className={cls.Footer}>
       <div className={['wrapper', cls.wrapper].join(' ')}>
@@ -12,6 +11,6 @@ export const Footer = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 Footer.displayName = 'Footer';

@@ -1,8 +1,7 @@
-import { memo } from 'react';
 import cls from './CardList.module.css';
 import { Skeleton } from '@/shared';
 
-export const SkeletonLoading = memo(() => {
+export const SkeletonLoading = () => {
   return (
     <div className={cls.CardList}>
       {Array(10)
@@ -22,6 +21,6 @@ export const SkeletonLoading = memo(() => {
         ))}
     </div>
   );
-});
+};
 
 SkeletonLoading.displayName = 'SkeletonLoading';

@@ -1,8 +1,8 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import cls from './Pagination.module.css';
 import { ButtonPage } from '@/features';
 
-export const Pagination = memo(() => {
+export const Pagination = () => {
   const [countPages, setCountPages] = useState<number>(0);
 
   useEffect(() => {
@@ -38,6 +38,6 @@ export const Pagination = memo(() => {
         })}
     </div>
   );
-});
+};
 
 Pagination.displayName = 'Pagination';
