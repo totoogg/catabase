@@ -13,6 +13,7 @@
   --errorBtn: #dc2626;
   --skeletonLight: #fdf4f4;
   --skeletonDark: #e5e5e5;
+  --pagination: #0c0537;
 
   --table: 768px;
   --content: 1400px;
@@ -28,7 +29,6 @@ html {
   font-size: 10px;
   scroll-behavior: smooth;
   font-family: 'Inter', sans-serif;
-  background-color: var(--background);
 }
 
 body {

@@ -1,7 +1,7 @@
 import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { MouseEvent } from 'react';
-import { Close } from '@/features';
+import { Close, ToggleTheme } from '@/features';
 import { useNavigate, useSearchParams } from 'react-router';
 
 export const Cat = () => {
@@ -27,7 +27,10 @@ export const Cat = () => {
     <div className={cls.Cat} onClick={handleClick}>
       <div className={cls.wrapper}>
         <div className={cls.content}>
-          <Close className={cls.close} />
+          <div className={cls.btnContainer}>
+            <ToggleTheme />
+            <Close className={cls.close} />
+          </div>
           <CardId />
         </div>
       </div>

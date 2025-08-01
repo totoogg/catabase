@@ -10,3 +10,4 @@ export * from './lib/utils/transformError';
 export * from './lib/hooks/useGetLocalData';
 export * from './lib/store/useAppDispatch';
 export * from './lib/store/useAppSelector';
+export * from './config/theme/themeConfig';
