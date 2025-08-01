@@ -3,6 +3,7 @@ import { CardTypes } from '../../types/cardApiTypes';
 import { setErrorHome } from '../error/errorSlice';
 import { setCount } from '../count/countSlice';
 import { Meta, ResError } from '../../types/queryTypes';
+import { transformError } from '@/shared/lib/utils/transformError';
 
 interface GetCardsProps {
   search?: string;
@@ -29,17 +30,7 @@ export const apiSliceWithCats = apiSlice.injectEndpoints({
         } catch (e) {
           const error = e as ResError;
 
-          if (error.error.status > 499) {
-            dispatch(setErrorHome('Server error'));
-            return;
-          }
-
-          if (error.error.status > 399) {
-            dispatch(setErrorHome('Invalid request'));
-            return;
-          }
-
-          dispatch(setErrorHome('Network error. Could not send request'));
+          dispatch(setErrorHome(transformError(error.error.status)));
         }
       },
     }),

@@ -12,7 +12,8 @@ import {
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
+import { ButtonDetail, Select } from '@/features';
 
 export const CardList: FC = () => {
   const [local, setLocal] = useState('');
@@ -33,7 +34,11 @@ export const CardList: FC = () => {
       setLocal(val ?? '');
 
       setCurrentPage(page);
-      const res = await fetchCats({ search: val ?? '', page });
+
+      const res = await fetchCats({
+        search: val ?? '',
+        page,
+      });
 
       setCards(res.data ?? null);
     };
@@ -52,7 +57,7 @@ export const CardList: FC = () => {
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    if (currentPage !== Number(params.get('page') ?? 1)) {
+    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
       fetchReq(local);
     }
 
@@ -61,8 +66,9 @@ export const CardList: FC = () => {
       setFirstRendering(false);
     }
 
-    return () =>
+    return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
+    };
   }, [
     currentPage,
     fetchCats,
@@ -89,13 +95,13 @@ export const CardList: FC = () => {
   return (
     <div className={cls.CardList}>
       {cards.map((el) => (
-        <Link
-          to={`cats/${el.id}?page=${page}`}
-          key={el.id}
-          className={cls.link}
-        >
-          <Card card={el} />
-        </Link>
+        <Card card={el} key={el.id}>
+          <ButtonDetail
+            className={cls.more}
+            link={`cats/${el.id}?page=${page}`}
+          />
+          <Select data={el} />
+        </Card>
       ))}
     </div>
   );

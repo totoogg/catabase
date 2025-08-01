@@ -4,9 +4,10 @@ import { AppImage, CardTypes, transformDataForCard } from '@/shared';
 
 interface CardListProps {
   card: CardTypes;
+  children?: React.ReactNode;
 }
 
-export const Card: FC<CardListProps> = ({ card }) => {
+export const Card: FC<CardListProps> = ({ card, children }) => {
   const { name, imageUrl } = card;
 
   const attribs = transformDataForCard(card);
@@ -23,6 +24,7 @@ export const Card: FC<CardListProps> = ({ card }) => {
           </p>
         ))}
       </div>
+      <div className={cls.actions}>{children}</div>
     </div>
   );
 };

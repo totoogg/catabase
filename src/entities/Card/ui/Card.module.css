@@ -23,3 +23,28 @@
 .cardImage {
   width: 250px;
 }
+
+.actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: 50px;
+
+}
+
+.more {
+  background-color: var(--backgroundBtnDark);
+  color: var(--card);
+  flex-grow: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add {
+  background-color: var(--cardBorder);
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

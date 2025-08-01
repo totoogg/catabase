@@ -36,3 +36,11 @@
 .link {
   color: var(--header);
 }
+
+.more {
+  width: 100%;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

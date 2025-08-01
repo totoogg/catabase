@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface IError {
+export interface ICount {
   countPage: number;
 }
 
-const initialState: IError = {
+const initialState: ICount = {
   countPage: 0,
 };
 

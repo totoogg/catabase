@@ -1,4 +1,4 @@
-import { apiSlice, CardTypes, ResError } from '@/shared';
+import { apiSlice, CardTypes, ResError, transformError } from '@/shared';
 import { setErrorDetail } from '@/shared/api/error/errorSlice';
 
 export const apiSliceWithCat = apiSlice.injectEndpoints({
@@ -11,17 +11,7 @@ export const apiSliceWithCat = apiSlice.injectEndpoints({
         } catch (e) {
           const error = e as ResError;
 
-          if (error.error.status > 499) {
-            dispatch(setErrorDetail('Server error'));
-            return;
-          }
-
-          if (error.error.status > 399) {
-            dispatch(setErrorDetail('Invalid request'));
-            return;
-          }
-
-          dispatch(setErrorDetail('Network error. Could not send request'));
+          dispatch(setErrorDetail(transformError(error.error.status)));
         }
       },
     }),
