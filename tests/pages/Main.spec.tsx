@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Main } from '../../src/pages/Main/ui/Main';
 import '@testing-library/jest-dom';
+import { renderWithProviders } from '../test-utils';
 
 beforeEach(() => {
   vi.mock('react-router', async () => {
@@ -16,7 +16,7 @@ beforeEach(() => {
 
 describe('Main', () => {
   it('renders Main', () => {
-    const { container } = render(<Main />);
+    const { container } = renderWithProviders(<Main />);
 
     expect(container.querySelector('div[class*="Main"]')).toBeInTheDocument();
     expect(container.querySelectorAll('div[class*="skeleton"]')).toHaveLength(

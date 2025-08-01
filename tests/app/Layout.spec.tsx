@@ -15,7 +15,7 @@ beforeEach(() => {
     return {
       ...mod,
       useParams: () => ({
-        catId: undefined,
+        catId: 1,
       }),
     };
   });
