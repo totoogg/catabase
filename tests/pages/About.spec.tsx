@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import { About } from '../../src/pages/About/ui/About';
+import '@testing-library/jest-dom/vitest';
 
 describe('About', () => {
   it('renders About', () => {

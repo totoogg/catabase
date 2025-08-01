@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ChooseCard } from '../../src/widgets/ChooseCard/ui/ChooseCard';
 import * as sharedModule from '../../src/shared';
 import * as entitiesModule from '../../src/entities';
+import '@testing-library/jest-dom/vitest';
 
 vi.mock('@/features', () => ({
   Download: vi.fn(({ data }) => (

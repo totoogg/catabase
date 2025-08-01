@@ -24,9 +24,9 @@ export const Cat = () => {
   };
 
   return (
-    <div className={cls.Cat} onClick={handleClick}>
-      <div className={cls.wrapper}>
-        <div className={cls.content}>
+    <div className={cls.Cat} data-testid="cat" onClick={handleClick}>
+      <div className={cls.wrapper} data-testid="wrapper">
+        <div className={cls.content} data-testid="content">
           <div className={cls.btnContainer}>
             <ToggleTheme />
             <Close className={cls.close} />

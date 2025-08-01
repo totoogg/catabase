@@ -2,6 +2,7 @@ import { ErrorPage } from '../../src/pages/ErrorPage/ui/ErrorPage';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import '@testing-library/jest-dom/vitest';
 
 const mockNavigate = vi.fn();
 

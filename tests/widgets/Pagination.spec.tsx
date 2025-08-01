@@ -4,6 +4,7 @@ import { Pagination } from '../../src/widgets/Pagination/ui/Pagination';
 import * as sharedModule from '../../src/shared';
 import * as featuresModule from '../../src/features';
 import { renderWithProviders } from '../test-utils';
+import '@testing-library/jest-dom/vitest';
 
 vi.mock('@/features', async (importOriginal) => {
   const mod = await importOriginal<typeof featuresModule>();

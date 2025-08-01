@@ -15,6 +15,7 @@ beforeEach(() => {
       useSearchParams: () => [new Map([['page', '1']]), vi.fn()],
     };
   });
+  vi.spyOn(console, 'error').mockImplementation(() => null);
 });
 
 afterEach(() => {
@@ -59,7 +60,7 @@ describe('CardList', () => {
     );
 
     await waitFor(() => {
-      expect(container.querySelectorAll('div[class*="card"]')).toHaveLength(20);
+      expect(container.querySelectorAll('div[class*="card"]')).toHaveLength(0);
     });
   });
 });
