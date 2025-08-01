@@ -9,6 +9,7 @@ import {
 } from '../../src/shared';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { renderWithProviders } from '../test-utils';
+import '@testing-library/jest-dom';
 
 vi.mock('@/shared', async (importOriginal) => {
   const mod = await importOriginal<typeof import('../../src/shared')>();
