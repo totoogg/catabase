@@ -1,5 +1,5 @@
 .Layout {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -21,8 +21,8 @@
   --cardBorder: #e5e5e5;
   --svgColor: #fdf4f4;
   --overlay: rgba(0, 0, 0, 0.5);
-  --backgroundBtnLight: #0c0537;
-  --backgroundBtnDark: #efefef;
+  --backgroundBtnLight: #2c236b;
+  --backgroundBtnDark: #decece;
   --colorBtnLight: #e5e5e5;
   --skeletonLight: #5d6976;
   --skeletonDark: #3d4f64;
