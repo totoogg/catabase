@@ -8,23 +8,22 @@
 
 .showCatById {
   overflow-y: hidden;
-  background: var(--overlay);
   position: relative;
   height: 100vh;
 }
 
-.moon {
-  --background: #0c0537;
-  --header: #e5e5e5;
-  --footer: #5d6976;
-  --card: #000000;
-  --cardBorder: #e5e5e5;
-  --svgColor: #fdf4f4;
-  --overlay: rgba(0, 0, 0, 0.5);
-  --backgroundBtnLight: #2c236b;
-  --backgroundBtnDark: #decece;
-  --colorBtnLight: #e5e5e5;
-  --skeletonLight: #5d6976;
-  --skeletonDark: #3d4f64;
-  --pagination: #3d4f64;
+.dark {
+  --background: var(--blue-100);
+  --header: var(--gray-10);
+  --footer: var(--gray-40);
+  --card: var(--black);
+  --cardBorder: var(--gray-10);
+  --svgColor: var(--white-95);
+  --overlay: var(--overlay-dark);
+  --backgroundBtnLight: var(--blue-80);
+  --backgroundBtnDark: var(--beige);
+  --colorBtnLight: var(--gray-10);
+  --skeletonLight: var(--gray-40);
+  --skeletonDark: var(--gray-70);
+  --pagination: var(--gray-70);
 }

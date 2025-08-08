@@ -1,19 +1,21 @@
+@import './colors.module.css';
+
 :root {
-  --background: #fcfcfc;
-  --header: #0c0537;
-  --footer: #3d4f64;
-  --card: #ffffff;
-  --svgColor: #000000;
-  --cardBorder: #e5e5e5;
-  --cardShadow: rgba(255, 201, 79, 1);
-  --overlay: rgba(61, 79, 100, 0.5);
-  --backgroundBtnLight: #efefef;
-  --backgroundBtnDark: #3d4f64;
-  --colorBtnLight: #535353;
-  --errorBtn: #dc2626;
-  --skeletonLight: #fdf4f4;
-  --skeletonDark: #e5e5e5;
-  --pagination: #0c0537;
+  --card: var(--white-10);
+  --background: var(--gray-30);
+  --overlay: var(--overlay-light);
+  --backgroundBtnLight: var(--gray-20);
+  --colorBtnLight: var(--gray-80);
+  --cardShadow: var(--yellow-50);
+  --errorBtn: var(--red-50);
+  --svgColor: var(--black);
+  --header: var(--blue-100);
+  --footer: var(--gray-70);
+  --cardBorder: var(--gray-10);
+  --backgroundBtnDark: var(--gray-70);
+  --skeletonLight: var(--white-95);
+  --skeletonDark: var(--gray-10);
+  --pagination: var(--blue-100);
 
   --table: 768px;
   --content: 1400px;

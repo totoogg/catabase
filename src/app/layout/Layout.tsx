@@ -15,7 +15,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div
       className={[
-        theme !== 'light' ? cls.moon : '',
+        theme !== 'light' ? cls.dark : '',
         cls.Layout,
         catId ? cls.showCatById : '',
       ].join(' ')}
