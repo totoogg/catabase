@@ -29,8 +29,16 @@
   font-size: 3rem;
   overflow-y: auto;
   cursor: default;
+  height: 100vh
 }
 
 .close {
   margin-left: auto;
+}
+
+.btnContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

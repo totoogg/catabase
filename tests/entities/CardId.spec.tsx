@@ -1,22 +1,26 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { MemoryRouter } from 'react-router';
-import { CardId } from '../../src/entities/CardId/ui/CardId';
-import * as api from '../../src/shared/api/api';
+import '@testing-library/jest-dom/vitest';
+import { screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { CardId } from '../../src/entities';
+import {
+  selectErrorDetail,
+  selectIsLoader,
+  useAppSelector,
+} from '../../src/shared';
+import { MemoryRouter, Route, Routes } from 'react-router';
+import { renderWithProviders } from '../test-utils';
 import '@testing-library/jest-dom';
 
-beforeEach(() => {
-  vi.spyOn(console, 'error').mockImplementation(() => null);
-  vi.mock('react-router', async () => {
-    const mod =
-      await vi.importActual<typeof import('react-router')>('react-router');
-    return {
-      ...mod,
-      useParams: () => ({
-        catId: '1',
-      }),
-    };
-  });
+vi.mock('@/shared', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('../../src/shared')>();
+  return {
+    ...mod,
+    useAppSelector: vi.fn(),
+    transformDataForCard: vi.fn((data) => [
+      { name: 'Breed', value: data.breed },
+      { name: 'Age', value: data.age },
+    ]),
+  };
 });
 
 afterEach(() => {
@@ -24,75 +28,65 @@ afterEach(() => {
 });
 
 describe('CardId', () => {
-  it('shows skeleton', () => {
-    vi.spyOn(api, 'getCardById').mockResolvedValue({
-      response: {} as Response,
-      status: 200,
-      res: [],
+  it('show skeleton', () => {
+    vi.mocked(useAppSelector).mockImplementation((selector) => {
+      if (selector === selectIsLoader) return true;
+      return undefined;
     });
 
-    const { container } = render(
-      <MemoryRouter>
-        <CardId />
+    const { container } = renderWithProviders(
+      <MemoryRouter initialEntries={[`/cats/${1}`]}>
+        <Routes>
+          <Route path="/cats/:catId" element={<CardId />} />
+        </Routes>
       </MemoryRouter>
     );
-
-    const skeletons = container.querySelectorAll('div[class*="skeleton"]');
-
-    expect(skeletons).toHaveLength(13);
+    expect(container.querySelector('div[class*="skeleton')).toBeInTheDocument();
   });
 
-  it('shows error', async () => {
-    vi.spyOn(api, 'getCardById').mockResolvedValue({
-      response: {} as Response,
-      res: 'Server error',
-      status: 500,
+  it('show error', () => {
+    vi.mocked(useAppSelector).mockImplementation((selector) => {
+      if (selector === selectErrorDetail) return 'Test Error';
+      return undefined;
     });
 
-    render(
-      <MemoryRouter>
-        <CardId />
+    renderWithProviders(
+      <MemoryRouter initialEntries={[`/cats/${1}`]}>
+        <Routes>
+          <Route path="/cats/:catId" element={<CardId />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Test Error')).toBeInTheDocument();
+  });
+
+  it('empty data', async () => {
+    vi.mocked(useAppSelector).mockReturnValue(false);
+    const { container } = renderWithProviders(
+      <MemoryRouter initialEntries={[`/cats/${2}`]}>
+        <Routes>
+          <Route path="/cats/:catId" element={<CardId />} />
+        </Routes>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Server error')).toBeInTheDocument();
+      expect(container).toBeEmptyDOMElement();
     });
   });
 
-  it('renders null', async () => {
-    vi.spyOn(api, 'getCardById').mockResolvedValue({
-      response: {} as Response,
-      res: null,
-      status: 404,
-    });
-
-    const { container } = render(
-      <MemoryRouter>
-        <CardId />
+  it('show parameter catID', async () => {
+    vi.mocked(useAppSelector).mockReturnValue(false);
+    renderWithProviders(
+      <MemoryRouter initialEntries={[`/cats/${2}`]}>
+        <Routes>
+          <Route path="/cats/:catId" element={<CardId />} />
+        </Routes>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(container.firstChild).toBeNull();
-    });
-  });
-
-  it('data error', async () => {
-    vi.spyOn(api, 'getCardById').mockResolvedValue({
-      response: {} as Response,
-      res: 'Invalid ID',
-      status: 400,
-    });
-
-    render(
-      <MemoryRouter>
-        <CardId />
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText('Invalid ID')).toBeInTheDocument();
+      expect(screen.queryByAltText('Test Cat')).not.toBeInTheDocument();
     });
   });
 });

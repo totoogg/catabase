@@ -1,73 +1,98 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { MemoryRouter } from 'react-router';
-import { Cat } from '../../src/pages/Cat/ui/Cat';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { Cat } from '../../src/pages/Cat';
+import { useNavigate, useSearchParams } from 'react-router';
+import '@testing-library/jest-dom/vitest';
+
+vi.mock('react-router', () => ({
+  useNavigate: vi.fn(),
+  useSearchParams: vi.fn(),
+}));
+
+vi.mock('@/entities', () => ({
+  CardId: vi.fn(() => <div data-testid="card-id" />),
+  Close: vi.fn(({ className }) => (
+    <div className={className} data-testid="close" />
+  )),
+  ToggleTheme: vi.fn(() => <div data-testid="toggle-theme" />),
+}));
 
 const mockNavigate = vi.fn();
+const mockSearchParams = new URLSearchParams('?page=2');
 
 beforeEach(() => {
-  vi.mock('@/features', () => ({
-    Close: ({ className }: { className: string }) => (
-      <button className={`${className} close`} data-testid="close-button" />
-    ),
-  }));
-  vi.mock('@/entities', () => ({
-    CardId: () => <div data-testid="card-id" />,
-  }));
-  vi.mock('react-router', async () => {
-    const mod =
-      await vi.importActual<typeof import('react-router')>('react-router');
-    return {
-      ...mod,
-      useNavigate: () => mockNavigate,
-    };
-  });
-});
-
-afterEach(() => {
-  mockNavigate.mockReset();
+  vi.clearAllMocks();
+  vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+  vi.mocked(useSearchParams).mockReturnValue([mockSearchParams, vi.fn()]);
 });
 
 describe('Cat', () => {
-  it('render Cat', () => {
-    render(
-      <MemoryRouter>
-        <Cat />
-      </MemoryRouter>
-    );
+  it('render', () => {
+    const { container } = render(<Cat />);
 
-    expect(screen.getByTestId('close-button')).toBeInTheDocument();
     expect(screen.getByTestId('card-id')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '' })).toHaveClass('close');
+    expect(
+      container.querySelector('button[class*="close"]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button[class*="toggle"]')
+    ).toBeInTheDocument();
   });
 
-  it('wrapper click', () => {
-    const { container } = render(
-      <MemoryRouter>
-        <Cat />
-      </MemoryRouter>
-    );
+  it('click wrapper', () => {
+    render(<Cat />);
 
-    const wrapper = container.querySelector(
-      'div[class*="wrapper"]'
-    ) as HTMLElement;
-    fireEvent.click(wrapper);
+    fireEvent.click(screen.getByTestId('wrapper'));
 
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=2');
   });
 
-  it('close button click', () => {
-    render(
-      <MemoryRouter>
-        <Cat />
-      </MemoryRouter>
+  it('click close', () => {
+    const { container } = render(<Cat />);
+
+    fireEvent.click(
+      container.querySelector('button[class*="close"]') as Element
     );
 
-    const closeButton = screen.getByTestId('close-button');
-    fireEvent.click(closeButton);
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=2');
+  });
 
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+  it('click component', () => {
+    render(<Cat />);
+
+    const catElement = screen.getByTestId('cat');
+    fireEvent.click(catElement);
+
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=2');
+  });
+
+  it('click content', () => {
+    render(<Cat />);
+
+    fireEvent.click(screen.getByTestId('content'));
+
+    expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
+  it('use page from parameter', () => {
+    const customSearchParams = new URLSearchParams('?page=5');
+    vi.mocked(useSearchParams).mockReturnValue([customSearchParams, vi.fn()]);
+
+    render(<Cat />);
+
+    fireEvent.click(screen.getByTestId('wrapper'));
+
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=5');
+  });
+
+  it('if parameter absent', () => {
+    const customSearchParams = new URLSearchParams('');
+    vi.mocked(useSearchParams).mockReturnValue([customSearchParams, vi.fn()]);
+
+    render(<Cat />);
+
+    fireEvent.click(screen.getByTestId('wrapper'));
+
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=1');
   });
 });

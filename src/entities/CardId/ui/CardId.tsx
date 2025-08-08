@@ -1,43 +1,33 @@
 import {
   AppImage,
   CardTypes,
-  getCardById,
+  selectErrorDetail,
+  selectIsLoader,
   transformDataForCard,
+  useAppSelector,
 } from '@/shared';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import cls from './CardId.module.css';
 import { SkeletonLoading } from './SkeletonLoading';
+import { useGetCatByIdQuery } from '../model/slice/apiSliceWithCatById';
 
 export const CardId = () => {
   const { catId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<CardTypes | null | string>(null);
-  const [status, setStatus] = useState<number | null>(null);
 
-  useEffect(() => {
-    async function requestCard() {
-      if (catId && !data) {
-        setIsLoading(true);
-        const res = await getCardById(catId);
-        setData(res.res);
-        setStatus(res.status);
-        setIsLoading(false);
-      }
-    }
-    requestCard();
-  }, [catId, data]);
+  const { data } = useGetCatByIdQuery(catId || '');
+  const isLoading = useAppSelector(selectIsLoader);
+  const error = useAppSelector(selectErrorDetail);
 
   if (isLoading) {
     return <SkeletonLoading />;
   }
 
-  if (!data || !status) {
-    return null;
+  if (error) {
+    return <div className={cls.error}>{error}</div>;
   }
 
-  if (status >= 400 && status <= 599) {
-    return <div className={cls.error}>{data as string}</div>;
+  if (!data) {
+    return null;
   }
 
   const { name, imageUrl } = data as CardTypes;

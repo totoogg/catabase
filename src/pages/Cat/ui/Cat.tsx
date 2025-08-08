@@ -1,11 +1,15 @@
 import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { MouseEvent } from 'react';
-import { Close } from '@/features';
-import { useNavigate } from 'react-router';
+import { Close, ToggleTheme } from '@/features';
+import { useNavigate, useSearchParams } from 'react-router';
 
 export const Cat = () => {
+  const [params] = useSearchParams();
+
   const navigate = useNavigate();
+
+  const page = parseInt(params.get('page') || '1');
 
   const handleClick = (e: MouseEvent) => {
     const classes = (e.target as HTMLElement).className;
@@ -15,15 +19,18 @@ export const Cat = () => {
       classes.includes('line') ||
       classes.includes('Cat')
     ) {
-      navigate(`/`);
+      navigate(`/?page=${page}`);
     }
   };
 
   return (
-    <div className={cls.Cat} onClick={handleClick}>
-      <div className={cls.wrapper}>
-        <div className={cls.content}>
-          <Close className={cls.close} />
+    <div className={cls.Cat} data-testid="cat" onClick={handleClick}>
+      <div className={cls.wrapper} data-testid="wrapper">
+        <div className={cls.content} data-testid="content">
+          <div className={cls.btnContainer}>
+            <ToggleTheme />
+            <Close className={cls.close} />
+          </div>
           <CardId />
         </div>
       </div>

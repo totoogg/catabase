@@ -1,40 +1,46 @@
 import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
-import { CardTypes, LOCAL_SEARCH, getCards, useGetLocalData } from '@/shared';
+import {
+  CardTypes,
+  LOCAL_SEARCH,
+  selectErrorHome,
+  selectIsLoader,
+  useAppSelector,
+  useGetLocalData,
+  useLazyGetCatsQuery,
+} from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
+import { ButtonDetail, Select } from '@/features';
 
 export const CardList: FC = () => {
-  const [cards, setCards] = useState<CardTypes[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [local, setLocal] = useState('');
-  const [error, setError] = useState('');
   const [params, setParams] = useSearchParams();
   const [firstRendering, setFirstRendering] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
 
+  const [fetchCats] = useLazyGetCatsQuery();
+  const isLoading = useAppSelector(selectIsLoader);
+  const error = useAppSelector(selectErrorHome);
+  const [cards, setCards] = useState<CardTypes[] | null>(null);
+
+  const page = parseInt(params.get('page') || '1');
+
   useEffect(() => {
     const fetchReq = async (val?: string) => {
-      setIsLoading(true);
       setLocal(val ?? '');
 
-      const page = parseInt(params.get('page') || '1');
       setCurrentPage(page);
 
-      const res = await getCards({ search: val ?? '', page });
+      const res = await fetchCats({
+        search: val ?? '',
+        page,
+      });
 
-      if (res.status > 0 && res.status < 400) {
-        setCards(res.res);
-        setIsLoading(false);
-        setError('');
-      } else {
-        setCards(null);
-        setIsLoading(false);
-        setError(res.res);
-      }
+      setCards(res.data ?? null);
     };
 
     const changeLocalStorage = (event: Event) => {
@@ -51,7 +57,7 @@ export const CardList: FC = () => {
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    if (currentPage !== Number(params.get('page') ?? 1)) {
+    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
       fetchReq(local);
     }
 
@@ -60,9 +66,19 @@ export const CardList: FC = () => {
       setFirstRendering(false);
     }
 
-    return () =>
+    return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
-  }, [currentPage, firstRendering, local, localValue, params, setParams]);
+    };
+  }, [
+    currentPage,
+    fetchCats,
+    firstRendering,
+    local,
+    localValue,
+    page,
+    params,
+    setParams,
+  ]);
 
   if (error) {
     return <p className={cls.error}>{error}</p>;
@@ -79,9 +95,13 @@ export const CardList: FC = () => {
   return (
     <div className={cls.CardList}>
       {cards.map((el) => (
-        <Link to={`cats/${el.id}`} key={el.id} className={cls.link}>
-          <Card card={el} />
-        </Link>
+        <Card card={el} key={el.id}>
+          <ButtonDetail
+            className={cls.more}
+            link={`cats/${el.id}?page=${page}`}
+          />
+          <Select data={el} />
+        </Card>
       ))}
     </div>
   );

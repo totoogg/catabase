@@ -1,76 +1,55 @@
-import { render, screen, act, waitFor } from '@testing-library/react';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { Pagination } from '../../src/widgets/Pagination/ui/Pagination';
-import '@testing-library/jest-dom';
+import * as sharedModule from '../../src/shared';
+import * as featuresModule from '../../src/features';
+import { renderWithProviders } from '../test-utils';
+import '@testing-library/jest-dom/vitest';
 
-interface TotalPagesEvent extends Event {
-  pages: number;
-}
-
-vi.mock('@/features', () => ({
-  ButtonPage: ({ index }: { index: number }) => (
-    <button data-testid={`page-button-${index}`}>{index}</button>
-  ),
-}));
+vi.mock('@/features', async (importOriginal) => {
+  const mod = await importOriginal<typeof featuresModule>();
+  return {
+    ...mod,
+    ButtonPage: vi.fn(({ index }) => <button>{index}</button>),
+  };
+});
 
 beforeEach(() => {
   vi.clearAllMocks();
-  localStorage.clear();
 });
 
 afterEach(() => {
   vi.spyOn(console, 'error').mockImplementation(() => null);
-
-  window.dispatchEvent(new Event('totalPages'));
 });
 
 describe('Pagination', () => {
-  it('does not render', () => {
-    const { container } = render(<Pagination />);
+  it('do not render', () => {
+    vi.spyOn(sharedModule, 'useAppSelector').mockReturnValue(0);
 
-    expect(container.firstChild).toBeNull();
+    const { container } = renderWithProviders(<Pagination />);
+
+    expect(container).toBeEmptyDOMElement();
+
+    vi.spyOn(sharedModule, 'useAppSelector').mockReturnValue(1);
+
+    renderWithProviders(<Pagination />, { container });
+
+    expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders 3 pages', async () => {
-    render(<Pagination />);
+  it('correct render', () => {
+    const count = 5;
+    vi.spyOn(sharedModule, 'useAppSelector').mockReturnValue(count);
 
-    act(() => {
-      const event = new Event('totalPages') as TotalPagesEvent;
-      event.pages = 3;
-      window.dispatchEvent(event);
-    });
+    renderWithProviders(<Pagination />);
 
-    await waitFor(() => {
-      expect(screen.getByTestId('page-button-1')).toBeInTheDocument();
-      expect(screen.getByTestId('page-button-2')).toBeInTheDocument();
-      expect(screen.getByTestId('page-button-3')).toBeInTheDocument();
-    });
-    expect(screen.queryByTestId('page-button-4')).not.toBeInTheDocument();
-  });
+    const buttons = screen.getAllByRole('button');
 
-  it('updates page count when new search', async () => {
-    render(<Pagination />);
+    expect(buttons).toHaveLength(count);
+    expect(featuresModule.ButtonPage).toHaveBeenCalledTimes(count);
 
-    act(() => {
-      const event = new Event('totalPages') as TotalPagesEvent;
-      event.pages = 2;
-      window.dispatchEvent(event);
-    });
-
-    expect(screen.getByTestId('page-button-1')).toBeInTheDocument();
-    expect(screen.getByTestId('page-button-2')).toBeInTheDocument();
-
-    act(() => {
-      const event = new Event('totalPages') as TotalPagesEvent;
-      event.pages = 4;
-      window.dispatchEvent(event);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByTestId('page-button-1')).toBeInTheDocument();
-      expect(screen.getByTestId('page-button-2')).toBeInTheDocument();
-      expect(screen.getByTestId('page-button-3')).toBeInTheDocument();
-      expect(screen.getByTestId('page-button-4')).toBeInTheDocument();
+    buttons.forEach((button, index) => {
+      expect(button).toHaveTextContent((index + 1).toString());
     });
   });
 });

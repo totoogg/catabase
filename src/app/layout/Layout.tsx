@@ -1,7 +1,8 @@
 import { Footer, Header } from '@/widgets';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useContext } from 'react';
 import cls from './Layout.module.css';
 import { useParams } from 'react-router';
+import { ThemeContext } from '@/shared';
 
 interface LayoutProps {
   children?: ReactNode;
@@ -9,9 +10,16 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
   const { catId } = useParams();
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={[cls.Layout, catId ? cls.showCatById : ''].join(' ')}>
+    <div
+      className={[
+        theme !== 'light' ? cls.dark : '',
+        cls.Layout,
+        catId ? cls.showCatById : '',
+      ].join(' ')}
+    >
       <Header />
       {children}
       <Footer />
