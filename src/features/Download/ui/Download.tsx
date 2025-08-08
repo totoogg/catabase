@@ -17,42 +17,39 @@ const CSV_HEADERS = [
 ].join(',');
 
 export const Download: FC<IProps> = ({ data }) => {
-  const download = useCallback(
-    (selectedItems: CardTypes[]) => {
-      const csvContent = [
-        CSV_HEADERS,
-        ...selectedItems.map((item) =>
-          [
-            item.name,
-            item.breed,
-            item.age,
-            item.weight,
-            item.dailyFood,
-            item.lastVetVisit,
-            item.adoptionDate,
-            item.medicalRecords.join(', '),
-          ].join(',')
-        ),
-      ].join('\n');
+  const download = useCallback((selectedItems: CardTypes[]) => {
+    const csvContent = [
+      CSV_HEADERS,
+      ...selectedItems.map((item) =>
+        [
+          item.name,
+          item.breed,
+          item.age,
+          item.weight,
+          item.dailyFood,
+          item.lastVetVisit,
+          item.adoptionDate,
+          item.medicalRecords.join(', '),
+        ].join(',')
+      ),
+    ].join('\n');
 
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-      const fileName =
-        selectedItems.length === 1
-          ? `${selectedItems.length}_item.csv`
-          : `${selectedItems.length}_items.csv`;
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    const fileName =
+      selectedItems.length === 1
+        ? `${selectedItems.length}_item.csv`
+        : `${selectedItems.length}_items.csv`;
 
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
 
-      link.href = url;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    },
-    [data]
-  );
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, []);
 
   return (
     <Button variant="filled" colorBtn="success" onClick={() => download(data)}>
