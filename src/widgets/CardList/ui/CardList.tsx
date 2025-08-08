@@ -1,13 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import {
-  CardTypes,
   LOCAL_SEARCH,
-  selectErrorHome,
-  selectIsLoader,
-  useAppSelector,
+  ResError,
+  transformError,
+  useGetCatsQuery,
   useGetLocalData,
-  useLazyGetCatsQuery,
 } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
@@ -22,10 +20,13 @@ export const CardList: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
 
-  const [fetchCats] = useLazyGetCatsQuery();
-  const isLoading = useAppSelector(selectIsLoader);
-  const error = useAppSelector(selectErrorHome);
-  const [cards, setCards] = useState<CardTypes[] | null>(null);
+  const { isFetching, isError, data, error } = useGetCatsQuery(
+    {
+      search: local ?? '',
+      page: currentPage,
+    },
+    { skip: firstRendering }
+  );
 
   const page = parseInt(params.get('page') || '1');
 
@@ -34,13 +35,6 @@ export const CardList: FC = () => {
       setLocal(val ?? '');
 
       setCurrentPage(page);
-
-      const res = await fetchCats({
-        search: val ?? '',
-        page,
-      });
-
-      setCards(res.data ?? null);
     };
 
     const changeLocalStorage = (event: Event) => {
@@ -69,32 +63,27 @@ export const CardList: FC = () => {
     return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
     };
-  }, [
-    currentPage,
-    fetchCats,
-    firstRendering,
-    local,
-    localValue,
-    page,
-    params,
-    setParams,
-  ]);
+  }, [currentPage, firstRendering, local, localValue, page, params, setParams]);
 
-  if (error) {
-    return <p className={cls.error}>{error}</p>;
+  if (isError) {
+    return (
+      <p className={cls.error}>
+        {transformError((error as ResError).status ?? '1')}
+      </p>
+    );
   }
 
-  if (isLoading || !cards) {
+  if (isFetching || !data) {
     return <SkeletonLoading />;
   }
 
-  if (cards.length === 0) {
+  if (data.length === 0) {
     return <NotFound text={local} />;
   }
 
   return (
     <div className={cls.CardList}>
-      {cards.map((el) => (
+      {data.map((el) => (
         <Card card={el} key={el.id}>
           <ButtonDetail
             className={cls.more}

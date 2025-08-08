@@ -1,9 +1,11 @@
-export function transformError(status: number) {
-  if (status > 499) {
+export function transformError(status: string) {
+  const statusNumber = Number(status);
+
+  if (statusNumber > 499) {
     return 'Server error';
   }
 
-  if (status > 399) {
+  if (statusNumber > 399) {
     return 'Invalid request';
   }
 
