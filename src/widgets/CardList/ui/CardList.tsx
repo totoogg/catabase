@@ -31,7 +31,7 @@ export const CardList: FC = () => {
   const page = parseInt(params.get('page') || '1');
 
   useEffect(() => {
-    const fetchReq = async (val?: string) => {
+    const fetchReq = (val?: string) => {
       setLocal(val ?? '');
 
       setCurrentPage(page);
