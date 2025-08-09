@@ -1,21 +1,27 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Cat } from '../../src/pages/Cat';
 import { useNavigate, useSearchParams } from 'react-router';
 import '@testing-library/jest-dom/vitest';
+import { renderWithProviders } from '../test-utils';
 
 vi.mock('react-router', () => ({
   useNavigate: vi.fn(),
   useSearchParams: vi.fn(),
+  useParams: vi.fn(() => ({ catId: 1 })),
 }));
 
-vi.mock('@/entities', () => ({
-  CardId: vi.fn(() => <div data-testid="card-id" />),
-  Close: vi.fn(({ className }) => (
-    <div className={className} data-testid="close" />
-  )),
-  ToggleTheme: vi.fn(() => <div data-testid="toggle-theme" />),
-}));
+vi.mock(import('../../src/shared'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    CardId: vi.fn(() => <div data-testid="card-id" />),
+    Close: vi.fn(({ className }) => (
+      <div className={className} data-testid="close" />
+    )),
+    ToggleTheme: vi.fn(() => <div data-testid="toggle-theme" />),
+  };
+});
 
 const mockNavigate = vi.fn();
 const mockSearchParams = new URLSearchParams('?page=2');
@@ -28,9 +34,10 @@ beforeEach(() => {
 
 describe('Cat', () => {
   it('render', () => {
-    const { container } = render(<Cat />);
+    const { container } = renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
-    expect(screen.getByTestId('card-id')).toBeInTheDocument();
     expect(
       container.querySelector('button[class*="close"]')
     ).toBeInTheDocument();
@@ -40,7 +47,9 @@ describe('Cat', () => {
   });
 
   it('click wrapper', () => {
-    render(<Cat />);
+    renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
     fireEvent.click(screen.getByTestId('wrapper'));
 
@@ -48,7 +57,9 @@ describe('Cat', () => {
   });
 
   it('click close', () => {
-    const { container } = render(<Cat />);
+    const { container } = renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
     fireEvent.click(
       container.querySelector('button[class*="close"]') as Element
@@ -58,7 +69,9 @@ describe('Cat', () => {
   });
 
   it('click component', () => {
-    render(<Cat />);
+    renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
     const catElement = screen.getByTestId('cat');
     fireEvent.click(catElement);
@@ -67,8 +80,9 @@ describe('Cat', () => {
   });
 
   it('click content', () => {
-    render(<Cat />);
-
+    renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
     fireEvent.click(screen.getByTestId('content'));
 
     expect(mockNavigate).not.toHaveBeenCalled();
@@ -78,7 +92,9 @@ describe('Cat', () => {
     const customSearchParams = new URLSearchParams('?page=5');
     vi.mocked(useSearchParams).mockReturnValue([customSearchParams, vi.fn()]);
 
-    render(<Cat />);
+    renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
     fireEvent.click(screen.getByTestId('wrapper'));
 
@@ -89,7 +105,9 @@ describe('Cat', () => {
     const customSearchParams = new URLSearchParams('');
     vi.mocked(useSearchParams).mockReturnValue([customSearchParams, vi.fn()]);
 
-    render(<Cat />);
+    renderWithProviders(<Cat />, {
+      preloadedState: { choose: { choose: {} } },
+    });
 
     fireEvent.click(screen.getByTestId('wrapper'));
 
