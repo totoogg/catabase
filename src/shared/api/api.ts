@@ -5,4 +5,5 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: URL }),
   endpoints: () => ({}),
+  keepUnusedDataFor: 30,
 });
