@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Layout } from '../../src/app/layout/Layout';
+import { Layout } from '../../src/_app/layout/Layout';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { renderWithProviders } from '../test-utils';

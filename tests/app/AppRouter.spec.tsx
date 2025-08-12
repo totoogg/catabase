@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { AppRouter } from '../../src/app/routers/AppRouter';
+import { AppRouter } from '../../src/_app/routers/AppRouter';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import '@testing-library/jest-dom';
 

@@ -7,6 +7,7 @@ export const School = () => {
         href="https://rs.school/react/"
         target="_blank"
         rel="noopener noreferrer"
+        className={cls.link}
       >
         <div className={cls.logo}></div>
         <div>

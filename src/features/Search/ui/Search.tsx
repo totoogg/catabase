@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { FC, KeyboardEvent, useEffect, useState } from 'react';

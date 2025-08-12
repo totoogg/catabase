@@ -3,6 +3,7 @@ import { CardTypes, useAppDispatch, useAppSelector } from '@/shared';
 import { FC } from 'react';
 import Heart from '@/shared/assets/icons/heart.svg';
 import cls from './Select.module.css';
+import Image from 'next/image';
 
 interface SelectProps {
   data: CardTypes;
@@ -27,7 +28,13 @@ export const Select: FC<SelectProps> = ({ data }) => {
       className={[cls.select, select ? cls.selected : ''].join(' ')}
       onClick={handleSelect}
     >
-      <Heart />
+      <Image
+        className={cls.icon}
+        src={Heart}
+        alt="choose"
+        width={40}
+        height={40}
+      />
     </div>
   );
 };

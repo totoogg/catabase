@@ -1,6 +1,6 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Cat } from '../../src/pages/Cat';
+import { Cat } from '../../src/_pages/Cat';
 import { useNavigate, useSearchParams } from 'react-router';
 import '@testing-library/jest-dom/vitest';
 import { renderWithProviders } from '../test-utils';

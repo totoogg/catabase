@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { Providers } from '../../src/app/providers/Providers';
-import { Main } from '../../src/pages/Main/ui/Main';
+import { Providers } from '../../src/_app/providers/Providers';
+import { Main } from '../../src/_pages/Main/ui/Main';
 import '@testing-library/jest-dom';
 
 beforeEach(() => {

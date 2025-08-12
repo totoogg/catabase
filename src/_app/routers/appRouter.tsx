@@ -5,7 +5,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router';
-import { About, Cat, ErrorPage, ErrorPageBoundary, Main } from '@/pages';
+import { About, Cat, ErrorPage, ErrorPageBoundary, Main } from '@/_pages';
 import { Layout } from '../layout/Layout';
 import { ErrorBoundary } from '@/shared';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { MouseEvent } from 'react';

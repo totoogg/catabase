@@ -37,6 +37,7 @@ export default tseslint.config(
       ...react.configs['jsx-runtime'].rules,
       'react/prop-types': 'off',
       '@typescript-eslint/no-dynamic-delete': 'off',
+      'react-refresh/only-export-components': 'off',
     },
     settings: {
       react: {

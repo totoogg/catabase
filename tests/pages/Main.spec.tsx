@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Main } from '../../src/pages/Main/ui/Main';
+import { Main } from '../../src/_pages/Main/ui/Main';
 import '@testing-library/jest-dom';
 import { renderWithProviders } from '../test-utils';
 

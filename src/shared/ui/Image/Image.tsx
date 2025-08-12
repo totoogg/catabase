@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useEffect, useState } from 'react';
 import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';

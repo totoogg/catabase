@@ -13,7 +13,6 @@ export const setupStore = (preloadedState?: Partial<RootState>) => {
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(apiSlice.middleware),
-    devTools: import.meta.env.VITE_DEV_MODE !== 'production',
     preloadedState,
   });
 };

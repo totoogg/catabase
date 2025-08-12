@@ -1,3 +1,5 @@
+'use client';
+
 import { ThemeContext } from '@/shared';
 import { FC, useMemo, useState } from 'react';
 

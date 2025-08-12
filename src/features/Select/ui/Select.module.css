@@ -4,21 +4,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  stroke: red;
-  fill: rgba(0, 0, 0, 0);
-  transition: fill 0.3s ease;
   cursor: pointer;
 }
 
-.select:hover {
-  fill: red;
+.select:hover .icon {
+  filter: brightness(0) saturate(0) invert(50%) sepia(100%) hue-rotate(100deg);
+  opacity: 1;
 }
 
-.selected {
-  fill: red;
-  transition: fill 0.3s ease;
+.selected:hover .icon {
+  filter: brightness(0) saturate(0) invert(50%) sepia(100%) hue-rotate(200deg);
+  opacity: 1;
 }
 
-.selected:hover {
-  fill: rgba(0, 0, 0, 0);
+.selected .icon {
+  filter: brightness(0) saturate(0) invert(50%) sepia(100%) hue-rotate(0deg);
+  opacity: 1;
+}
+
+.icon {
+  filter: brightness(0) saturate(0) invert(50%) sepia(100%) hue-rotate(0deg);
+  opacity: 0.3;
+  transition: all 0.3s ease;
 }

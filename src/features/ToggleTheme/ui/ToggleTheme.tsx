@@ -1,8 +1,11 @@
+'use client';
+
 import { Button, ThemeContext } from '@/shared';
 import cls from './ToggleTheme.module.css';
 import { useCallback, useContext } from 'react';
 import Sun from '@/shared/assets/icons/sun.svg';
 import Moon from '@/shared/assets/icons/moon.svg';
+import Image from 'next/image';
 
 export const ToggleTheme = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -15,7 +18,12 @@ export const ToggleTheme = () => {
 
   return (
     <Button className={cls.toggle} onClick={toggleTheme}>
-      {theme === 'light' ? <Moon /> : <Sun />}
+      <Image
+        width={40}
+        height={40}
+        alt="theme"
+        src={theme === 'light' ? Moon : Sun}
+      />
     </Button>
   );
 };
