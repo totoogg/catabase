@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, CardTypes, useAppDispatch, useAppSelector } from '@/shared';
 import cls from './ChooseCard.module.css';
 import { Download } from '@/features';

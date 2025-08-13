@@ -1,12 +1,14 @@
+'use client';
+
 import { Button } from '@/shared';
-import { useNavigate } from 'react-router';
 import cls from './ErrorPage.module.css';
+import { useRouter } from 'next/navigation';
 
 export const ErrorPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleHome = () => {
-    navigate(`/?page=1`);
+    router.push('/?page=1');
   };
 
   return (

@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
+import ImageNext from 'next/image';
 
 interface ImageProps {
   src: string;
@@ -38,18 +39,24 @@ export const AppImage: FC<ImageProps> = (props) => {
 
   if (hasError) {
     return (
-      <div className={cls.Image}>
-        <ImageError />
-      </div>
+      <ImageNext
+        height={parseInt(height)}
+        width={parseInt(height)}
+        src={ImageError}
+        alt={'error'}
+      />
     );
   }
 
   return (
-    <img
+    <ImageNext
       className={[cls.Image, className].join(' ')}
-      height={height}
+      height={parseInt(height)}
+      width={parseInt(height)}
       src={src}
       alt={alt}
+      unoptimized
+      priority
     />
   );
 };

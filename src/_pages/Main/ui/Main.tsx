@@ -1,6 +1,5 @@
 import { CardList, ChooseCard, Pagination } from '@/widgets';
 import cls from './Main.module.css';
-import { Outlet } from 'react-router';
 
 export const Main = () => {
   return (
@@ -10,7 +9,6 @@ export const Main = () => {
           <CardList />
           <ChooseCard />
           <Pagination />
-          <Outlet />
         </div>
       </div>
     </div>
@@ -18,3 +16,5 @@ export const Main = () => {
 };
 
 Main.displayName = 'Main';
+
+export default Main;

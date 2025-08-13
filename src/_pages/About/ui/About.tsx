@@ -1,9 +1,9 @@
 import { Author, School } from '@/entities';
-import { Link } from 'react-router';
 import cls from './About.module.css';
 import { Button, ThemeContext } from '@/shared';
 import { ToggleTheme } from '@/features';
 import { useContext } from 'react';
+import Link from 'next/link';
 
 export const About = () => {
   const { theme } = useContext(ThemeContext);
@@ -15,7 +15,7 @@ export const About = () => {
           <ToggleTheme />
           <Author />
           <School />
-          <Link to="/" className={cls.link}>
+          <Link href="/" className={cls.link}>
             <Button variant="filled" colorBtn="success" className={cls.return}>
               Return to home page
             </Button>

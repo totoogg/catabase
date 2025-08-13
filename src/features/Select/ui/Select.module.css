@@ -24,6 +24,6 @@
 
 .icon {
   filter: brightness(0) saturate(0) invert(50%) sepia(100%) hue-rotate(0deg);
-  opacity: 0.3;
+  opacity: 0.2;
   transition: all 0.3s ease;
 }

@@ -3,6 +3,7 @@
 import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import {
+  Button,
   LOCAL_SEARCH,
   ResError,
   transformError,
@@ -12,12 +13,15 @@ import {
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
-import { useSearchParams } from 'react-router';
-import { ButtonDetail, Select } from '@/features';
+import { Select } from '@/features';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 export const CardList: FC = () => {
   const [local, setLocal] = useState('');
-  const [params, setParams] = useSearchParams();
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const [firstRendering, setFirstRendering] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
@@ -46,7 +50,9 @@ export const CardList: FC = () => {
 
       if (local !== customEvent.newValue) {
         fetchReq(customEvent.newValue ?? '');
-        setParams({ page: '1' });
+        const searchParams = new URLSearchParams(params);
+        searchParams.set('page', '1');
+        router.push(`${pathname}?${searchParams.toString()}`);
         localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
       }
     };
@@ -65,7 +71,7 @@ export const CardList: FC = () => {
     return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
     };
-  }, [currentPage, firstRendering, local, localValue, page, params, setParams]);
+  }, [currentPage, firstRendering, local, localValue, page, params]);
 
   if (isError) {
     return (
@@ -87,10 +93,12 @@ export const CardList: FC = () => {
     <div className={cls.CardList}>
       {data.map((el) => (
         <Card card={el} key={el.id}>
-          <ButtonDetail
-            className={cls.more}
-            link={`cats/${el.id}?page=${page}`}
-          />
+          <Link href={`cats/${el.id}?page=${page}`} className={cls.more}>
+            <Button className={cls.more} variant="filled" colorBtn="success">
+              Read more
+            </Button>
+          </Link>
+
           <Select data={el} />
         </Card>
       ))}

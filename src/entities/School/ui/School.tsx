@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import cls from './School.module.css';
+import logo from '@/shared/assets/icons/rss-logo.svg';
 
 export const School = () => {
   return (
@@ -9,7 +11,7 @@ export const School = () => {
         rel="noopener noreferrer"
         className={cls.link}
       >
-        <div className={cls.logo}></div>
+        <Image src={logo} width={100} height={100} alt="logo" />
         <div>
           <h3>RS School React</h3>
           <p>Course on modern React development</p>

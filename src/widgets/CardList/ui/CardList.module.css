@@ -39,6 +39,7 @@
 
 .more {
   width: 100%;
+  height: 50px;
   border-radius: 0;
   display: flex;
   justify-content: center;

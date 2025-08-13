@@ -1,11 +1,15 @@
+import Image from 'next/image';
 import csl from './Author.module.css';
+import author from '@/shared/assets/photo/author.jpg';
 
 export const Author = () => {
   return (
     <div className={csl.author}>
       <h2>About the author</h2>
       <div className={csl.content}>
-        <div className={csl.photo}></div>
+        <div className={csl.photo}>
+          <Image src={author} alt="author" width={150} height={200} />
+        </div>
         <div className={csl.text}>
           <h3>Uladzimir Hancharou</h3>
           <p>

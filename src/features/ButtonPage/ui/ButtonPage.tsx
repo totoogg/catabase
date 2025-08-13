@@ -1,20 +1,23 @@
+'use client';
+
 import { FC } from 'react';
 import cls from './ButtonPage.module.css';
 import { Button } from '@/shared';
-import { useSearchParams } from 'react-router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface ButtonPageProps {
   index: number;
 }
 
 export const ButtonPage: FC<ButtonPageProps> = ({ index }) => {
-  const [params, setParams] = useSearchParams();
+  const params = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleClick = () => {
-    setParams((prev) => {
-      prev.set('page', index.toString());
-      return prev;
-    });
+    const searchParams = new URLSearchParams(params);
+    searchParams.set('page', index.toString());
+    router.push(`${pathname}?${searchParams.toString()}`);
   };
 
   return (

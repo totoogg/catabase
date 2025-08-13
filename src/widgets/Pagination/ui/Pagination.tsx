@@ -1,3 +1,5 @@
+'use client';
+
 import cls from './Pagination.module.css';
 import { ButtonPage } from '@/features';
 import { selectCount, useAppSelector } from '@/shared';

@@ -1,3 +1,5 @@
+'use client';
+
 import { LOCAL_SEARCH } from '@/shared/consts/localStorage';
 import { useEffect, useState } from 'react';
 

@@ -1,15 +1,17 @@
+'use client';
+
 import { Footer, Header } from '@/widgets';
 import { FC, ReactNode, useContext } from 'react';
 import cls from './Layout.module.css';
-import { useParams } from 'react-router';
 import { ThemeContext } from '@/shared';
+import { useParams } from 'next/navigation';
 
 interface LayoutProps {
   children?: ReactNode;
 }
 
 export const Layout: FC<LayoutProps> = ({ children }) => {
-  const { catId } = useParams();
+  const params = useParams();
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -17,7 +19,7 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
       className={[
         theme !== 'light' ? cls.dark : '',
         cls.Layout,
-        catId ? cls.showCatById : '',
+        params['catId'] ? cls.showCatById : '',
       ].join(' ')}
     >
       <Header />
