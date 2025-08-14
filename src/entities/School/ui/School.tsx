@@ -11,7 +11,7 @@ export const School = () => {
         rel="noopener noreferrer"
         className={cls.link}
       >
-        <Image src={logo} width={100} height={100} alt="logo" />
+        <Image priority src={logo} width={100} height={100} alt="logo" />
         <div>
           <h3>RS School React</h3>
           <p>Course on modern React development</p>

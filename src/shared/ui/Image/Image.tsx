@@ -44,6 +44,7 @@ export const AppImage: FC<ImageProps> = (props) => {
         width={parseInt(height)}
         src={ImageError}
         alt={'error'}
+        priority
       />
     );
   }

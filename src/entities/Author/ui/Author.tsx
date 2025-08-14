@@ -8,7 +8,7 @@ export const Author = () => {
       <h2>About the author</h2>
       <div className={csl.content}>
         <div className={csl.photo}>
-          <Image src={author} alt="author" width={150} height={200} />
+          <Image priority src={author} alt="author" width={150} height={200} />
         </div>
         <div className={csl.text}>
           <h3>Uladzimir Hancharou</h3>

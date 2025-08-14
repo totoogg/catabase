@@ -29,6 +29,7 @@ export const Select: FC<SelectProps> = ({ data }) => {
       onClick={handleSelect}
     >
       <Image
+        priority
         className={cls.icon}
         src={Heart}
         alt="choose"

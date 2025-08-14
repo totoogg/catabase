@@ -19,6 +19,7 @@ export const ToggleTheme = () => {
   return (
     <Button className={cls.toggle} onClick={toggleTheme}>
       <Image
+        priority
         width={40}
         height={40}
         alt="theme"
