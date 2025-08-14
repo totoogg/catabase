@@ -12,16 +12,24 @@ export function useGetLocalData() {
 
   useEffect(() => {
     const local = localStorage.getItem(LOCAL_SEARCH) ?? '';
-    setValue(local);
     const searchParams = new URLSearchParams(params);
 
     const page = searchParams.get('page');
+    const query = searchParams.get('query');
 
-    searchParams.set('query', local);
+    if (query !== null && local !== query) {
+      localStorage.setItem(LOCAL_SEARCH, query);
+      setValue(query);
+    } else {
+      localStorage.setItem(LOCAL_SEARCH, local);
+      searchParams.set('query', local);
+      setValue(local);
+    }
+
     searchParams.set('page', page || '1');
 
     router.push(`${pathname}?${searchParams.toString()}`);
-  }, []);
+  }, [params, pathname, router]);
 
   return { value, setValue };
 }

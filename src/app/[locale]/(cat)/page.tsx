@@ -2,7 +2,7 @@ import SkeletonLoading from '@/widgets/CardList/ui/SkeletonLoading';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-const Main = dynamic(() => import('../../_pages/Main/ui/Main'));
+const Main = dynamic(() => import('../../../_pages/Main/ui/Main'));
 
 export default async function Page({
   searchParams,

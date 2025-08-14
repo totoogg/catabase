@@ -25,7 +25,7 @@ export const Button: FC<ButtonProps> = (props) => {
 
   return (
     <button className={classes} {...otherProps}>
-      {children ?? 'Button'}
+      {children ?? ''}
     </button>
   );
 };
