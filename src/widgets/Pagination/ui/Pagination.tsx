@@ -1,12 +1,12 @@
-'use client';
-
+import { FC } from 'react';
 import cls from './Pagination.module.css';
 import { ButtonPage } from '@/features';
-import { selectCount, useAppSelector } from '@/shared';
 
-export const Pagination = () => {
-  const count = useAppSelector(selectCount);
+interface PaginationProps {
+  count: number;
+}
 
+export const Pagination: FC<PaginationProps> = ({ count }) => {
   if (count <= 1) {
     return null;
   }

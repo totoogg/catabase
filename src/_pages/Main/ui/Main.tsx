@@ -1,14 +1,22 @@
 import { CardList, ChooseCard, Pagination } from '@/widgets';
 import cls from './Main.module.css';
+import { FC } from 'react';
+import { CardTypes } from '@/shared';
 
-export const Main = () => {
+interface MainProps {
+  data: CardTypes[];
+  status: number;
+  count: number;
+}
+
+export const Main: FC<MainProps> = ({ count, data, status }) => {
   return (
     <div className={cls.Main}>
       <div className="wrapper">
         <div className={cls.content}>
-          <CardList />
+          <CardList data={data} status={status} />
           <ChooseCard />
-          <Pagination />
+          <Pagination count={count} />
         </div>
       </div>
     </div>

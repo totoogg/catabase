@@ -1,10 +1,8 @@
-import { apiSlice, Button, useAppDispatch } from '@/shared';
+import { Button } from '@/shared';
 
 export const ResetCache = () => {
-  const dispatch = useAppDispatch();
-
   const handleClick = () => {
-    dispatch(apiSlice.util.resetApiState());
+    console.log('reset');
   };
 
   return (

@@ -4,20 +4,23 @@ import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import {
   Button,
+  CardTypes,
   LOCAL_SEARCH,
-  ResError,
   transformError,
-  useGetCatsQuery,
   useGetLocalData,
 } from '@/shared';
 import { Card } from '@/entities';
-import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
 import { Select } from '@/features';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export const CardList: FC = () => {
+interface CardListProps {
+  data: CardTypes[];
+  status: number;
+}
+
+export const CardList: FC<CardListProps> = ({ data, status }) => {
   const [local, setLocal] = useState('');
   const params = useSearchParams();
   const router = useRouter();
@@ -25,14 +28,6 @@ export const CardList: FC = () => {
   const [firstRendering, setFirstRendering] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
-
-  const { isFetching, isError, data, error } = useGetCatsQuery(
-    {
-      search: local ?? '',
-      page: currentPage,
-    },
-    { skip: firstRendering }
-  );
 
   const page = parseInt(params.get('page') || '1');
 
@@ -71,18 +66,19 @@ export const CardList: FC = () => {
     return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
     };
-  }, [currentPage, firstRendering, local, localValue, page, params]);
+  }, [
+    currentPage,
+    firstRendering,
+    local,
+    localValue,
+    page,
+    params,
+    pathname,
+    router,
+  ]);
 
-  if (isError) {
-    return (
-      <p className={cls.error}>
-        {transformError((error as ResError).status ?? '1')}
-      </p>
-    );
-  }
-
-  if (isFetching || !data) {
-    return <SkeletonLoading />;
+  if (status > 399) {
+    return <p className={cls.error}>{transformError(String(status))}</p>;
   }
 
   if (data.length === 0) {

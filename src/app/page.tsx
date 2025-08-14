@@ -1,11 +1,18 @@
+import { getCards } from '@/shared';
 import dynamic from 'next/dynamic';
 
 const Main = dynamic(() => import('../_pages/Main/ui/Main'));
 
-export function generateStaticParams() {
-  return [{ slug: [''] }];
-}
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const { page = '1', query = '' } = await searchParams;
 
-export default function Page() {
-  return <Main />;
+  const result = await getCards({ page: parseInt(page), search: query });
+
+  return (
+    <Main count={result.pages ?? 1} data={result.res} status={result.status} />
+  );
 }

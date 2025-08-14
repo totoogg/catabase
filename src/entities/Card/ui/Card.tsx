@@ -15,7 +15,7 @@ export const Card: FC<CardListProps> = ({ card, children }) => {
   return (
     <div className={cls.Card}>
       <div className={cls.cardImage}>
-        <AppImage src={imageUrl} alt={name} height="250px" />
+        <AppImage src={imageUrl} alt={name} height="250" />
       </div>
       <div className={cls.cardBlock}>
         {attribs.map((item) => (

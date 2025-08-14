@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AppImage,
   CardTypes,
@@ -5,35 +7,32 @@ import {
   transformDataForCard,
   transformError,
 } from '@/shared';
-import { useParams } from 'react-router';
 import cls from './CardId.module.css';
 import { SkeletonLoading } from './SkeletonLoading';
-import { useGetCatByIdQuery } from '../model/slice/apiSliceWithCatById';
+import { useParams } from 'next/navigation';
 
 export const CardId = () => {
-  const { catId } = useParams();
+  const params = useParams();
 
-  const { data, isFetching, isError, error } = useGetCatByIdQuery(catId || '');
-
-  if (isFetching) {
+  if (params) {
     return <SkeletonLoading />;
   }
 
-  if (isError) {
+  if (params) {
     return (
       <div className={cls.error}>
-        {transformError((error as ResError).status ?? '1')}
+        {transformError((params as ResError).status ?? '1')}
       </div>
     );
   }
 
-  if (!data) {
+  if (!params) {
     return null;
   }
 
-  const { name, imageUrl } = data as CardTypes;
+  const { name, imageUrl } = params as CardTypes;
 
-  const attribs = transformDataForCard(data as CardTypes, true);
+  const attribs = transformDataForCard(params as CardTypes, true);
 
   return (
     <div className={cls.content}>
@@ -41,7 +40,7 @@ export const CardId = () => {
         className={cls.cardImage}
         src={imageUrl}
         alt={name}
-        height="800px"
+        height="800"
       />
       <div className={cls.cardBlock}>
         {attribs.map((item) => (

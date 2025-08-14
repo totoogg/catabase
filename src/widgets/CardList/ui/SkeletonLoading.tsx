@@ -24,3 +24,5 @@ export const SkeletonLoading = () => {
 };
 
 SkeletonLoading.displayName = 'SkeletonLoading';
+
+export default SkeletonLoading;

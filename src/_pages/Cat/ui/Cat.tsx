@@ -4,12 +4,12 @@ import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { MouseEvent } from 'react';
 import { Close, ResetCache, ToggleTheme } from '@/features';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const Cat = () => {
-  const [params] = useSearchParams();
+  const params = useSearchParams();
 
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const page = parseInt(params.get('page') || '1');
 
@@ -21,7 +21,7 @@ export const Cat = () => {
       classes.includes('line') ||
       classes.includes('Cat')
     ) {
-      navigate(`/?page=${page}`);
+      navigate.push(`/?page=${page}`);
     }
   };
 
@@ -40,3 +40,5 @@ export const Cat = () => {
     </div>
   );
 };
+
+export default Cat;

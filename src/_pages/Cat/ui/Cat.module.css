@@ -29,6 +29,7 @@
   overflow-y: auto;
   cursor: default;
   height: 100vh;
+  z-index: 2;
 }
 
 .btnContainer {
