@@ -1,9 +1,10 @@
+'use client';
+
 import { Author, School } from '@/entities';
 import cls from './About.module.css';
-import { Button, ThemeContext } from '@/shared';
+import { Button, CustomLink, ThemeContext } from '@/shared';
 import { ToggleTheme } from '@/features';
 import { useContext } from 'react';
-import Link from 'next/link';
 
 export const About = () => {
   const { theme } = useContext(ThemeContext);
@@ -15,11 +16,11 @@ export const About = () => {
           <ToggleTheme />
           <Author />
           <School />
-          <Link href="/" className={cls.link}>
+          <CustomLink href="/" className={cls.link}>
             <Button variant="filled" colorBtn="success" className={cls.return}>
               Return to home page
             </Button>
-          </Link>
+          </CustomLink>
         </div>
       </div>
     </div>

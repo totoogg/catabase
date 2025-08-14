@@ -8,7 +8,7 @@ interface GetCardsProps {
 
 const getResponse = async (url: string) => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { next: { tags: ['cats'] } });
 
     if (res.status > 499) {
       return { status: res.status, res: 'Server error' };

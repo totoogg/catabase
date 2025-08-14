@@ -1,38 +1,33 @@
-'use client';
-
 import {
   AppImage,
   CardTypes,
-  ResError,
+  getCardById,
   transformDataForCard,
   transformError,
 } from '@/shared';
 import cls from './CardId.module.css';
-import { SkeletonLoading } from './SkeletonLoading';
-import { useParams } from 'next/navigation';
+import { FC } from 'react';
 
-export const CardId = () => {
-  const params = useParams();
+interface CardIdProps {
+  id: string;
+}
 
-  if (params) {
-    return <SkeletonLoading />;
-  }
+export const CardId: FC<CardIdProps> = async ({ id }) => {
+  const { status, res: data } = await getCardById(id);
 
-  if (params) {
+  if (status > 399) {
     return (
-      <div className={cls.error}>
-        {transformError((params as ResError).status ?? '1')}
-      </div>
+      <div className={cls.error}>{transformError(String(status) || '1')}</div>
     );
   }
 
-  if (!params) {
+  if (!data) {
     return null;
   }
 
-  const { name, imageUrl } = params as CardTypes;
+  const { name, imageUrl } = data as CardTypes;
 
-  const attribs = transformDataForCard(params as CardTypes, true);
+  const attribs = transformDataForCard(data as CardTypes, true);
 
   return (
     <div className={cls.content}>
@@ -40,7 +35,7 @@ export const CardId = () => {
         className={cls.cardImage}
         src={imageUrl}
         alt={name}
-        height="800"
+        height="650px"
       />
       <div className={cls.cardBlock}>
         {attribs.map((item) => (

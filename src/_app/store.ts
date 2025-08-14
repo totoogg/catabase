@@ -1,9 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { countReducer } from '@/shared';
 import { chooseReducer } from '@/entities';
 
 const rootReducer = combineReducers({
-  count: countReducer,
   choose: chooseReducer,
 });
 

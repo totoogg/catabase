@@ -1,32 +1,17 @@
-'use client';
-
 import { CardId } from '@/entities';
 import cls from './Cat.module.css';
-import { MouseEvent } from 'react';
+import { FC, Suspense } from 'react';
 import { Close, ResetCache, ToggleTheme } from '@/features';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Wrapper } from './Wrapper';
+import { SkeletonLoading } from '@/entities/CardId/ui/SkeletonLoading';
 
-export const Cat = () => {
-  const params = useSearchParams();
+interface CatProps {
+  id: string;
+}
 
-  const navigate = useRouter();
-
-  const page = parseInt(params.get('page') || '1');
-
-  const handleClick = (e: MouseEvent) => {
-    const classes = (e.target as HTMLElement).className;
-    if (
-      classes.includes('wrapper') ||
-      classes.includes('close') ||
-      classes.includes('line') ||
-      classes.includes('Cat')
-    ) {
-      navigate.push(`/?page=${page}`);
-    }
-  };
-
+export const Cat: FC<CatProps> = async ({ id }) => {
   return (
-    <div className={cls.Cat} data-testid="cat" onClick={handleClick}>
+    <Wrapper className={cls.Cat}>
       <div className={cls.wrapper} data-testid="wrapper">
         <div className={cls.content} data-testid="content">
           <div className={cls.btnContainer}>
@@ -34,10 +19,13 @@ export const Cat = () => {
             <ResetCache />
             <Close />
           </div>
-          <CardId />
+
+          <Suspense fallback={<SkeletonLoading />}>
+            <CardId id={id} />
+          </Suspense>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 

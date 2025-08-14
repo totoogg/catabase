@@ -5,6 +5,7 @@ import cls from './CardList.module.css';
 import {
   Button,
   CardTypes,
+  CustomLink,
   LOCAL_SEARCH,
   transformError,
   useGetLocalData,
@@ -13,7 +14,6 @@ import { Card } from '@/entities';
 import { NotFound } from './NotFound';
 import { Select } from '@/features';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 
 interface CardListProps {
   data: CardTypes[];
@@ -89,11 +89,11 @@ export const CardList: FC<CardListProps> = ({ data, status }) => {
     <div className={cls.CardList}>
       {data.map((el) => (
         <Card card={el} key={el.id}>
-          <Link href={`cats/${el.id}?page=${page}`} className={cls.more}>
+          <CustomLink href={`cats/${el.id}?page=${page}`} className={cls.more}>
             <Button className={cls.more} variant="filled" colorBtn="success">
               Read more
             </Button>
-          </Link>
+          </CustomLink>
 
           <Select data={el} />
         </Card>

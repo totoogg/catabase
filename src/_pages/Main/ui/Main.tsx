@@ -1,22 +1,26 @@
 import { CardList, ChooseCard, Pagination } from '@/widgets';
 import cls from './Main.module.css';
 import { FC } from 'react';
-import { CardTypes } from '@/shared';
+import { getCards } from '@/shared';
 
 interface MainProps {
-  data: CardTypes[];
-  status: number;
-  count: number;
+  page: string;
+  query: string;
 }
 
-export const Main: FC<MainProps> = ({ count, data, status }) => {
+export const Main: FC<MainProps> = async ({ page, query }) => {
+  const { status, res, pages } = await getCards({
+    page: parseInt(page),
+    search: query,
+  });
+
   return (
     <div className={cls.Main}>
       <div className="wrapper">
         <div className={cls.content}>
-          <CardList data={data} status={status} />
+          <CardList data={res} status={status} />
           <ChooseCard />
-          <Pagination count={count} />
+          <Pagination count={pages ?? 1} />
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ export const AppImage: FC<ImageProps> = (props) => {
   });
 
   if (!isLoading) {
-    return <Skeleton width={250} height={height} />;
+    return <Skeleton width="100%" height={height} />;
   }
 
   if (hasError) {
