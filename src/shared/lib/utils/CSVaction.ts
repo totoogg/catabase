@@ -1,19 +1,22 @@
 'use server';
 
+import { getTranslations } from 'next-intl/server';
 import { CardTypes } from '../../types/cardApiTypes';
 
-const CSV_HEADERS = [
-  'Name',
-  'Breed',
-  'Age',
-  'Weight',
-  'Daily Food',
-  'Last Visit',
-  'Adoption Date',
-  'Medical Records',
-].join(',');
-
 export async function CSVaction(data: CardTypes[]) {
+  const t = await getTranslations('Data');
+
+  const CSV_HEADERS = [
+    t('name'),
+    t('breed'),
+    t('age'),
+    t('weight'),
+    t('dailyFood'),
+    t('lastVetVisit'),
+    t('adoptionDate'),
+    t('medicalRecords'),
+  ].join(',');
+
   const csvContent = [
     CSV_HEADERS,
     ...data.map((item) =>
@@ -31,7 +34,7 @@ export async function CSVaction(data: CardTypes[]) {
   ].join('\n');
 
   const fileName =
-    data.length === 1 ? `${data.length}_item.csv` : `${data.length}_items.csv`;
+    data.length === 1 ? t('downloadOne') : `${data.length}${t('downloadMany')}`;
 
   return { csvContent, fileName };
 }

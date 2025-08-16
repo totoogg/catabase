@@ -6,7 +6,9 @@
 }
 
 .photo {
-  overflow: hidden;
+  background: url('../../../shared/assets/photo/author.jpg') center -30px;
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 50%;
   width: 150px;
   height: 150px;

@@ -1,8 +1,11 @@
 'use client';
 
 import { Button } from '@/shared';
+import { useTranslations } from 'next-intl';
 
 export const ResetCache = () => {
+  const t = useTranslations('Buttons');
+
   const handleClick = async () => {
     const response = await fetch('/api/revalidate', {
       method: 'POST',
@@ -17,7 +20,7 @@ export const ResetCache = () => {
 
   return (
     <Button onClick={handleClick} variant="filled" colorBtn="normal">
-      Reset Cache
+      {t('resetCache')}
     </Button>
   );
 };

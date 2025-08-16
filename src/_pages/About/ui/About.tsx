@@ -5,9 +5,11 @@ import cls from './About.module.css';
 import { Button, CustomLink, ThemeContext } from '@/shared';
 import { ToggleTheme } from '@/features';
 import { useContext } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const About = () => {
   const { theme } = useContext(ThemeContext);
+  const t = useTranslations('Buttons');
 
   return (
     <div className={[theme !== 'light' ? cls.moon : '', cls.About].join(' ')}>
@@ -18,7 +20,7 @@ export const About = () => {
           <School />
           <CustomLink href="/" className={cls.link}>
             <Button variant="filled" colorBtn="success" className={cls.return}>
-              Return to home page
+              {t('home')}
             </Button>
           </CustomLink>
         </div>
@@ -26,5 +28,3 @@ export const About = () => {
     </div>
   );
 };
-
-export default About;

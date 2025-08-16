@@ -4,7 +4,9 @@ import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import cls from './Search.module.css';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 interface SearchProps {
   className?: string;
@@ -16,6 +18,7 @@ export const Search: FC<SearchProps> = (props) => {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('');
 
   const classes = [cls.block, props.className].join(' ');
 
@@ -44,7 +47,7 @@ export const Search: FC<SearchProps> = (props) => {
     const filteredValue = inputValue.replace(/[^\p{L}\d\s]/gu, '');
 
     if (inputValue !== filteredValue) {
-      setError('Only letters, numbers and spaces are allowed!');
+      setError(t('Error.search'));
     } else {
       setError('');
     }
@@ -63,12 +66,12 @@ export const Search: FC<SearchProps> = (props) => {
       <Input
         pattern="/[^\p{L}\d\s]/gu"
         value={value ?? ''}
-        placeholder="Search..."
+        placeholder={t('Input.placeholder')}
         onKeyUp={typeEnter}
         onChange={getValue}
       />
       <Button className={cls.btn} variant="filled" onClick={saveLocal}>
-        Search
+        {t('Buttons.search')}
       </Button>
       {error && <div className={cls.error}>{error}</div>}
     </div>

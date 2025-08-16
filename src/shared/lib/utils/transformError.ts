@@ -1,13 +1,16 @@
-export function transformError(status: string) {
+import { getTranslations } from 'next-intl/server';
+
+export async function transformError(status: string) {
+  const t = await getTranslations('Error');
   const statusNumber = Number(status);
 
   if (statusNumber > 499) {
-    return 'Server error';
+    return t('ServerError');
   }
 
   if (statusNumber > 399) {
-    return 'Invalid request';
+    return t('InvalidRequest');
   }
 
-  return 'Network error. Could not send request';
+  return t('NetworkError');
 }

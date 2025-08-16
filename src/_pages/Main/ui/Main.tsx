@@ -28,5 +28,3 @@ export const Main: FC<MainProps> = async ({ page, query }) => {
 };
 
 Main.displayName = 'Main';
-
-export default Main;

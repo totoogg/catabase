@@ -5,6 +5,7 @@ import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
 import ImageNext from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface ImageProps {
   src: string;
@@ -17,6 +18,7 @@ export const AppImage: FC<ImageProps> = (props) => {
   const { alt, src, height, className } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const t = useTranslations('Error');
 
   useEffect(() => {
     const { src } = props;
@@ -43,8 +45,9 @@ export const AppImage: FC<ImageProps> = (props) => {
         height={parseInt(height)}
         width={parseInt(height)}
         src={ImageError}
-        alt={'error'}
+        alt={t('error')}
         priority
+        className={[cls.Image, className].join(' ')}
       />
     );
   }

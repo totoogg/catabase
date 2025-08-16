@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import cls from './Card.module.css';
 import { AppImage, CardTypes, transformDataForCard } from '@/shared';
+import { useTranslations } from 'next-intl';
 
 interface CardListProps {
   card: CardTypes;
@@ -9,8 +10,24 @@ interface CardListProps {
 
 export const Card: FC<CardListProps> = ({ card, children }) => {
   const { name, imageUrl } = card;
+  const t = useTranslations('Data');
 
-  const attribs = transformDataForCard(card);
+  const translate = {
+    name: t('name'),
+    breed: t('breed'),
+    age: t('age'),
+    weight: t('weight'),
+    dailyFood: t('dailyFood'),
+    lastVetVisit: t('lastVetVisit'),
+    adoptionDate: t('adoptionDate'),
+    temperament: t('temperament'),
+    likes: t('likes'),
+    dislikes: t('dislikes'),
+    owner: t('owner'),
+    medicalRecords: t('medicalRecords'),
+  };
+
+  const attribs = transformDataForCard(translate, card);
 
   return (
     <div className={cls.Card}>

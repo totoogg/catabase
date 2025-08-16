@@ -1,6 +1,7 @@
 'use client';
 
 import { Button, CardTypes } from '@/shared';
+import { useTranslations } from 'next-intl';
 import { FC, useRef } from 'react';
 
 interface DownloadProps {
@@ -9,6 +10,7 @@ interface DownloadProps {
 
 export const Download: FC<DownloadProps> = ({ data }) => {
   const linkRef = useRef<HTMLAnchorElement>(null);
+  const t = useTranslations('Buttons');
 
   const handleDownload = async () => {
     const response = await fetch('/api/csv', {
@@ -36,7 +38,7 @@ export const Download: FC<DownloadProps> = ({ data }) => {
   return (
     <a ref={linkRef}>
       <Button variant="filled" colorBtn="success" onClick={handleDownload}>
-        Download
+        {t('download')}
       </Button>
     </a>
   );

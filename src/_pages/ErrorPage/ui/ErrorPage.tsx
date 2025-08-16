@@ -2,9 +2,12 @@
 
 import { Button } from '@/shared';
 import cls from './ErrorPage.module.css';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export const ErrorPage = () => {
+  const t = useTranslations('ErrorPage');
+
   const router = useRouter();
 
   const handleHome = () => {
@@ -13,10 +16,10 @@ export const ErrorPage = () => {
 
   return (
     <div className={cls.wrapper}>
-      <h1>404 NotFound</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
+      <h1>{t('title')}</h1>
+      <p>{t('description')}</p>
       <Button variant="filled" colorBtn="success" onClick={handleHome}>
-        Home page
+        {t('home')}
       </Button>
     </div>
   );

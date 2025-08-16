@@ -7,6 +7,7 @@ import {
 } from '@/shared';
 import cls from './CardId.module.css';
 import { FC } from 'react';
+import { getTranslations } from 'next-intl/server';
 
 interface CardIdProps {
   id: string;
@@ -17,7 +18,9 @@ export const CardId: FC<CardIdProps> = async ({ id }) => {
 
   if (status > 399) {
     return (
-      <div className={cls.error}>{transformError(String(status) || '1')}</div>
+      <div className={cls.error}>
+        {await transformError(String(status) || '1')}
+      </div>
     );
   }
 
@@ -27,7 +30,24 @@ export const CardId: FC<CardIdProps> = async ({ id }) => {
 
   const { name, imageUrl } = data as CardTypes;
 
-  const attribs = transformDataForCard(data as CardTypes, true);
+  const t = await getTranslations('Data');
+
+  const translate = {
+    name: t('name'),
+    breed: t('breed'),
+    age: t('age'),
+    weight: t('weight'),
+    dailyFood: t('dailyFood'),
+    lastVetVisit: t('lastVetVisit'),
+    adoptionDate: t('adoptionDate'),
+    temperament: t('temperament'),
+    likes: t('likes'),
+    dislikes: t('dislikes'),
+    owner: t('owner'),
+    medicalRecords: t('medicalRecords'),
+  };
+
+  const attribs = transformDataForCard(translate, data as CardTypes, true);
 
   return (
     <div className={cls.content}>

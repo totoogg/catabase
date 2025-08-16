@@ -1,6 +1,7 @@
 import { CardTypes } from '../../types/cardApiTypes';
 
 export const transformDataForCard = (
+  translate: { [key: string]: string },
   card: CardTypes,
   cardId: boolean = false
 ) => {
@@ -18,19 +19,19 @@ export const transformDataForCard = (
   } = card;
 
   const attribs = [
-    { name: 'Name', value: name },
-    { name: 'Breed', value: breed },
-    { name: 'Age', value: age },
-    { name: 'Weight', value: weight },
-    { name: 'Daily Food', value: dailyFood },
-    { name: 'Last Visit', value: lastVetVisit },
+    { name: translate.name, value: name },
+    { name: translate.breed, value: breed },
+    { name: translate.age, value: age },
+    { name: translate.weight, value: weight },
+    { name: translate.dailyFood, value: dailyFood },
+    { name: translate.lastVetVisit, value: lastVetVisit },
 
-    { name: 'Adoption Date', value: adoptionDate },
-    { name: 'Temperament', value: temperament },
-    { name: 'Likes', value: likes.join(', ') },
-    { name: 'Dislikes', value: dislikes.join(', ') },
-    { name: 'Owner', value: ownerName },
-    { name: 'Medical Records', value: medicalRecords.join(', ') },
+    { name: translate.adoptionDate, value: adoptionDate },
+    { name: translate.temperament, value: temperament },
+    { name: translate.likes, value: likes.join(', ') },
+    { name: translate.dislikes, value: dislikes.join(', ') },
+    { name: translate.owner, value: ownerName },
+    { name: translate.medicalRecords, value: medicalRecords.join(', ') },
   ];
 
   return cardId ? attribs : attribs.slice(0, 6);

@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Heart from '@/shared/assets/icons/heart.svg';
 import cls from './Select.module.css';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface SelectProps {
   data: CardTypes;
@@ -12,6 +13,7 @@ interface SelectProps {
 export const Select: FC<SelectProps> = ({ data }) => {
   const chooses = useAppSelector(selectChoose);
   const dispatch = useAppDispatch();
+  const t = useTranslations('Buttons');
 
   const select = chooses[data.id];
 
@@ -32,7 +34,7 @@ export const Select: FC<SelectProps> = ({ data }) => {
         priority
         className={cls.icon}
         src={Heart}
-        alt="choose"
+        alt={t('choose')}
         width={40}
         height={40}
       />

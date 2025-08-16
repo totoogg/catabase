@@ -3,7 +3,8 @@
 import { FC } from 'react';
 import cls from './ButtonPage.module.css';
 import { Button } from '@/shared';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 
 interface ButtonPageProps {
   index: number;

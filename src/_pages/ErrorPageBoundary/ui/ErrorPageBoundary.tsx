@@ -1,7 +1,10 @@
+import { getTranslations } from 'next-intl/server';
 import cls from './ErrorPageBoundary.module.css';
 
-export const ErrorPageBoundary = () => {
-  return <div className={cls.text}>Something went wrong!</div>;
+export const ErrorPageBoundary = async () => {
+  const t = await getTranslations('Error');
+
+  return <div className={cls.text}>{t('errorComponent')}</div>;
 };
 
 ErrorPageBoundary.displayName = 'ErrorPageBoundary';

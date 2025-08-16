@@ -9,7 +9,7 @@ interface CatProps {
   id: string;
 }
 
-export const Cat: FC<CatProps> = async ({ id }) => {
+export const Cat: FC<CatProps> = ({ id }) => {
   return (
     <Wrapper className={cls.Cat}>
       <div className={cls.wrapper} data-testid="wrapper">
@@ -28,5 +28,3 @@ export const Cat: FC<CatProps> = async ({ id }) => {
     </Wrapper>
   );
 };
-
-export default Cat;

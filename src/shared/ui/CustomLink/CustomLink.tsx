@@ -1,23 +1,22 @@
 'use client';
 
 import { useTransition } from 'react';
-import NextLink from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Loader } from '../Loader/Loader';
+import { Link, useRouter } from '@/i18n/navigation';
 
 export function CustomLink({
   href,
   children,
   replace,
   ...rest
-}: Parameters<typeof NextLink>[0]) {
-  const router = useRouter();
+}: Parameters<typeof Link>[0]) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   return (
     <>
       {isPending && <Loader />}
-      <NextLink
+      <Link
         href={href}
         onClick={(e) => {
           e.preventDefault();
@@ -33,7 +32,7 @@ export function CustomLink({
         {...rest}
       >
         {children}
-      </NextLink>
+      </Link>
     </>
   );
 }
