@@ -5,7 +5,6 @@ import cls from './ButtonPage.module.css';
 import { Button } from '@/shared';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '@/i18n/navigation';
-
 interface ButtonPageProps {
   index: number;
 }

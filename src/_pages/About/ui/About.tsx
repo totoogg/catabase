@@ -3,7 +3,7 @@
 import { Author, School } from '@/entities';
 import cls from './About.module.css';
 import { Button, CustomLink, ThemeContext } from '@/shared';
-import { ToggleTheme } from '@/features';
+import { ToggleLang, ToggleTheme } from '@/features';
 import { useContext } from 'react';
 import { useTranslations } from 'next-intl';
 
@@ -15,6 +15,7 @@ export const About = () => {
     <div className={[theme !== 'light' ? cls.moon : '', cls.About].join(' ')}>
       <div className="wrapper">
         <div className={cls.content}>
+          <ToggleLang />
           <ToggleTheme />
           <Author />
           <School />

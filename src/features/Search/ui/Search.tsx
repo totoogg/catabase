@@ -4,9 +4,9 @@ import { Button, LOCAL_SEARCH, useGetLocalData } from '@/shared';
 import { Input } from '@/shared/ui/Input/Input';
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
 import cls from './Search.module.css';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
 
 interface SearchProps {
   className?: string;

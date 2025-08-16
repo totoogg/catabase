@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { LOCAL_SEARCH } from '@/shared/consts/localStorage';
+import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -9,6 +10,7 @@ export function useGetLocalData() {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const locale = useLocale();
   const [value, setValue] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -29,8 +31,10 @@ export function useGetLocalData() {
 
     searchParams.set('page', page || '1');
 
-    router.push(`${pathname}?${searchParams.toString()}`);
-  }, [params, pathname, router]);
+    if (searchParams.toString() !== params.toString()) {
+      router.push(`${pathname}?${searchParams.toString()}`, { locale });
+    }
+  }, [params, pathname, router, locale]);
 
   return { value, setValue };
 }

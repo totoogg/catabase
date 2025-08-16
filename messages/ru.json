@@ -7,7 +7,8 @@
     "search": "Поиск",
     "resetCache": "Сбросить кэш",
     "download": "Скачать",
-    "unselect": "Отменить выбор всех"
+    "unselect": "Отменить выбор всех",
+    "reset": "Перезагрузка"
   },
 
   "Input": {
@@ -47,8 +48,8 @@
   "HomePage": {
     "NotFound": "Кот с именем &quot;{text}&quot; не найден.",
     "ReadMore": "Читать далее",
-    "selectOne": "${count} элемент выбран",
-    "selectMany": "${count} элемента выбраны"
+    "selectOne": "{count} элемент выбран",
+    "selectMany": "{count} элемента выбраны"
   },
 
   "ErrorPage": {

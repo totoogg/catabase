@@ -1,7 +1,6 @@
 import { Providers } from '@/_app/providers/Providers';
 import type { Metadata } from 'next';
 import { StrictMode } from 'react';
-import '../../index.css';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
@@ -26,8 +25,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         <div id="root">
-          {' '}
-          <NextIntlClientProvider>
+          <NextIntlClientProvider locale={locale}>
             <StrictMode>
               <Providers>{children}</Providers>
             </StrictMode>

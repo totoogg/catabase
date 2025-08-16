@@ -2,8 +2,8 @@
 
 import { Button } from '@/shared';
 import cls from './ErrorPage.module.css';
-import { useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 
 export const ErrorPage = () => {
   const t = useTranslations('ErrorPage');

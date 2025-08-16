@@ -1,7 +1,7 @@
 import { CardId } from '@/entities';
 import cls from './Cat.module.css';
 import { FC, Suspense } from 'react';
-import { Close, ResetCache, ToggleTheme } from '@/features';
+import { Close, ResetCache, ToggleLang, ToggleTheme } from '@/features';
 import { Wrapper } from './Wrapper';
 import { SkeletonLoading } from '@/entities/CardId/ui/SkeletonLoading';
 
@@ -17,6 +17,7 @@ export const Cat: FC<CatProps> = ({ id }) => {
           <div className={cls.btnContainer}>
             <ToggleTheme />
             <ResetCache />
+            <ToggleLang />
             <Close />
           </div>
 
