@@ -1,7 +1,7 @@
 import { apiSlice } from '../api';
 import { CardTypes } from '../../types/cardApiTypes';
 import { setCount } from '../count/countSlice';
-import { Meta } from '../../types/queryTypes';
+import { ResError } from '../../types/queryTypes';
 
 interface GetCardsProps {
   search?: string;
@@ -14,16 +14,18 @@ export const apiSliceWithCats = apiSlice.injectEndpoints({
     getCats: builder.query<CardTypes[], GetCardsProps>({
       query: ({ limit = 10, page = 1, search = '' }) =>
         `?name_like=${search}&_limit=${limit}&_page=${page}`,
+      transformErrorResponse: (response: ResError) => response.status,
       async onQueryStarted({ limit = 10 }, { dispatch, queryFulfilled }) {
         const res = await queryFulfilled;
+        const meta = res.meta;
 
-        const response = (res.meta as Meta)?.response;
-
-        const pages = Math.ceil(
-          parseInt(response.headers.get('X-Total-Count') || '0') / limit
-        );
-
-        dispatch(setCount(pages));
+        if (meta && 'response' in meta && meta.response instanceof Response) {
+          const response = meta.response;
+          const totalCount = response.headers.get('X-Total-Count');
+          const total = parseInt(totalCount || '0', 10);
+          const pages = Math.ceil(total / limit);
+          dispatch(setCount(pages));
+        }
       },
     }),
   }),

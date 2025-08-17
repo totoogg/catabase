@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import {
   LOCAL_SEARCH,
-  ResError,
   transformError,
   useGetCatsQuery,
   useGetLocalData,
@@ -31,46 +30,43 @@ export const CardList: FC = () => {
   const page = parseInt(params.get('page') || '1');
 
   useEffect(() => {
-    const fetchReq = (val?: string) => {
-      setLocal(val ?? '');
-
-      setCurrentPage(page);
-    };
-
     const changeLocalStorage = (event: Event) => {
       const customEvent = event as CustomEvent & {
         newValue: string;
       };
 
       if (local !== customEvent.newValue) {
-        fetchReq(customEvent.newValue ?? '');
+        setLocal(customEvent.newValue ?? '');
         setParams({ page: '1' });
+        setCurrentPage(page);
         localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
       }
     };
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
-      fetchReq(local);
-    }
-
-    if (localValue !== undefined && firstRendering) {
-      fetchReq(localValue);
-      setFirstRendering(false);
-    }
-
     return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
     };
-  }, [currentPage, firstRendering, local, localValue, page, params, setParams]);
+  }, [local, page, setParams]);
+
+  useEffect(() => {
+    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
+      setLocal(local ?? '');
+      setCurrentPage(page);
+    }
+
+    if (localValue !== undefined && firstRendering) {
+      setLocal(localValue ?? '');
+      setCurrentPage(page);
+      setFirstRendering(false);
+    }
+  }, [currentPage, firstRendering, local, localValue, page, params]);
 
   if (isError) {
-    return (
-      <p className={cls.error}>
-        {transformError((error as ResError).status ?? '1')}
-      </p>
-    );
+    const errorStatus = error !== undefined ? String(error) : '1';
+
+    return <p className={cls.error}>{transformError(errorStatus)}</p>;
   }
 
   if (isFetching || !data) {

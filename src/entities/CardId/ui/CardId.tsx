@@ -1,7 +1,6 @@
 import {
   AppImage,
   CardTypes,
-  ResError,
   transformDataForCard,
   transformError,
 } from '@/shared';
@@ -20,11 +19,9 @@ export const CardId = () => {
   }
 
   if (isError) {
-    return (
-      <div className={cls.error}>
-        {transformError((error as ResError).status ?? '1')}
-      </div>
-    );
+    const errorStatus = error !== undefined ? String(error) : '1';
+
+    return <div className={cls.error}>{transformError(errorStatus)}</div>;
   }
 
   if (!data) {
