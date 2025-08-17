@@ -2,7 +2,6 @@ import { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
-  distDir: './build',
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
