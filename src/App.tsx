@@ -1,10 +1,11 @@
-import { Header } from './components/Header/Header';
-import { Main } from './components/Main/Main';
+import { Header } from './features/Header/Header';
+import { Main } from './features/Main/Main';
 
 export function App() {
   return (
     <>
-      <Header></Header> <Main></Main>
+      <Header />
+      <Main />
     </>
   );
 }

@@ -1,0 +1,48 @@
+.button {
+  cursor: pointer;
+  color: #441306;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.filled {
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.outline {
+  background: none;
+  border-radius: 5px;
+}
+
+.outline.normal {
+  border: 2px solid #ff8904;
+}
+
+.outline.success {
+  border: 2px solid #f54900;
+}
+
+.outline.error {
+  border: 2px solid #ca3500;
+}
+
+.filled.normal {
+  background: #ff8904;
+  color: #fff7ed;
+}
+
+.filled.success {
+  background: #f54900;
+}
+
+.filled.error {
+  background: #ca3500;
+}
