@@ -90,8 +90,10 @@ describe('Header', () => {
     fireEvent.click(screen.getByText('Uncontrolled Form'));
     expect(screen.getByTestId('uncontrolled-form')).toBeInTheDocument();
 
-    const closeFn = (UncontrolledForm as Mock).mock.calls[0][0].close;
-    closeFn();
+    await act(async () => {
+      const closeFn = (UncontrolledForm as Mock).mock.calls[0][0].close;
+      closeFn();
+    });
 
     await whenStable();
 
@@ -128,8 +130,10 @@ describe('Header', () => {
     expect(screen.getByTestId('controlled-form')).toBeInTheDocument();
     expect(screen.queryByTestId('uncontrolled-form')).not.toBeInTheDocument();
 
-    const closeControlled = (ControlledForm as Mock).mock.calls[0][0].close;
-    closeControlled();
+    await act(async () => {
+      const closeControlled = (ControlledForm as Mock).mock.calls[0][0].close;
+      closeControlled();
+    });
 
     await whenStable();
 
