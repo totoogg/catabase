@@ -24,6 +24,7 @@
   width: 100%;
   align-items: center;
   gap: 10px;
+  border-bottom: 1px solid #441306;
 }
 
 .last {
