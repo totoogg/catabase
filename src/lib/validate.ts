@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 export const schema = Yup.object().shape({
   username: Yup.string()
     .required('Name is required')
+    .matches(/^[A-ZА-Я]/, 'There must be a string')
     .test({
       test: (value) => value[0] === value[0]?.toUpperCase(),
       message: 'The first letter must be capitalized',

@@ -1,4 +1,4 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FC, FormEvent, useRef, useState } from 'react';
 import { ValidationError } from 'yup';
 import cls from './UncontrolledForm.module.css';
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -6,7 +6,11 @@ import { Button, Input } from '@/components';
 import { addData, selectCountries } from '../dataSlice';
 import { schema } from '@/lib/validate';
 
-export const UncontrolledForm = () => {
+interface UncontrolledFormProps {
+  close: () => void;
+}
+
+export const UncontrolledForm: FC<UncontrolledFormProps> = ({ close }) => {
   const nameField = useRef<HTMLInputElement | null>(null);
   const ageField = useRef<HTMLInputElement | null>(null);
   const emailField = useRef<HTMLInputElement | null>(null);
@@ -54,6 +58,7 @@ export const UncontrolledForm = () => {
               file: reader.result as string,
             })
           );
+          close();
         };
         if (fileField.current?.files?.[0]) {
           reader.readAsDataURL(fileField.current.files[0]);
@@ -115,7 +120,9 @@ export const UncontrolledForm = () => {
         id="password"
         className={cls.input}
       />
-      <p className={cls.error}>&nbsp;{error.password}</p>
+      <p className={[cls.error, cls.password].join(' ')}>
+        &nbsp;{error.password}
+      </p>
       <label className={cls.label} htmlFor="confirmPassword">
         Confirm Password*
       </label>

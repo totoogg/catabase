@@ -28,12 +28,12 @@ export const Header = () => {
 
       {showModal === 'controlled' && (
         <Modal onClose={close}>
-          <ControlledForm />
+          <ControlledForm close={close} />
         </Modal>
       )}
       {showModal === 'uncontrolled' && (
         <Modal onClose={close}>
-          <UncontrolledForm />
+          <UncontrolledForm close={close} />
         </Modal>
       )}
     </header>

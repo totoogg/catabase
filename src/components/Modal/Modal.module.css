@@ -44,12 +44,13 @@
 .modal {
   margin-top: 40px;
   cursor: default;
-  padding: 20px;
+  padding: 50px;
   padding-top: 80px;
   background-color: #ffedd4;
   border-radius: 20px;
   position: relative;
   overflow-y: auto;
+  width: 70%;
 }
 
 ::-webkit-scrollbar {
