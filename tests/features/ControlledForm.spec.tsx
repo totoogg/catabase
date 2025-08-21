@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
-import { UncontrolledForm } from '../../src/features/UncontrolledForm/UncontrolledForm';
+import { ControlledForm } from '../../src/features/ControlledForm/ControlledForm';
 import '@testing-library/jest-dom/vitest';
 import { renderWithProviders } from '../test-utils';
 import { act } from 'react';
@@ -16,9 +16,9 @@ beforeEach(() => {
 
 const mockClose = vi.fn();
 
-describe('UncontrolledForm', () => {
+describe('ControlledForm', () => {
   it('renders form', () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
       preloadedState: {
         data: {
           countries: ['USA', 'Canada', 'Brazil'],
@@ -27,7 +27,7 @@ describe('UncontrolledForm', () => {
       },
     });
 
-    expect(screen.getByText('Uncontrolled Form')).toBeInTheDocument();
+    expect(screen.getByText('Controlled Form')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Age')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
@@ -43,35 +43,8 @@ describe('UncontrolledForm', () => {
     expect(screen.getByText('Submit')).toBeInTheDocument();
   });
 
-  it('displays validation errors', async () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
-      preloadedState: {
-        data: {
-          countries: ['USA', 'Canada', 'Brazil'],
-          data: [],
-        },
-      },
-    });
-
-    fireEvent.click(screen.getByText('Submit'));
-
-    await whenStable();
-
-    expect(await screen.findByText('Name is required')).toBeInTheDocument();
-    expect(await screen.findByText('Age is required')).toBeInTheDocument();
-    expect(await screen.findByText('Email is required')).toBeInTheDocument();
-    expect(await screen.findByText('Password is required')).toBeInTheDocument();
-    expect(await screen.findByText('Confirm password')).toBeInTheDocument();
-    expect(await screen.findByText('Gender is required')).toBeInTheDocument();
-    expect(
-      await screen.findByText('You must accept Terms and Conditions agreement')
-    ).toBeInTheDocument();
-    expect(await screen.findByText('File is required')).toBeInTheDocument();
-    expect(await screen.findByText('Country is required')).toBeInTheDocument();
-  });
-
-  it('validates name', async () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
+  it('validates username', async () => {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
       preloadedState: {
         data: {
           countries: ['USA', 'Canada', 'Brazil'],
@@ -81,15 +54,8 @@ describe('UncontrolledForm', () => {
     });
 
     const nameInput = screen.getByPlaceholderText('Name');
-    fireEvent.change(nameInput, { target: { value: 'john' } });
-    fireEvent.click(screen.getByText('Submit'));
-
-    expect(
-      await screen.findByText('The first letter must be capitalized')
-    ).toBeInTheDocument();
 
     fireEvent.change(nameInput, { target: { value: 'John' } });
-    fireEvent.click(screen.getByText('Submit'));
 
     await whenStable();
 
@@ -99,7 +65,7 @@ describe('UncontrolledForm', () => {
   });
 
   it('validates email', async () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
       preloadedState: {
         data: {
           countries: ['USA', 'Canada', 'Brazil'],
@@ -123,7 +89,7 @@ describe('UncontrolledForm', () => {
   });
 
   it('validates password', async () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
       preloadedState: {
         data: {
           countries: ['USA', 'Canada', 'Brazil'],
@@ -155,7 +121,7 @@ describe('UncontrolledForm', () => {
   });
 
   it('validates file', async () => {
-    renderWithProviders(<UncontrolledForm close={mockClose} />, {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
       preloadedState: {
         data: {
           countries: ['USA', 'Canada', 'Brazil'],
@@ -184,5 +150,19 @@ describe('UncontrolledForm', () => {
     expect(
       screen.queryByText('Unsupported format (png | jpeg)')
     ).not.toBeInTheDocument();
+  });
+
+  it('disables submit', async () => {
+    renderWithProviders(<ControlledForm close={mockClose} />, {
+      preloadedState: {
+        data: {
+          countries: ['USA', 'Canada', 'Brazil'],
+          data: [],
+        },
+      },
+    });
+
+    const submitButton = screen.getByText('Submit');
+    expect(submitButton).toBeDisabled();
   });
 });
