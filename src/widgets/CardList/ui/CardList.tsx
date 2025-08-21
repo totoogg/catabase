@@ -1,13 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import cls from './CardList.module.css';
 import {
-  CardTypes,
   LOCAL_SEARCH,
-  selectErrorHome,
-  selectIsLoader,
-  useAppSelector,
+  transformError,
+  useGetCatsQuery,
   useGetLocalData,
-  useLazyGetCatsQuery,
 } from '@/shared';
 import { Card } from '@/entities';
 import { SkeletonLoading } from './SkeletonLoading';
@@ -22,79 +19,65 @@ export const CardList: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { value: localValue } = useGetLocalData();
 
-  const [fetchCats] = useLazyGetCatsQuery();
-  const isLoading = useAppSelector(selectIsLoader);
-  const error = useAppSelector(selectErrorHome);
-  const [cards, setCards] = useState<CardTypes[] | null>(null);
+  const { isFetching, isError, data, error } = useGetCatsQuery(
+    {
+      search: local ?? '',
+      page: currentPage,
+    },
+    { skip: firstRendering }
+  );
 
   const page = parseInt(params.get('page') || '1');
 
   useEffect(() => {
-    const fetchReq = async (val?: string) => {
-      setLocal(val ?? '');
-
-      setCurrentPage(page);
-
-      const res = await fetchCats({
-        search: val ?? '',
-        page,
-      });
-
-      setCards(res.data ?? null);
-    };
-
     const changeLocalStorage = (event: Event) => {
       const customEvent = event as CustomEvent & {
         newValue: string;
       };
 
       if (local !== customEvent.newValue) {
-        fetchReq(customEvent.newValue ?? '');
+        setLocal(customEvent.newValue ?? '');
         setParams({ page: '1' });
+        setCurrentPage(page);
         localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
       }
     };
 
     window.addEventListener('localStorageChanged', changeLocalStorage);
 
-    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
-      fetchReq(local);
-    }
-
-    if (localValue !== undefined && firstRendering) {
-      fetchReq(localValue);
-      setFirstRendering(false);
-    }
-
     return () => {
       window.removeEventListener('localStorageChanged', changeLocalStorage);
     };
-  }, [
-    currentPage,
-    fetchCats,
-    firstRendering,
-    local,
-    localValue,
-    page,
-    params,
-    setParams,
-  ]);
+  }, [local, page, setParams]);
 
-  if (error) {
-    return <p className={cls.error}>{error}</p>;
+  useEffect(() => {
+    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
+      setLocal(local ?? '');
+      setCurrentPage(page);
+    }
+
+    if (localValue !== undefined && firstRendering) {
+      setLocal(localValue ?? '');
+      setCurrentPage(page);
+      setFirstRendering(false);
+    }
+  }, [currentPage, firstRendering, local, localValue, page, params]);
+
+  if (isError) {
+    return <p className={cls.error}>{transformError(String(error))}</p>;
   }
 
-  if (isLoading || !cards) {
+  if (isFetching || !data) {
     return <SkeletonLoading />;
   }
 
-  if (cards.length === 0) {
+  if (data.length === 0) {
     return <NotFound text={local} />;
   }
 
   return (
     <div className={cls.CardList}>
-      {cards.map((el) => (
+      {data.map((el) => (
         <Card card={el} key={el.id}>
           <ButtonDetail
             className={cls.more}

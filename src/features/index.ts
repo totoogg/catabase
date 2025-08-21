@@ -5,3 +5,4 @@ export * from './Download';
 export * from './Select';
 export * from './ButtonDetail';
 export * from './ToggleTheme';
+export * from './ResetCache';

@@ -1,10 +1,8 @@
 import {
   AppImage,
   CardTypes,
-  selectErrorDetail,
-  selectIsLoader,
   transformDataForCard,
-  useAppSelector,
+  transformError,
 } from '@/shared';
 import { useParams } from 'react-router';
 import cls from './CardId.module.css';
@@ -14,16 +12,14 @@ import { useGetCatByIdQuery } from '../model/slice/apiSliceWithCatById';
 export const CardId = () => {
   const { catId } = useParams();
 
-  const { data } = useGetCatByIdQuery(catId || '');
-  const isLoading = useAppSelector(selectIsLoader);
-  const error = useAppSelector(selectErrorDetail);
+  const { data, isFetching, isError, error } = useGetCatByIdQuery(catId || '');
 
-  if (isLoading) {
+  if (isFetching) {
     return <SkeletonLoading />;
   }
 
-  if (error) {
-    return <div className={cls.error}>{error}</div>;
+  if (isError) {
+    return <div className={cls.error}>{transformError(String(error))}</div>;
   }
 
   if (!data) {
@@ -40,7 +36,7 @@ export const CardId = () => {
         className={cls.cardImage}
         src={imageUrl}
         alt={name}
-        height="800"
+        height="800px"
       />
       <div className={cls.cardBlock}>
         {attribs.map((item) => (

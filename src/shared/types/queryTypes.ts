@@ -3,5 +3,5 @@ export interface Meta {
 }
 
 export interface ResError {
-  error: { status: number };
+  status: string;
 }

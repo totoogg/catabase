@@ -1,17 +1,8 @@
+import { BaseQueryFn } from '@reduxjs/toolkit/query';
 import { URL } from '../consts/api';
-import {
-  BaseQueryFn,
-  createApi,
-  fetchBaseQuery,
-} from '@reduxjs/toolkit/query/react';
-import { setLoader } from './loader/loaderSlice';
-import { setErrorDetail, setErrorHome } from './error/errorSlice';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
-  api.dispatch(setLoader(true));
-  api.dispatch(setErrorDetail(''));
-  api.dispatch(setErrorHome(''));
-
   try {
     const result = await fetchBaseQuery({ baseUrl: URL })(
       args,
@@ -20,8 +11,9 @@ const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
     );
 
     return result;
-  } finally {
-    api.dispatch(setLoader(false));
+  } catch (error) {
+    console.error('API Error:', error);
+    return { error };
   }
 };
 
@@ -29,4 +21,5 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: customBaseQuery,
   endpoints: () => ({}),
+  keepUnusedDataFor: 30,
 });

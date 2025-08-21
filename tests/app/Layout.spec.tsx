@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Layout } from '../../src/app/layout/Layout';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
+import { renderWithProviders } from '../test-utils';
 
 const Child = () => {
   return <div data-testid="child" />;
@@ -23,7 +24,7 @@ beforeEach(() => {
 
 describe('Layout', () => {
   it('renders Layout', () => {
-    const { container } = render(
+    const { container } = renderWithProviders(
       <MemoryRouter>
         <Layout>
           <Child />

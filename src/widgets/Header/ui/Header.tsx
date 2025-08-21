@@ -1,5 +1,5 @@
 import cls from './Header.module.css';
-import { Search, ToggleTheme } from '@/features';
+import { ResetCache, Search, ToggleTheme } from '@/features';
 
 export const Header = () => {
   return (
@@ -8,6 +8,7 @@ export const Header = () => {
         <div className={cls.content}>
           <Search />
           <ToggleTheme />
+          <ResetCache />
         </div>
       </div>
     </div>
