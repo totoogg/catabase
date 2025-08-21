@@ -1,8 +1,8 @@
-import { Button } from '@/components/Button/Button';
-import { Modal } from '@/components/Modal/Modal';
 import { useState } from 'react';
 import { ControlledForm } from '../ControlledForm/ControlledForm';
 import { UncontrolledForm } from '../UncontrolledForm/UncontrolledForm';
+import cls from './Header.module.css';
+import { Button, Modal } from '@/components';
 
 export const Header = () => {
   const [showModal, setShowModal] = useState<string | null>(null);
@@ -18,12 +18,12 @@ export const Header = () => {
   };
 
   return (
-    <div>
+    <header className={cls.header}>
       <Button variant="filled" onClick={handleShowForm('uncontrolled')}>
-        UncontrolledForm
+        Uncontrolled Form
       </Button>
       <Button variant="filled" onClick={handleShowForm('controlled')}>
-        ControlledForm
+        Controlled Form
       </Button>
 
       {showModal === 'controlled' && (
@@ -36,6 +36,6 @@ export const Header = () => {
           <UncontrolledForm />
         </Modal>
       )}
-    </div>
+    </header>
   );
 };

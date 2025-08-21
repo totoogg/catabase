@@ -16,6 +16,7 @@ body {
   max-width: 1400px;
   margin: auto;
   display: flex;
+  background-color: #fff7ed;
   flex-direction: column;
 }
 
@@ -40,5 +41,5 @@ a {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #fff7ed;
+  padding: 20px;
 }
