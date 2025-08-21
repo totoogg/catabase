@@ -64,9 +64,7 @@ export const CardList: FC = () => {
   }, [currentPage, firstRendering, local, localValue, page, params]);
 
   if (isError) {
-    const errorStatus = error !== undefined ? String(error) : '1';
-
-    return <p className={cls.error}>{transformError(errorStatus)}</p>;
+    return <p className={cls.error}>{transformError(String(error))}</p>;
   }
 
   if (isFetching || !data) {

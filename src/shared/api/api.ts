@@ -12,7 +12,7 @@ const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 
     return result;
   } catch (error) {
-    console.error('Error:', error);
+    console.error('API Error:', error);
     return { error };
   }
 };

@@ -19,9 +19,7 @@ export const CardId = () => {
   }
 
   if (isError) {
-    const errorStatus = error !== undefined ? String(error) : '1';
-
-    return <div className={cls.error}>{transformError(errorStatus)}</div>;
+    return <div className={cls.error}>{transformError(String(error))}</div>;
   }
 
   if (!data) {
