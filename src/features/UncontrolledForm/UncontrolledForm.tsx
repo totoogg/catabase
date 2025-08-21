@@ -77,6 +77,7 @@ export const UncontrolledForm: FC<UncontrolledFormProps> = ({ close }) => {
 
   return (
     <form onSubmit={handleSubmit} className={cls.form}>
+      <h2 className={cls.title}>Uncontrolled Form</h2>
       <label className={cls.label} htmlFor="name">
         Name*
       </label>

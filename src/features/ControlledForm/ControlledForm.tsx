@@ -64,6 +64,7 @@ export const ControlledForm: FC<ControlledForm> = ({ close }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cls.form}>
+      <h2 className={cls.title}>Controlled Form</h2>
       <label className={cls.label} htmlFor="name">
         Name*
       </label>

@@ -29,7 +29,7 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     addData: (state, action: PayloadAction<Data>) => {
-      state.data = [action.payload, ...state.data];
+      state.data.push(action.payload);
     },
   },
 });

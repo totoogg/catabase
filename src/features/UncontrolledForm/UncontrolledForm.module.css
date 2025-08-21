@@ -4,6 +4,10 @@
   flex-direction: column;
 }
 
+.title {
+  margin-bottom: 20px;
+}
+
 .label {
   margin-bottom: 1rem;
 }

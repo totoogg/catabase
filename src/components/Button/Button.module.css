@@ -35,6 +35,7 @@
 }
 
 .filled.normal {
+  font-size: 5rem;
   background: #ff8904;
   color: #fff7ed;
 }
