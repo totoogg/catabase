@@ -1,3 +1,4 @@
+import { countries } from '@/const/countries';
 import { RootState } from '@/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -15,10 +16,12 @@ export interface Data {
 
 export interface IData {
   data: Data[];
+  countries: string[];
 }
 
 const initialState: IData = {
   data: [],
+  countries: countries,
 };
 
 const dataSlice = createSlice({
@@ -26,7 +29,7 @@ const dataSlice = createSlice({
   initialState,
   reducers: {
     addData: (state, action: PayloadAction<Data>) => {
-      state.data.push(action.payload);
+      state.data = [action.payload, ...state.data];
     },
   },
 });
@@ -34,5 +37,6 @@ const dataSlice = createSlice({
 export const { addData } = dataSlice.actions;
 
 export const selectData = (state: RootState) => state.data.data;
+export const selectCountries = (state: RootState) => state.data.countries;
 
 export default dataSlice.reducer;
