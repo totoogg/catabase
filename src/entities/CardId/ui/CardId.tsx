@@ -18,9 +18,7 @@ export const CardId: FC<CardIdProps> = async ({ id }) => {
 
   if (status > 399) {
     return (
-      <div className={cls.error}>
-        {await transformError(String(status) || '1')}
-      </div>
+      <div className={cls.error}>{await transformError(String(status))}</div>
     );
   }
 
