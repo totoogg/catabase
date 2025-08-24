@@ -1,0 +1,8 @@
+.text {
+  display: flex;
+  font-size: 4rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: var(--errorBtn);
+}

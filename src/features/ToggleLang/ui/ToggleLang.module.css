@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+button.button {
+  border-radius: 0px;
+}
+
+button.active {
+  opacity: 0.8;
+}

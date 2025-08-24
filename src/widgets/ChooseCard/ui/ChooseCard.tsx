@@ -1,12 +1,16 @@
+'use client';
+
 import { Button, CardTypes, useAppDispatch, useAppSelector } from '@/shared';
 import cls from './ChooseCard.module.css';
 import { Download } from '@/features';
 import { Choose, removeAll, selectChoose, selectCountChoose } from '@/entities';
+import { useTranslations } from 'next-intl';
 
 export const ChooseCard = () => {
   const count = useAppSelector(selectCountChoose);
   const choose = useAppSelector(selectChoose);
   const dispatch = useAppDispatch();
+  const t = useTranslations('Buttons');
 
   const handleRemove = () => {
     dispatch(removeAll());
@@ -23,7 +27,7 @@ export const ChooseCard = () => {
       <Choose />
       <div className={cls.buttons}>
         <Button variant="filled" colorBtn="success" onClick={handleRemove}>
-          Unselect all
+          {t('unselect')}
         </Button>
         <Download data={data} />
       </div>

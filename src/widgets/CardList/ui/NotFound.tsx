@@ -1,18 +1,15 @@
 import { FC } from 'react';
 import cls from './CardList.module.css';
+import { useTranslations } from 'next-intl';
 
 interface NotFoundProps {
   text: string;
 }
 
 export const NotFound: FC<NotFoundProps> = ({ text }) => {
-  return (
-    <p className={cls.notFound}>
-      No cat with the name &quot;
-      {text}
-      &quot; found
-    </p>
-  );
+  const t = useTranslations('HomePage');
+
+  return <p className={cls.notFound}>{t('NotFound', { text })}</p>;
 };
 
 NotFound.displayName = 'NotFound';

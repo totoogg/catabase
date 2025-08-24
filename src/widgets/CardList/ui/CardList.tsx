@@ -1,88 +1,44 @@
-import { FC, useEffect, useState } from 'react';
+'use client';
+
+import { FC } from 'react';
 import cls from './CardList.module.css';
-import {
-  LOCAL_SEARCH,
-  transformError,
-  useGetCatsQuery,
-  useGetLocalData,
-} from '@/shared';
+import { Button, CardTypes, CustomLink, transformError } from '@/shared';
 import { Card } from '@/entities';
-import { SkeletonLoading } from './SkeletonLoading';
 import { NotFound } from './NotFound';
-import { useSearchParams } from 'react-router';
-import { ButtonDetail, Select } from '@/features';
+import { Select } from '@/features';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
-export const CardList: FC = () => {
-  const [local, setLocal] = useState('');
-  const [params, setParams] = useSearchParams();
-  const [firstRendering, setFirstRendering] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const { value: localValue } = useGetLocalData();
+interface CardListProps {
+  data: CardTypes[];
+  status: number;
+}
 
-  const { isFetching, isError, data, error } = useGetCatsQuery(
-    {
-      search: local ?? '',
-      page: currentPage,
-    },
-    { skip: firstRendering }
-  );
+export const CardList: FC<CardListProps> = ({ data, status }) => {
+  const params = useSearchParams();
+  const t = useTranslations('HomePage');
 
   const page = parseInt(params.get('page') || '1');
 
-  useEffect(() => {
-    const changeLocalStorage = (event: Event) => {
-      const customEvent = event as CustomEvent & {
-        newValue: string;
-      };
+  const query = params.get('query') || '';
 
-      if (local !== customEvent.newValue) {
-        setLocal(customEvent.newValue ?? '');
-        setParams({ page: '1' });
-        setCurrentPage(page);
-        localStorage.setItem(LOCAL_SEARCH, customEvent.newValue);
-      }
-    };
-
-    window.addEventListener('localStorageChanged', changeLocalStorage);
-
-    return () => {
-      window.removeEventListener('localStorageChanged', changeLocalStorage);
-    };
-  }, [local, page, setParams]);
-
-  useEffect(() => {
-    if (currentPage !== Number(params.get('page') ?? 1) && !firstRendering) {
-      setLocal(local ?? '');
-      setCurrentPage(page);
-    }
-
-    if (localValue !== undefined && firstRendering) {
-      setLocal(localValue ?? '');
-      setCurrentPage(page);
-      setFirstRendering(false);
-    }
-  }, [currentPage, firstRendering, local, localValue, page, params]);
-
-  if (isError) {
-    return <p className={cls.error}>{transformError(String(error))}</p>;
-  }
-
-  if (isFetching || !data) {
-    return <SkeletonLoading />;
+  if (status > 399) {
+    return <p className={cls.error}>{transformError(String(status))}</p>;
   }
 
   if (data.length === 0) {
-    return <NotFound text={local} />;
+    return <NotFound text={query || ''} />;
   }
 
   return (
     <div className={cls.CardList}>
       {data.map((el) => (
         <Card card={el} key={el.id}>
-          <ButtonDetail
-            className={cls.more}
-            link={`cats/${el.id}?page=${page}`}
-          />
+          <CustomLink href={`cats/${el.id}?page=${page}`} className={cls.more}>
+            <Button className={cls.more} variant="filled" colorBtn="success">
+              {t('ReadMore')}
+            </Button>
+          </CustomLink>
           <Select data={el} />
         </Card>
       ))}

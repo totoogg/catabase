@@ -3,6 +3,6 @@ export * from './ButtonPage';
 export * from './Close';
 export * from './Download';
 export * from './Select';
-export * from './ButtonDetail';
 export * from './ToggleTheme';
 export * from './ResetCache';
+export * from './ToggleLang';

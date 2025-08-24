@@ -1,24 +1,24 @@
 import cls from './School.module.css';
+import { useTranslations } from 'next-intl';
 
 export const School = () => {
+  const t = useTranslations('AboutPage');
+
   return (
     <div className={cls.school}>
       <a
         href="https://rs.school/react/"
         target="_blank"
         rel="noopener noreferrer"
+        className={cls.link}
       >
         <div className={cls.logo}></div>
         <div>
-          <h3>RS School React</h3>
-          <p>Course on modern React development</p>
+          <h3>{t('titleSchool')}</h3>
+          <p>{t('titleDescribe')}</p>
         </div>
       </a>
-      <p>
-        RS School is a free educational program with a practical focus. The
-        course covers modern approaches to React development, including hooks,
-        TypeScript, testing, and performance optimization.
-      </p>
+      <p>{t('describeSchool')}</p>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.Layout {
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: var(--background);
+}
+
+.showCatById {
+  overflow-y: hidden;
+  position: relative;
+  height: 100vh;
+}
+
+.dark {
+  --background: var(--blue-100);
+  --header: var(--gray-10);
+  --footer: var(--gray-40);
+  --card: var(--black);
+  --cardBorder: var(--gray-10);
+  --svgColor: var(--white-95);
+  --overlay: var(--overlay-dark);
+  --backgroundBtnLight: var(--blue-80);
+  --backgroundBtnDark: var(--beige);
+  --colorBtnLight: var(--gray-10);
+  --skeletonLight: var(--gray-40);
+  --skeletonDark: var(--gray-70);
+  --pagination: var(--gray-70);
+}

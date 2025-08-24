@@ -8,7 +8,7 @@ import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage'] },
+  { ignores: ['dist', 'coverage', 'build', '.next'] },
   {
     extends: [
       js.configs.recommended,
@@ -37,6 +37,7 @@ export default tseslint.config(
       ...react.configs['jsx-runtime'].rules,
       'react/prop-types': 'off',
       '@typescript-eslint/no-dynamic-delete': 'off',
+      'react-refresh/only-export-components': 'off',
     },
     settings: {
       react: {

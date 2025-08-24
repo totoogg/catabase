@@ -19,13 +19,13 @@ export const Button: FC<ButtonProps> = (props) => {
     ...otherProps
   } = props;
 
-  const classes = [cls[variant], cls[colorBtn], cls.button, className].join(
+  const classes = [className, cls[variant], cls[colorBtn], cls.button].join(
     ' '
   );
 
   return (
     <button className={classes} {...otherProps}>
-      {children ?? 'Button'}
+      {children ?? ''}
     </button>
   );
 };

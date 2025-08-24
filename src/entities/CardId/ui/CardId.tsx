@@ -1,25 +1,25 @@
 import {
   AppImage,
   CardTypes,
+  getCardById,
   transformDataForCard,
   transformError,
 } from '@/shared';
-import { useParams } from 'react-router';
 import cls from './CardId.module.css';
-import { SkeletonLoading } from './SkeletonLoading';
-import { useGetCatByIdQuery } from '../model/slice/apiSliceWithCatById';
+import { FC } from 'react';
+import { getTranslations } from 'next-intl/server';
 
-export const CardId = () => {
-  const { catId } = useParams();
+interface CardIdProps {
+  id: string;
+}
 
-  const { data, isFetching, isError, error } = useGetCatByIdQuery(catId || '');
+export const CardId: FC<CardIdProps> = async ({ id }) => {
+  const { status, res: data } = await getCardById(id);
 
-  if (isFetching) {
-    return <SkeletonLoading />;
-  }
-
-  if (isError) {
-    return <div className={cls.error}>{transformError(String(error))}</div>;
+  if (status > 399) {
+    return (
+      <div className={cls.error}>{await transformError(String(status))}</div>
+    );
   }
 
   if (!data) {
@@ -28,7 +28,24 @@ export const CardId = () => {
 
   const { name, imageUrl } = data as CardTypes;
 
-  const attribs = transformDataForCard(data as CardTypes, true);
+  const t = await getTranslations('Data');
+
+  const translate = {
+    name: t('name'),
+    breed: t('breed'),
+    age: t('age'),
+    weight: t('weight'),
+    dailyFood: t('dailyFood'),
+    lastVetVisit: t('lastVetVisit'),
+    adoptionDate: t('adoptionDate'),
+    temperament: t('temperament'),
+    likes: t('likes'),
+    dislikes: t('dislikes'),
+    owner: t('owner'),
+    medicalRecords: t('medicalRecords'),
+  };
+
+  const attribs = transformDataForCard(translate, data as CardTypes, true);
 
   return (
     <div className={cls.content}>
@@ -36,7 +53,7 @@ export const CardId = () => {
         className={cls.cardImage}
         src={imageUrl}
         alt={name}
-        height="800px"
+        height="650px"
       />
       <div className={cls.cardBlock}>
         {attribs.map((item) => (

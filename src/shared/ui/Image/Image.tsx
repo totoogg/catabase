@@ -1,7 +1,11 @@
+'use client';
+
 import { FC, useEffect, useState } from 'react';
 import ImageError from '../../assets/icons/imgError.svg';
 import cls from './Image.module.css';
 import { Skeleton } from '../Skeleton/Skeleton';
+import ImageNext from 'next/image';
+import { useTranslations } from 'next-intl';
 
 interface ImageProps {
   src: string;
@@ -14,6 +18,7 @@ export const AppImage: FC<ImageProps> = (props) => {
   const { alt, src, height, className } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const t = useTranslations('Error');
 
   useEffect(() => {
     const { src } = props;
@@ -31,23 +36,31 @@ export const AppImage: FC<ImageProps> = (props) => {
   });
 
   if (!isLoading) {
-    return <Skeleton width={250} height={height} />;
+    return <Skeleton width="100%" height={height} />;
   }
 
   if (hasError) {
     return (
-      <div className={cls.Image}>
-        <ImageError />
-      </div>
+      <ImageNext
+        height={parseInt(height)}
+        width={parseInt(height)}
+        src={ImageError}
+        alt={t('error')}
+        priority
+        className={[cls.Image, className].join(' ')}
+      />
     );
   }
 
   return (
-    <img
+    <ImageNext
       className={[cls.Image, className].join(' ')}
-      height={height}
+      height={parseInt(height)}
+      width={parseInt(height)}
       src={src}
       alt={alt}
+      unoptimized
+      priority
     />
   );
 };

@@ -1,4 +1,4 @@
-.toggle {
+button.toggle {
   border-radius: 50%;
   width: 60px;
   display: flex;
@@ -6,4 +6,15 @@
   justify-content: center;
   fill: black;
   padding: 0;
+  height: 50px;
+}
+
+.moon {
+  background-image: url('../../../shared/assets//icons/moon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sun {
+  background-image: url('../../../shared/assets//icons/sun.svg');
 }

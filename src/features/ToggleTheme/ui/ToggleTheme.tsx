@@ -1,8 +1,8 @@
+'use client';
+
 import { Button, ThemeContext } from '@/shared';
 import cls from './ToggleTheme.module.css';
 import { useCallback, useContext } from 'react';
-import Sun from '@/shared/assets/icons/sun.svg';
-import Moon from '@/shared/assets/icons/moon.svg';
 
 export const ToggleTheme = () => {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -14,8 +14,9 @@ export const ToggleTheme = () => {
   }, [setTheme, theme]);
 
   return (
-    <Button className={cls.toggle} onClick={toggleTheme}>
-      {theme === 'light' ? <Moon /> : <Sun />}
-    </Button>
+    <Button
+      className={[cls.toggle, theme === 'light' ? cls.moon : cls.sun].join(' ')}
+      onClick={toggleTheme}
+    ></Button>
   );
 };

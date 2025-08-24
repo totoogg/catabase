@@ -1,3 +1,5 @@
+'use client';
+
 import { Component, ErrorInfo, ReactNode, Suspense } from 'react';
 
 interface ErrorBoundaryProps {
