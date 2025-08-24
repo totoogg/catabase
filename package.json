@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "i18n:check": "i18n-check --source en --locales messages"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
