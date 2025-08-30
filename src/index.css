@@ -13,7 +13,6 @@ html {
 body {
   font-size: 1.5rem;
   width: 100%;
-  max-width: 1400px;
   margin: auto;
   display: flex;
   background-color: #fff7ed;
@@ -41,5 +40,4 @@ a {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px;
 }

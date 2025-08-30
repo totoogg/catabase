@@ -1,31 +1,33 @@
 import { useState } from 'react';
 import cls from './Header.module.css';
 import { Button, Modal } from '@/components';
+import { Search } from './Search';
+import { Sort } from './Sort';
+import { ChooseYear } from './ChooseYear';
 
 export const Header = () => {
-  const [showModal, setShowModal] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const close = () => {
-    setShowModal(null);
+    setShowModal(false);
   };
 
-  const handleShowForm = (name: string) => {
-    return () => {
-      setShowModal(name);
-    };
-  };
+  const handleShowModal = () => setShowModal(true);
 
   return (
     <header className={cls.header}>
-      <Button variant="filled" onClick={handleShowForm('uncontrolled')}>
-        Uncontrolled Form
-      </Button>
-      <Button variant="filled" onClick={handleShowForm('controlled')}>
-        Controlled Form
-      </Button>
+      <div className={cls.wrapper}>
+        <Search />
+        <div className={cls.actions}>
+          <Sort />
+          <ChooseYear />
+          <Button variant="filled" onClick={handleShowModal}>
+            Set Column
+          </Button>
+        </div>
+      </div>
 
-      {showModal === 'controlled' && <Modal onClose={close}>asd</Modal>}
-      {showModal === 'uncontrolled' && <Modal onClose={close}>asd</Modal>}
+      {showModal && <Modal onClose={close}>asd</Modal>}
     </header>
   );
 };
