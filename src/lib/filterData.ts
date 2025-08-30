@@ -32,9 +32,9 @@ export function filterData(
   result = result.sort((a, b) => {
     const choseYear = Number(selectedYear);
     if (sortConfig === 'nameCountryUp') {
-      return a.country.localeCompare(b.country);
-    } else if (sortConfig === 'nameCountryDown') {
       return b.country.localeCompare(a.country);
+    } else if (sortConfig === 'nameCountryDown') {
+      return a.country.localeCompare(b.country);
     } else if (sortConfig === 'populationUp') {
       return choseYear
         ? Number(a.data.find((el) => el.year === choseYear)?.population) -

@@ -1,69 +1,41 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Before optimization (sort)
 
-Currently, two official plugins are available:
+- Component Table rendering duration - 65.9ms
+- Total rendering duration - 1151.9ms
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![before optimization flamegraph](./profile/sort1.png)
+![before optimization ranked](./profile/sort2.png)
 
-## Expanding the ESLint configuration
+## Before optimization (select)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Component Table rendering duration - 62.3ms
+- Total rendering duration - 1243.3ms
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![before optimization flamegraph](./profile/select1.png)
+![before optimization ranked](./profile/select2.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Before optimization (search)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Component Table rendering duration - 69.4ms
+- Total rendering duration - 1224.1ms
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+![before optimization flamegraph](./profile/search1.png)
+![before optimization ranked](./profile/search2.png)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Before optimization (add column)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Component Table rendering duration - 1119.2ms
+- Total rendering duration - 3072.6ms
+
+![before optimization flamegraph](./profile/add1.png)
+![before optimization ranked](./profile/add2.png)
+
+## Before optimization (remove column)
+
+- Component Table rendering duration - 82.7ms
+- Total rendering duration - 1649.1ms
+
+![before optimization flamegraph](./profile/remove1.png)
+![before optimization ranked](./profile/remove2.png)
