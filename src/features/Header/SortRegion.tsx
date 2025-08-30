@@ -10,7 +10,6 @@ const sort = [
   'South America',
   'Oceania',
   'Middle East',
-  'Global',
   'Antarctica',
 ];
 

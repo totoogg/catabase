@@ -2,7 +2,7 @@ import { Selector } from '@/components';
 import cls from './Header.module.css';
 import { FC } from 'react';
 
-const years = Array.from({ length: 2024 - 1750 }, (_, i) => `${1750 + i}`);
+const years = Array.from({ length: 2024 - 1750 }, (_, i) => `${2023 - i}`);
 
 interface ChooseYearProps {
   onChange: (value: string) => void;

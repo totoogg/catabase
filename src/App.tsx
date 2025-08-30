@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Header } from './features/Header/Header';
 import { Main } from './features/Main/Main';
 import { Loader } from './components';
@@ -9,14 +9,6 @@ export function App() {
   const [year, setYear] = useState('');
   const [region, setRegion] = useState('');
   const [columns, setColumns] = useState(['year', 'population']);
-
-  useEffect(() => {
-    console.log('search', search);
-    console.log('sort', sort);
-    console.log('year', year);
-    console.log('columns', columns);
-    console.log('columns', region);
-  }, [columns, region, search, sort, year]);
 
   return (
     <>
