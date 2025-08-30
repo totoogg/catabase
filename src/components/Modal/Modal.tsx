@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useRef } from 'react';
+import { FC, memo, MouseEvent, useEffect, useRef } from 'react';
 import cls from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import { Button } from '../Button/Button';
@@ -8,7 +8,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export const Modal: FC<ModalProps> = ({ children, onClose }) => {
+export const Modal: FC<ModalProps> = memo(({ children, onClose }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const handleClickOverview = (event: MouseEvent) => {
@@ -43,4 +43,6 @@ export const Modal: FC<ModalProps> = ({ children, onClose }) => {
     </div>,
     document.body
   );
-};
+});
+
+Modal.displayName = 'Modal';

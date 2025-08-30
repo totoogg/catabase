@@ -1,5 +1,5 @@
 import { Selector } from '@/components';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 import cls from './Header.module.css';
 
 const sort = [
@@ -17,10 +17,13 @@ interface SortRegionProps {
   onChange: (value: string) => void;
 }
 
-export const SortRegion: FC<SortRegionProps> = ({ onChange }) => {
-  const handleSelect = (option: string) => {
-    onChange(option);
-  };
+export const SortRegion: FC<SortRegionProps> = memo(({ onChange }) => {
+  const handleSelect = useCallback(
+    (option: string) => {
+      onChange(option);
+    },
+    [onChange]
+  );
 
   return (
     <div className={cls.sort}>
@@ -33,4 +36,6 @@ export const SortRegion: FC<SortRegionProps> = ({ onChange }) => {
       />
     </div>
   );
-};
+});
+
+SortRegion.displayName = 'SortRegion';

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import cls from './Main.module.css';
 import { IData } from '@/types/types';
 
@@ -7,7 +7,7 @@ interface TableProps {
   selectedColumns: string[];
 }
 
-export const Table: FC<TableProps> = ({ data, selectedColumns }) => {
+export const Table: FC<TableProps> = memo(({ data, selectedColumns }) => {
   const [highlight, setHighlight] = useState(false);
 
   useEffect(() => {
@@ -46,4 +46,6 @@ export const Table: FC<TableProps> = ({ data, selectedColumns }) => {
       </tbody>
     </table>
   );
-};
+});
+
+Table.displayName = 'Table';

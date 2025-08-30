@@ -1,6 +1,6 @@
 import { Selector } from '@/components';
 import cls from './Header.module.css';
-import { FC } from 'react';
+import { FC, memo, useCallback } from 'react';
 
 const years = Array.from({ length: 2024 - 1750 }, (_, i) =>
   i === 0 ? 'All years' : `${2024 - i}`
@@ -10,10 +10,13 @@ interface ChooseYearProps {
   onChange: (value: string) => void;
 }
 
-export const ChooseYear: FC<ChooseYearProps> = ({ onChange }) => {
-  const handleChange = (value: string) => {
-    onChange(value);
-  };
+export const ChooseYear: FC<ChooseYearProps> = memo(({ onChange }) => {
+  const handleChange = useCallback(
+    (value: string) => {
+      onChange(value);
+    },
+    [onChange]
+  );
 
   return (
     <div className={cls.year}>
@@ -26,4 +29,6 @@ export const ChooseYear: FC<ChooseYearProps> = ({ onChange }) => {
       />
     </div>
   );
-};
+});
+
+ChooseYear.displayName = 'ChooseYear';

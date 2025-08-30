@@ -1,9 +1,9 @@
-import { Suspense, useState } from 'react';
+import { memo, Suspense, useState } from 'react';
 import { Header } from './features/Header/Header';
 import { Main } from './features/Main/Main';
 import { Loader } from './components';
 
-export function App() {
+export const App = memo(() => {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('');
   const [year, setYear] = useState('');
@@ -31,4 +31,6 @@ export function App() {
       </Suspense>
     </>
   );
-}
+});
+
+App.displayName = 'App';

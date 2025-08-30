@@ -1,4 +1,4 @@
-import { FC, use, useDeferredValue } from 'react';
+import { FC, memo, use, useDeferredValue, useMemo } from 'react';
 import cls from './Main.module.css';
 import { filterData } from '@/lib/filterData';
 import { fetchData } from '@/lib/fetchData';
@@ -17,53 +17,79 @@ interface MainProps {
 
 const userPromiseData = fetchData();
 
-export const Main: FC<MainProps> = ({
-  regionFilter,
-  searchQuery,
-  selectedColumns,
-  selectedYear,
-  sortConfig,
-}) => {
-  const deferredRegionFilter = useDeferredValue(regionFilter);
-  const deferredSearchQuery = useDeferredValue(searchQuery);
-  const deferredSortConfig = useDeferredValue(sortConfig);
-  const deferredSelectedYear = useDeferredValue(selectedYear);
+export const Main: FC<MainProps> = memo(
+  ({
+    regionFilter,
+    searchQuery,
+    selectedColumns,
+    selectedYear,
+    sortConfig,
+  }) => {
+    const deferredRegionFilter = useDeferredValue(regionFilter);
+    const deferredSearchQuery = useDeferredValue(searchQuery);
+    const deferredSortConfig = useDeferredValue(sortConfig);
+    const deferredSelectedYear = useDeferredValue(selectedYear);
 
-  const originData = use(userPromiseData);
+    const originData = use(userPromiseData);
 
-  const data = filterData(
-    originData,
-    deferredRegionFilter,
-    deferredSearchQuery,
-    deferredSortConfig,
-    deferredSelectedYear
-  );
+    const data = useMemo(
+      () =>
+        filterData(
+          originData,
+          deferredRegionFilter,
+          deferredSearchQuery,
+          deferredSortConfig,
+          deferredSelectedYear
+        ),
+      [
+        deferredRegionFilter,
+        deferredSearchQuery,
+        deferredSelectedYear,
+        deferredSortConfig,
+        originData,
+      ]
+    );
 
-  const isProcessing =
-    deferredRegionFilter !== regionFilter ||
-    deferredSearchQuery !== searchQuery ||
-    deferredSortConfig !== sortConfig ||
-    deferredSelectedYear !== selectedYear;
+    const isProcessing = useMemo(
+      () =>
+        deferredRegionFilter !== regionFilter ||
+        deferredSearchQuery !== searchQuery ||
+        deferredSortConfig !== sortConfig ||
+        deferredSelectedYear !== selectedYear,
+      [
+        deferredRegionFilter,
+        deferredSearchQuery,
+        deferredSelectedYear,
+        deferredSortConfig,
+        regionFilter,
+        searchQuery,
+        selectedYear,
+        sortConfig,
+      ]
+    );
 
-  return (
-    <main className={cls.main}>
-      {isProcessing && <Loader />}
+    return (
+      <main className={cls.main}>
+        {isProcessing && <Loader />}
 
-      {data.length > 0 ? (
-        <GridWrapper>
-          <GridHeader />
+        {data.length > 0 ? (
+          <GridWrapper>
+            <GridHeader />
 
-          {data.map((country) => (
-            <GridRow
-              key={country.country}
-              country={country}
-              selectedColumns={selectedColumns}
-            />
-          ))}
-        </GridWrapper>
-      ) : (
-        <p className={cls.empty}>No records found</p>
-      )}
-    </main>
-  );
-};
+            {data.map((country) => (
+              <GridRow
+                key={country.country}
+                country={country}
+                selectedColumns={selectedColumns}
+              />
+            ))}
+          </GridWrapper>
+        ) : (
+          <p className={cls.empty}>No records found</p>
+        )}
+      </main>
+    );
+  }
+);
+
+Main.displayName = 'Main';

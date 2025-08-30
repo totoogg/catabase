@@ -1,28 +1,31 @@
 import { Button, Input } from '@/components';
 import cls from './Header.module.css';
-import { FC, useState, KeyboardEvent } from 'react';
+import { FC, useState, KeyboardEvent, memo, useCallback } from 'react';
 
 interface SearchProps {
   onChange: (value: string) => void;
 }
 
-export const Search: FC<SearchProps> = ({ onChange }) => {
+export const Search: FC<SearchProps> = memo(({ onChange }) => {
   const [search, setSearch] = useState<string>('');
 
-  const onHandleSearch = () => {
+  const onHandleSearch = useCallback(() => {
     onChange(search);
-  };
+  }, [onChange, search]);
 
-  const getValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-  };
+  }, []);
 
-  const typeEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      onHandleSearch();
-    }
-  };
+  const typeEnter = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        onHandleSearch();
+      }
+    },
+    [onHandleSearch]
+  );
 
   return (
     <div className={cls.search}>
@@ -37,4 +40,6 @@ export const Search: FC<SearchProps> = ({ onChange }) => {
       </Button>
     </div>
   );
-};
+});
+
+Search.displayName = 'Search';
