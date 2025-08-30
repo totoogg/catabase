@@ -1,5 +1,6 @@
 import { Selector } from '@/components';
 import cls from './Header.module.css';
+import { FC } from 'react';
 
 const sort = [
   'Country name Z-A',
@@ -8,16 +9,20 @@ const sort = [
   'Population ↓',
 ];
 
-export const Sort = () => {
+interface SortProps {
+  onChange: (value: string) => void;
+}
+
+export const Sort: FC<SortProps> = ({ onChange }) => {
   const handleSelect = (option: string) => {
     if (option === 'Country name Z-A') {
-      console.log('nameCountryUp');
+      onChange('nameCountryUp');
     } else if (option === 'Country name A-Z') {
-      console.log('nameCountryDown');
+      onChange('nameCountryDown');
     } else if (option === 'Population ↑') {
-      console.log('populationUp');
+      onChange('populationUp');
     } else if (option === 'Population ↓') {
-      console.log('populationDown');
+      onChange('populationDown');
     }
   };
 

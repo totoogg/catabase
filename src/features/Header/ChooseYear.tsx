@@ -1,11 +1,16 @@
 import { Selector } from '@/components';
 import cls from './Header.module.css';
+import { FC } from 'react';
 
 const years = Array.from({ length: 2024 - 1750 }, (_, i) => `${1750 + i}`);
 
-export const ChooseYear = () => {
+interface ChooseYearProps {
+  onChange: (value: string) => void;
+}
+
+export const ChooseYear: FC<ChooseYearProps> = ({ onChange }) => {
   const handleChange = (value: string) => {
-    console.log(value);
+    onChange(value);
   };
 
   return (
