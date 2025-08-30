@@ -39,3 +39,47 @@
 
 ![before optimization flamegraph](./profile/remove1.png)
 ![before optimization ranked](./profile/remove2.png)
+
+## After optimization (sort)
+
+- Component Table rendering duration - 63ms
+- Total rendering duration - 74.9ms
+
+![after optimization flamegraph](./profile/sort3.png)
+![after optimization ranked](./profile/sort4.png)
+
+## After optimization (select)
+
+- Component Table rendering duration - 0ms
+- Total rendering duration - 140ms
+
+![after optimization flamegraph](./profile/select3.png)
+![after optimization ranked](./profile/select4.png)
+
+## After optimization (search)
+
+- Component Table rendering duration - 0ms
+- Total rendering duration - 16.4ms
+
+![after optimization flamegraph](./profile/search3.png)
+![after optimization ranked](./profile/search4.png)
+
+## After optimization (add column)
+
+- Component Table rendering duration - 166.4ms
+- Total rendering duration - 728.1ms
+
+![after optimization flamegraph](./profile/add3.png)
+![after optimization ranked](./profile/add4.png)
+
+## After optimization (remove column)
+
+- Component Table rendering duration - 92.6ms
+- Total rendering duration - 491.9ms
+
+![after optimization flamegraph](./profile/remove3.png)
+![after optimization ranked](./profile/remove4.png)
+
+## Conclusion
+
+Optimization reduced overall rendering time by **_~50%_**
