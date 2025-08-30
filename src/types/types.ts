@@ -13,5 +13,5 @@ export interface ICountry {
   region: string;
   iso_code: string | undefined;
   data: IData[];
-  population: number;
+  population: number | string;
 }

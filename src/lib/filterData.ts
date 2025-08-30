@@ -9,6 +9,19 @@ export function filterData(
 ): ICountry[] {
   let result = [...data];
 
+  if (Number(selectedYear)) {
+    result = result.map((el) => ({
+      ...el,
+      population:
+        Number(
+          el.data.find((item) => item.year === Number(selectedYear))?.population
+        ) || 'N/A',
+      data: el.data.filter((item) => item.year === Number(selectedYear)),
+    }));
+  } else {
+    result = [...data];
+  }
+
   result = result.filter((el) => {
     const matchesRegion = !regionFilter || el.region === regionFilter;
     const matchesSearch =
@@ -16,15 +29,6 @@ export function filterData(
       el.country.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesRegion && matchesSearch;
   });
-
-  if (selectedYear) {
-    result = result.map((el) => ({
-      ...el,
-      population: Number(
-        el.data.find((item) => item.year === Number(selectedYear))?.population
-      ),
-    }));
-  }
 
   result = result.sort((a, b) => {
     if (sortConfig === 'nameCountryUp') {

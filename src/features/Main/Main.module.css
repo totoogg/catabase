@@ -61,3 +61,10 @@
   padding: 10px;
   text-align: center;
 }
+
+
+.highlight {
+  background-color: #441306;
+  color: #ffedd4;
+  transition: all 0.5s ease;
+}
