@@ -16,7 +16,6 @@ export function filterData(
         Number(
           el.data.find((item) => item.year === Number(selectedYear))?.population
         ) || 'N/A',
-      data: el.data.filter((item) => item.year === Number(selectedYear)),
     }));
   } else {
     result = [...data];
@@ -31,14 +30,21 @@ export function filterData(
   });
 
   result = result.sort((a, b) => {
+    const choseYear = Number(selectedYear);
     if (sortConfig === 'nameCountryUp') {
       return a.country.localeCompare(b.country);
     } else if (sortConfig === 'nameCountryDown') {
       return b.country.localeCompare(a.country);
     } else if (sortConfig === 'populationUp') {
-      return Number(a.population || 0) - Number(b.population);
+      return choseYear
+        ? Number(a.data.find((el) => el.year === choseYear)?.population) -
+            Number(b.data.find((el) => el.year === choseYear)?.population)
+        : Number(a.population) - Number(b.population);
     } else if (sortConfig === 'populationDown') {
-      return Number(b.population) - Number(a.population);
+      return choseYear
+        ? Number(b.data.find((el) => el.year === choseYear)?.population) -
+            Number(a.data.find((el) => el.year === choseYear)?.population)
+        : Number(b.population) - Number(a.population);
     }
     return 0;
   });

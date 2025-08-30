@@ -49,17 +49,21 @@ export const Main: FC<MainProps> = ({
     <main className={cls.main}>
       {isProcessing && <Loader />}
 
-      <GridWrapper>
-        <GridHeader />
+      {data.length > 0 ? (
+        <GridWrapper>
+          <GridHeader />
 
-        {data.map((country) => (
-          <GridRow
-            key={country.country}
-            country={country}
-            selectedColumns={selectedColumns}
-          />
-        ))}
-      </GridWrapper>
+          {data.map((country) => (
+            <GridRow
+              key={country.country}
+              country={country}
+              selectedColumns={selectedColumns}
+            />
+          ))}
+        </GridWrapper>
+      ) : (
+        <p className={cls.empty}>No records found</p>
+      )}
     </main>
   );
 };
