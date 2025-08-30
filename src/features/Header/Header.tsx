@@ -5,11 +5,13 @@ import { Search } from './Search';
 import { Sort } from './Sort';
 import { ChooseYear } from './ChooseYear';
 import { SetColumn } from '../SetColumn/SetColumn';
+import { SortRegion } from './SortRegion';
 
 interface HeaderProps {
   onChangeSearch: (value: string) => void;
   onChangeSort: (value: string) => void;
   onChangeYear: (value: string) => void;
+  onChangeRegion: (value: string) => void;
   columns: string[];
   onChangeColumn: (value: string[]) => void;
 }
@@ -20,6 +22,7 @@ export const Header: FC<HeaderProps> = ({
   onChangeSearch,
   onChangeSort,
   onChangeYear,
+  onChangeRegion,
 }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -35,6 +38,7 @@ export const Header: FC<HeaderProps> = ({
         <Search onChange={onChangeSearch} />
         <div className={cls.actions}>
           <Sort onChange={onChangeSort} />
+          <SortRegion onChange={onChangeRegion} />
           <ChooseYear onChange={onChangeYear} />
           <Button variant="filled" onClick={handleShowModal}>
             Set Column

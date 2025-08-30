@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Header } from './features/Header/Header';
 import { Main } from './features/Main/Main';
+import { Loader } from './components';
 
 export function App() {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('');
   const [year, setYear] = useState('');
+  const [region, setRegion] = useState('');
   const [columns, setColumns] = useState(['year', 'population']);
 
   useEffect(() => {
@@ -13,7 +15,8 @@ export function App() {
     console.log('sort', sort);
     console.log('year', year);
     console.log('columns', columns);
-  }, [columns, search, sort, year]);
+    console.log('columns', region);
+  }, [columns, region, search, sort, year]);
 
   return (
     <>
@@ -23,8 +26,17 @@ export function App() {
         onChangeSearch={setSearch}
         onChangeSort={setSort}
         onChangeYear={setYear}
+        onChangeRegion={setRegion}
       />
-      <Main />
+      <Suspense fallback={<Loader />}>
+        <Main
+          selectedYear={year}
+          regionFilter={region}
+          searchQuery={search}
+          sortConfig={sort}
+          selectedColumns={columns}
+        />
+      </Suspense>
     </>
   );
 }
