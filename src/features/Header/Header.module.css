@@ -1,0 +1,37 @@
+.header {
+  width: 100%;
+  background: #ffedd4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  max-width: 1400px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.year,
+.sort {
+  display: flex;
+  gap: 10px;
+  font-size: 2rem;
+  align-items: center;
+}

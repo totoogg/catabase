@@ -1,0 +1,34 @@
+import { Selector } from '@/components';
+import cls from './Header.module.css';
+import { FC, memo, useCallback } from 'react';
+
+const years = Array.from({ length: 2024 - 1750 }, (_, i) =>
+  i === 0 ? 'All years' : `${2024 - i}`
+);
+
+interface ChooseYearProps {
+  onChange: (value: string) => void;
+}
+
+export const ChooseYear: FC<ChooseYearProps> = memo(({ onChange }) => {
+  const handleChange = useCallback(
+    (value: string) => {
+      onChange(value);
+    },
+    [onChange]
+  );
+
+  return (
+    <div className={cls.year}>
+      Year:
+      <Selector
+        onChange={handleChange}
+        label="Choose Year"
+        options={years}
+        className="ChooseYear"
+      />
+    </div>
+  );
+});
+
+ChooseYear.displayName = 'ChooseYear';

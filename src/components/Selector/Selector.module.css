@@ -1,0 +1,55 @@
+.custom-select {
+  position: relative;
+  width: 200px;
+  font-size: 2rem;
+}
+
+.custom-select::after {
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #ff6900;
+  font-size: 2rem;
+}
+
+.select-box {
+  padding: 5px;
+  border: 1px solid #ff6900;
+  cursor: pointer;
+  background-color: #fff7ed;
+  border-radius: 10px;
+}
+
+.option {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #9f2d00;
+  color: #fff7ed;
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ff6900;
+  background-color: #fff7ed;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+.options.show {
+  display: block;
+  opacity: 1;
+}
