@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  gap: 20px;
+  justify-content: center;
+}
+
+.empty {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+}

@@ -1,0 +1,67 @@
+.overview {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: flex-start;
+  overflow: auto;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+}
+
+.line {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background-color: #f54900;
+  left: calc(50% - 20px);
+  border-radius: 10px;
+  transform: scale(0);
+  z-index: 5;
+}
+
+.line:first-child {
+  transform: rotate(-45deg);
+  top: calc(50% - 2px);
+}
+
+.line:last-child {
+  bottom: calc(50% - 2px);
+  transform: rotate(45deg);
+}
+
+.modal {
+  margin-top: 40px;
+  cursor: default;
+  padding: 50px;
+  background-color: #ffedd4;
+  border-radius: 20px;
+  position: relative;
+  width: 70%;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #ffb86a;
+}
