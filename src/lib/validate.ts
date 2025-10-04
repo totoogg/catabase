@@ -1,15 +1,16 @@
 import { countriesLower } from '@/const/countries';
 import * as Yup from 'yup';
 
+const FIRST_UPPER_CASE_REGEXP = /^[A-Z]/;
+const PASSWORD_REGEXP = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/;
+
+const MAX_FILE_SIZE = 1048576;
+const ALLOWED_FILE_TYPES = ['image/png', 'image/jpeg'];
+
 export const schema = Yup.object().shape({
   username: Yup.string()
     .required('Name is required')
-    .matches(/^[A-ZА-Я]/, {
-      message: 'There must be a string',
-      excludeEmptyString: true,
-    })
-    .test({
-      test: (value) => value[0] === value[0]?.toUpperCase(),
+    .matches(FIRST_UPPER_CASE_REGEXP, {
       message: 'The first letter must be capitalized',
     }),
   age: Yup.number()
@@ -22,15 +23,12 @@ export const schema = Yup.object().shape({
   password: Yup.string()
     .required('Password is required')
     .matches(
-      /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
+      PASSWORD_REGEXP,
       'Password must have 1 number, 1 uppercased letter, 1 lowercased letter and 1 special character'
-    )
-    .test('passwordRequired', 'Password is required', (value) => !!value),
+    ),
   confirmPassword: Yup.string()
     .required('Confirm password')
-    .test('passwords-match', 'The passwords do not match', function (value) {
-      return !value || this.parent.password === value;
-    }),
+    .oneOf([Yup.ref('password')], 'The passwords do not match'),
   gender: Yup.string().required('Gender is required'),
   accept: Yup.boolean().oneOf(
     [true],
@@ -39,12 +37,11 @@ export const schema = Yup.object().shape({
   file: Yup.mixed<File>()
     .required('File is required')
     .test('fileSize', 'The file is too big (> 1 MB)', (value) => {
-      return value && value.size <= 1048576;
+      return value && value.size <= MAX_FILE_SIZE;
     })
     .test('fileFormat', 'Unsupported format (png | jpeg)', (value) => {
-      return value && ['image/png', 'image/jpeg'].includes(value.type);
-    })
-    .test('fileRequired', 'File is required', (value) => !!value),
+      return value && ALLOWED_FILE_TYPES.includes(value.type);
+    }),
   country: Yup.string()
     .required('Country is required')
     .test({
