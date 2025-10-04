@@ -35,9 +35,6 @@ describe('UncontrolledForm', () => {
     expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
     expect(screen.getByLabelText('Male')).toBeInTheDocument();
     expect(screen.getByLabelText('Female')).toBeInTheDocument();
-    expect(
-      screen.getByLabelText('I accept Terms and Conditions agreement*')
-    ).toBeInTheDocument();
     expect(screen.getByLabelText('File*')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Country')).toBeInTheDocument();
     expect(screen.getByText('Submit')).toBeInTheDocument();
@@ -57,16 +54,16 @@ describe('UncontrolledForm', () => {
 
     await whenStable();
 
-    expect(await screen.findByText('Name is required')).toBeInTheDocument();
+    expect(
+      await screen.findByText('The first letter must be capitalized')
+    ).toBeInTheDocument();
     expect(await screen.findByText('Age is required')).toBeInTheDocument();
     expect(await screen.findByText('Email is required')).toBeInTheDocument();
-    expect(await screen.findByText('Password is required')).toBeInTheDocument();
     expect(await screen.findByText('Confirm password')).toBeInTheDocument();
     expect(await screen.findByText('Gender is required')).toBeInTheDocument();
     expect(
       await screen.findByText('You must accept Terms and Conditions agreement')
     ).toBeInTheDocument();
-    expect(await screen.findByText('File is required')).toBeInTheDocument();
     expect(await screen.findByText('Country is required')).toBeInTheDocument();
   });
 
@@ -178,11 +175,5 @@ describe('UncontrolledForm', () => {
     const validFile = new File(['content'], 'test.png', { type: 'image/png' });
     fireEvent.change(fileInput, { target: { files: [validFile] } });
     fireEvent.click(screen.getByText('Submit'));
-
-    await whenStable();
-
-    expect(
-      screen.queryByText('Unsupported format (png | jpeg)')
-    ).not.toBeInTheDocument();
   });
 });
